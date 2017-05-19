@@ -12,6 +12,8 @@ class SearchViewController: UIViewController {
     
     var searchController:UISearchController!
     var _collectionView:UICollectionView!
+    
+    let searchCellId:String = "search_cell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +27,18 @@ class SearchViewController: UIViewController {
         self._collectionView.delegate = self
         
         let cell:UINib = UINib(nibName: "SearchCell", bundle: nil)
+        self._collectionView.register(cell, forCellWithReuseIdentifier: searchCellId)
+        self._collectionView.backgroundColor = UIColor.white
+        self.view.addSubview(self._collectionView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        print("this appeared")
+
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -53,13 +61,18 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController:UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.searchCellId, for: indexPath)
+        cell.backgroundColor = UIColor.green
+        
+        return cell
+        
     }
 }
 
 extension SearchViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 10
     }
 }
 

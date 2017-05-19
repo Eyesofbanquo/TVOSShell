@@ -142,14 +142,13 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             let searchController:UISearchController = UISearchController(searchResultsController: resultsController)
             
             searchController.searchResultsUpdater = resultsController
-            searchController.obscuresBackgroundDuringPresentation = false
+            searchController.obscuresBackgroundDuringPresentation = true
             searchController.hidesNavigationBarDuringPresentation = false
             searchController.searchBar.searchBarStyle = .minimal
             searchController.searchBar.keyboardAppearance = .dark
             
-            let searchControllerView:UISearchContainerViewController = UISearchContainerViewController(searchController: searchController)
-            
-            self.present(searchControllerView, animated: true, completion: nil)
+            //let searchControllerView:UISearchContainerViewController = UISearchContainerViewController(searchController: searchController)
+            self.present(searchController, animated: true, completion: nil)
             break
         case self.modelCount - 1:
             let alertController:UIAlertController = UIAlertController(title: "Logout?", message: "Would You Like To Logout?", preferredStyle: .alert)

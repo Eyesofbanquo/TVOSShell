@@ -25,6 +25,7 @@
 		D501233E1ECE5DDD003854B3 /* Winona.swift in Sources */ = {isa = PBXBuildFile; fileRef = D501233D1ECE5DDD003854B3 /* Winona.swift */; };
 		D50123401ECE78E7003854B3 /* TopFeaturedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */; };
 		D50123421ECEB6FD003854B3 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D50123411ECEB6FD003854B3 /* SearchCell.xib */; };
+		D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		D501233D1ECE5DDD003854B3 /* Winona.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Winona.swift; sourceTree = "<group>"; };
 		D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopFeaturedView.swift; sourceTree = "<group>"; };
 		D50123411ECEB6FD003854B3 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			children = (
 				D50123331ECCE7EF003854B3 /* SearchViewController.swift */,
 				D50123411ECEB6FD003854B3 /* SearchCell.xib */,
+				D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			files = (
 				D501232E1ECA42A4003854B3 /* ScrollMainViewController.swift in Sources */,
 				D501233B1ECE3AF7003854B3 /* ScrollingImageView.swift in Sources */,
+				D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */,
 				D50123091EC3C179003854B3 /* AppDelegate.swift in Sources */,
 				D50123281EC64318003854B3 /* UpcomingEventsViewController.swift in Sources */,
 				D501232A1EC6462B003854B3 /* UpcomingEventsCell.swift in Sources */,

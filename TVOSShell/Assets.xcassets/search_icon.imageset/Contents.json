@@ -2,7 +2,8 @@
   "images" : [
     {
       "idiom" : "tv",
-      "filename" : "search-icon.pdf"
+      "filename" : "complete_search_icon.pdf",
+      "scale" : "1x"
     }
   ],
   "info" : {

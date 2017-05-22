@@ -11,8 +11,8 @@ import UIKit
 class ScrollMainViewController: UIViewController {
     
     @IBOutlet weak var _topFeaturedView:TopFeaturedView!
-    
     @IBOutlet weak var _collectionView:UICollectionView!
+    @IBOutlet weak var _backgroundImage:UIImageView!
     var scrollViewWidth:CGFloat!
     var scrollViewHeight:CGFloat!
     let numberOfScrollViewPages:CGFloat! = 3.0
@@ -31,6 +31,12 @@ class ScrollMainViewController: UIViewController {
         
         self._collectionView.delegate = self
         self._collectionView.dataSource = self
+        
+        let blurEffect:UIBlurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self._backgroundImage.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self._backgroundImage.addSubview(blurEffectView)
         
         /*load videos from the API*/
         
@@ -60,12 +66,9 @@ class ScrollMainViewController: UIViewController {
         let focusGuideRightOfFeaturedView:UIFocusGuide = UIFocusGuide()
         self.view.addLayoutGuide(focusGuideRightOfFeaturedView)
         focusGuideRightOfFeaturedView.leftAnchor.constraint(equalTo: self._topFeaturedView.rightAnchor).isActive = true
-        //focusGuideRightOfFeaturedView.rightAnchor.constraint(equalTo: self._topFeaturedView.leftAnchor).isActive = true
         focusGuideRightOfFeaturedView.topAnchor.constraint(equalTo: self._topFeaturedView.topAnchor).isActive = true
         focusGuideRightOfFeaturedView.bottomAnchor.constraint(equalTo: self._topFeaturedView.bottomAnchor).isActive = true
         focusGuideRightOfFeaturedView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
-        //focusGuideLeftOfFeaturedView.preferredFocusEnvironments = [self._topFeaturedView]
-        print(-1 % 3)
     }
     
     func scrollFeaturedImage(next:Int){
@@ -79,13 +82,10 @@ class ScrollMainViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        /* layout the scrollview here so that it happens after/excludes autolayout */
-        //self.setupScrollView()
     }
     
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        return [self._topFeaturedView]
+        return [self._collectionView]
     }
     
     // MARK: - Navigation
@@ -110,15 +110,10 @@ extension ScrollMainViewController:UICollectionViewDelegate {
         /* Make the first cell the cell that opens the SearchViewController/begins search feature/makes visible search bar */
         switch indexPath.item {
         case 0:
-            videoCell._videoImage.backgroundColor = UIColor.gray
+            videoCell._videoImage.image = UIImage(named: "search_icon")
             videoCell._videoTitle.text = "Search"
-            
-           // videoCell.layer.addSublayer(searchButtonLayer)
-            
-            
-            
         case self.modelCount - 1:
-            videoCell.backgroundColor = UIColor.red
+            videoCell._videoImage.image = UIImage(named: "settings")
             videoCell._videoTitle.text = "Settings"
         default:
             videoCell._videoImage.image = UIImage(named: "dummyimage1")
@@ -139,6 +134,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
         switch indexPath.item {
         case 0:
             let resultsController:SearchViewController = SearchViewController()
+        
             let searchController:UISearchController = UISearchController(searchResultsController: resultsController)
             
             searchController.searchResultsUpdater = resultsController
@@ -147,7 +143,8 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             searchController.searchBar.searchBarStyle = .minimal
             searchController.searchBar.keyboardAppearance = .dark
             
-            //let searchControllerView:UISearchContainerViewController = UISearchContainerViewController(searchController: searchController)
+            resultsController.searchController = searchController
+
             self.present(searchController, animated: true, completion: nil)
             break
         case self.modelCount - 1:
@@ -174,6 +171,6 @@ extension ScrollMainViewController:UICollectionViewDataSource {
 
 extension ScrollMainViewController:UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: -80.0, left: 80, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0.0, left: 20, bottom: 0, right: 0)
     }
 }

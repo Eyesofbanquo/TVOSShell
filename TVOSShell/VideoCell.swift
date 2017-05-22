@@ -33,7 +33,7 @@ class VideoCell: UICollectionViewCell {
 
         /* If the cell doesn't have a value for the unfocusedConstraint then assign it a value */
         if self.unfocusedConstraint == nil {
-            self.unfocusedConstraint = self._videoTitle.topAnchor.constraint(equalTo: self._videoImage.bottomAnchor, constant: 5)
+            self.unfocusedConstraint = self._videoTitle.topAnchor.constraint(equalTo: self._videoImage.bottomAnchor, constant: 4)
         }
         self.focusedConstraint.isActive = self.isFocused
         self.unfocusedConstraint.isActive = !self.isFocused

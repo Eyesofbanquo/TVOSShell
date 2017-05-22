@@ -82,9 +82,9 @@
 		D50123071EC3C179003854B3 /* TVOSShell */ = {
 			isa = PBXGroup;
 			children = (
+				D50123191EC3C5B6003854B3 /* MainViewController.swift */,
 				D501233C1ECE5BB2003854B3 /* Networking */,
 				D50123351ECE3A98003854B3 /* Views */,
-				D50123191EC3C5B6003854B3 /* MainViewController.swift */,
 				D50123211EC3CC19003854B3 /* UIKitExtensions */,
 				D501231B1EC3C5E9003854B3 /* Controllers */,
 				D50123171EC3C4E3003854B3 /* Storyboards */,
@@ -424,6 +424,7 @@
 				D50123161EC3C179003854B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

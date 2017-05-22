@@ -42,19 +42,15 @@ class TopFeaturedView: UIView {
     }
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        
-        print("yeet")
-        
+                
         guard   let action = self.performAction,
             let position = self.position
             else { return }
         
         if context.focusHeading == .right {
             action(position - 1)
-            print("to the right")
         } else if context.focusHeading == .left {
             action(position + 1)
-            print("to the left")
         }
         
         //This is behavior when the view has just lost focus

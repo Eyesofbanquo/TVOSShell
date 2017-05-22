@@ -79,15 +79,6 @@ extension FeaturedTableViewController: UITableViewDelegate {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: featured_cell, for: indexPath) as? FeaturedTableViewCell else { return UITableViewCell() }
         
-        //Creating a focus guide for each row
-        let focusGuide:UIFocusGuide = UIFocusGuide()
-        self.view.addLayoutGuide(focusGuide)
-        focusGuide.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
-        focusGuide.heightAnchor.constraint(equalToConstant: cell.bounds.height).isActive = true
-        focusGuide.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-        focusGuide.leadingAnchor.constraint(equalTo: cell.trailingAnchor, constant: 0.0).isActive = true
-        focusGuide.preferredFocusEnvironments = [cell]
-        
         return cell
     }
     

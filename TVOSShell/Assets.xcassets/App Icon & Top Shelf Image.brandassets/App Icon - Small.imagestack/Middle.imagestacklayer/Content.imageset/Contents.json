@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
+      "filename" : "appleTVIconMiddle.png",
       "scale" : "1x"
     }
   ],

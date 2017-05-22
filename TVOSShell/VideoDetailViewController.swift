@@ -21,14 +21,23 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet weak var playButton:UIButton!
     @IBOutlet weak var categoriesButton:UIButton!
     
+    var backgroundImageCache:NSCache<NSString, UIImage>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.categoriesButton.addTarget(self, action: #selector(returnToCategories(_:)), for: .primaryActionTriggered)
         self.playButton.addTarget(self, action: #selector(playVideo(_:)), for: .primaryActionTriggered)
         
+        self.backgroundImage.layer.opacity = 0.0
+        self.backgroundImageCache = NSCache()
+        //self.backgroundImageCache.setObject(nil, forKey: "image")
+        //self.backgroundImageCache.setValue(nil, forKey: "image")
+        
+
+        
         /* Set a thumbnail real quick */
-        DispatchQueue.main.async {
+        /*DispatchQueue.main.async {
             guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
             let asset:AVURLAsset = AVURLAsset(url: url, options: nil)
             let imageGenerator:AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
@@ -40,7 +49,7 @@ class VideoDetailViewController: UIViewController {
             } catch {
                 fatalError()
             }
-        }
+        }*/
         
         
         /* Set a gradient on the image in the background */
@@ -53,6 +62,54 @@ class VideoDetailViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         self.backgroundImage.layer.mask = gradientLayer
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        DispatchQueue.global().async {
+            let image:UIImage?
+            
+            if self.backgroundImageCache.object(forKey: "image") == nil {
+                guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
+                let asset:AVURLAsset = AVURLAsset(url: url, options: nil)
+                let imageGenerator:AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+                imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
+                imageGenerator.requestedTimeToleranceBefore = kCMTimeZero
+                
+                let time:CMTime = CMTime(seconds: 0, preferredTimescale: 1)
+                do {
+                    let cgImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+                    image = UIImage(cgImage: cgImage)
+                    self.backgroundImageCache.setObject(image!, forKey: "image")
+                    DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                        self.backgroundImage.image = image
+                        UIView.animate(withDuration: 0.4, animations: {
+                            self.backgroundImage.layer.opacity = 1.0
+                        }, completion: {
+                            completed in
+                            if completed {
+                                self.backgroundImage.layer.opacity = 1.0
+                            }
+                        })
+                    })
+                    
+                } catch {
+                    fatalError()
+                }
+                
+            } else {
+                self.backgroundImage.image = self.backgroundImageCache.object(forKey: "image")
+            }
+        }
+            
+            
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+        self.backgroundImageCache = nil
     }
     
     func returnToCategories(_ sender:UIButton) {
@@ -88,10 +145,6 @@ class VideoDetailViewController: UIViewController {
         return [backgroundImage]
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     /*

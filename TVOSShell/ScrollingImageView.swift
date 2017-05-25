@@ -34,8 +34,6 @@ class ScrollingImageView: UIImageView {
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         
-        print("yeet")
-        
         guard   let action = self.performAction,
                 let position = self.position
                 else { return }

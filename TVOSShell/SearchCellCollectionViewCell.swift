@@ -9,6 +9,15 @@
 import UIKit
 
 class SearchCellCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var _cellImage:UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        guard _cellImage != nil else { return }
+        _cellImage.adjustsImageWhenAncestorFocused = true
+    }
+    
     override var canBecomeFocused: Bool {
         return true
     }
@@ -17,18 +26,13 @@ class SearchCellCollectionViewCell: UICollectionViewCell {
         //create changes to this item if it is current focused
         if context.nextFocusedView == self {
             coordinator.addCoordinatedAnimations({
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.backgroundColor = UIColor.red
-
-                })
+                self.addParallaxMotionEffects(tiltValue: 0.25, panValue: 5.0)
             }, completion: nil)
         }
         //undo changes to the focused it
         if context.previouslyFocusedView == self {
             coordinator.addCoordinatedAnimations({
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.backgroundColor = UIColor.green
-                })
+                self.motionEffects = []
             }, completion: nil)
         }
         if self.isFocused {

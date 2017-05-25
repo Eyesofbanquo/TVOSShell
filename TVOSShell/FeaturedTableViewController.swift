@@ -94,17 +94,6 @@ extension FeaturedTableViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return model.count
     }
-    
-    
-    /* This will set custom heights for each tableview row */
-    /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 400.0
-        default:
-            return 100.0
-        }
-    }*/
 }
 
 /* Extensions for UICollectionView */

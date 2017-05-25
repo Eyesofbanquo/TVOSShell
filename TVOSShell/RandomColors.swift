@@ -55,3 +55,35 @@ extension UIImageView {
         self.layer.mask = gradientLayer
     }
 }
+
+extension UIView {
+    func addParallaxMotionEffects(tiltValue:CGFloat, panValue:CGFloat) {
+        var xTilt:UIInterpolatingMotionEffect = UIInterpolatingMotionEffect()
+        var yTilt:UIInterpolatingMotionEffect = UIInterpolatingMotionEffect()
+        
+        var xPan:UIInterpolatingMotionEffect = UIInterpolatingMotionEffect()
+        var yPan:UIInterpolatingMotionEffect = UIInterpolatingMotionEffect()
+        
+        let motionGroup:UIMotionEffectGroup = UIMotionEffectGroup()
+        
+        xTilt = UIInterpolatingMotionEffect(keyPath: "layer.transform.rotation.y", type: .tiltAlongHorizontalAxis)
+        xTilt.minimumRelativeValue = -1 * tiltValue
+        xTilt.maximumRelativeValue = tiltValue
+        
+        yTilt = UIInterpolatingMotionEffect(keyPath: "layer.transform.rotation.x", type: .tiltAlongVerticalAxis)
+        yTilt.minimumRelativeValue = -1 * tiltValue
+        yTilt.maximumRelativeValue = tiltValue
+        
+        xPan = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        xPan.minimumRelativeValue = -1 * panValue
+        xPan.maximumRelativeValue = panValue
+        
+        yPan = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+        yPan.minimumRelativeValue = -1 * panValue
+        yPan.maximumRelativeValue = panValue
+        
+        motionGroup.motionEffects = [xTilt, yTilt, xPan, yPan]
+        self.addMotionEffect(motionGroup)
+        
+    }
+}

@@ -17,6 +17,8 @@ class ScrollMainViewController: UIViewController {
     var scrollViewHeight:CGFloat!
     let numberOfScrollViewPages:CGFloat! = 3.0
     let collectionView_cell_name:String = "video_cell"
+    
+    var imageCache:NSCache<NSString, UIImage>!
 
     
     /* For testing purposes only */
@@ -31,6 +33,8 @@ class ScrollMainViewController: UIViewController {
         
         self._collectionView.delegate = self
         self._collectionView.dataSource = self
+        self._collectionView.remembersLastFocusedIndexPath = true
+
         
         let blurEffect:UIBlurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -38,50 +42,52 @@ class ScrollMainViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self._backgroundImage.addSubview(blurEffectView)
         
+        
+        //Set up the image cache to store the images loaded from the API
+        self.imageCache = NSCache()
+        
         /*load videos from the API*/
-        
-        /* set the featured images from API*/
-        let image1:UIImage? = UIImage(named: "slide1")
-        let image2:UIImage? = UIImage(named: "slide2")
-        let image3:UIImage? = UIImage(named: "slide3")
-        
-        self.featuredVideos = [image1, image2, image3]
-        
-        /* Assign closure to imageview */
-        self._topFeaturedView.setup(pos: 0, image: self.featuredVideos[0], action: self.scrollFeaturedImage(next:))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
         
-        /* Create a focus layout as an empty view for the top featured image to allow a scrolling effect */
-        let focusGuideLeftOfFeaturedView:UIFocusGuide = UIFocusGuide()
-        self.view.addLayoutGuide(focusGuideLeftOfFeaturedView)
-        focusGuideLeftOfFeaturedView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        focusGuideLeftOfFeaturedView.rightAnchor.constraint(equalTo: self._topFeaturedView.leftAnchor).isActive = true
-        focusGuideLeftOfFeaturedView.topAnchor.constraint(equalTo: self._topFeaturedView.topAnchor).isActive = true
-        focusGuideLeftOfFeaturedView.bottomAnchor.constraint(equalTo: self._topFeaturedView.bottomAnchor).isActive = true
-        
-        
-        let focusGuideRightOfFeaturedView:UIFocusGuide = UIFocusGuide()
-        self.view.addLayoutGuide(focusGuideRightOfFeaturedView)
-        focusGuideRightOfFeaturedView.leftAnchor.constraint(equalTo: self._topFeaturedView.rightAnchor).isActive = true
-        focusGuideRightOfFeaturedView.topAnchor.constraint(equalTo: self._topFeaturedView.topAnchor).isActive = true
-        focusGuideRightOfFeaturedView.bottomAnchor.constraint(equalTo: self._topFeaturedView.bottomAnchor).isActive = true
-        focusGuideRightOfFeaturedView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
+        //When hitting a memory warning just remove all cached objects
+        self.imageCache.removeAllObjects()
     }
     
-    func scrollFeaturedImage(next:Int){
-        self._topFeaturedView.imageView.image = nil
-        let count = self.featuredVideos.count
-        if next % count > 0 {
-            self._topFeaturedView.imageView.image = self.featuredVideos[next % count]
+    /* The title/featured image should change its image based on which item is currently focused in the collection view. This will be done by casting the nextFocusedView as a VideoCell and ravaging its positionInCollectionView property to determine which Cell was actually focused. Then you display its featured image */
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocus(in: context, with: coordinator)
+        
+        
+        guard let video_cell = context.nextFocusedView as? VideoCell else { return }
+        self._topFeaturedView.featuredImageView.image = video_cell._videoImage.image
 
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        guard let previous_video_cell = context.previouslyFocusedView as? VideoCell else { return }
+        UIView.setAnimationCurve(.easeInOut)
+        UIView.animate(withDuration: 0.22, animations: {
+            self._topFeaturedView.layer.opacity = 0.0
+        })
+       /* coordinator.addCoordinatedAnimations({
+            UIView.setAnimationCurve(.easeIn)
+            UIView.animate(withDuration: UIView.inheritedAnimationDuration * 20, animations: {
+                self._topFeaturedView.layer.opacity = 0.0
+            })
+        }, completion: nil)*/
+        UIView.setAnimationCurve(.easeInOut)
+        UIView.animate(withDuration: 0.22, animations: {
+            self._topFeaturedView.layer.opacity = 1.0
+            
+        })
+        /*coordinator.addCoordinatedAnimations({
+            UIView.setAnimationCurve(.easeIn)
+            UIView.animate(withDuration: UIView.inheritedAnimationDuration * 20, animations: {
+                self._topFeaturedView.layer.opacity = 1.0
+
+            })
+        }, completion: nil)*/
+        
     }
     
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
@@ -102,23 +108,39 @@ class ScrollMainViewController: UIViewController {
 extension ScrollMainViewController:UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        func newFucntion() {
+            
+        }
+        
         guard let videoCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionView_cell_name, for: indexPath) as? VideoCell else { return UICollectionViewCell() }
         
         /*Overrode this function to add the ability to reset the cell exactly how I want to */
         videoCell.prepareForReuse()
         
-        /* Make the first cell the cell that opens the SearchViewController/begins search feature/makes visible search bar */
+        var imageName:NSString
+        
+        /* First check to see if image cache exists. If not, then create UIImage from the imageName and store the UIImage in the cache. If it does exist then just use the image cache for the video cell's imageview */
         switch indexPath.item {
         case 0:
-            videoCell._videoImage.image = UIImage(named: "search_icon")
+            imageName = "search_icon"
+            if self.imageCache.object(forKey: imageName) == nil {
+                let toBeCachedImage:UIImage? = UIImage(named: imageName as String)
+                self.imageCache.setObject(toBeCachedImage!, forKey: imageName)
+            }
+            videoCell._videoImage.image = self.imageCache.object(forKey: imageName)
             videoCell._videoTitle.text = "Search"
         case self.modelCount - 1:
-            videoCell._videoImage.image = UIImage(named: "settings")
+            imageName = "settings"
+            if self.imageCache.object(forKey: imageName) == nil {
+                let toBeCachedImage:UIImage? = UIImage(named: imageName as String)
+                self.imageCache.setObject(toBeCachedImage!, forKey: imageName)
+            }
+            videoCell._videoImage.image = self.imageCache.object(forKey: imageName)
             videoCell._videoTitle.text = "Settings"
         default:
             videoCell._videoImage.image = UIImage(named: "dummyimage1")
         }
-
+        //videoCell.positionInCollectionView = indexPath.item
         return videoCell
     }
     
@@ -128,11 +150,13 @@ extension ScrollMainViewController:UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        /* grab the current cell and the Storyboard instance since we will be using this Storyboard instance to create a SearchViewController from our Main Storyboard */
         let currentCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionView_cell_name, for: indexPath)
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         switch indexPath.item {
         case 0:
+            /* Create and push a UISearchController to the screen. This seems to just dim the View Controller beneath it instead of pushing a new View Controller. This is by design since the UITransitionView wasn't dismissing itself when returning from the UISearchControllerContainerView */
             let resultsController:SearchViewController = SearchViewController()
         
             let searchController:UISearchController = UISearchController(searchResultsController: resultsController)
@@ -148,6 +172,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             self.present(searchController, animated: true, completion: nil)
             break
         case self.modelCount - 1:
+            /* The last item in the list should be the settings item which will allow the user to log in and out of the tvOS app. Logging in and out should only be used for switching users and not to maintain multiple accounts for the same user */
             let alertController:UIAlertController = UIAlertController(title: "Logout?", message: "Would You Like To Logout?", preferredStyle: .alert)
             let confirmButton:UIAlertAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
             alertController.addAction(confirmButton)
@@ -158,6 +183,12 @@ extension ScrollMainViewController:UICollectionViewDelegate {
         default:
             let destination:FeaturedTableViewController = storyboard.instantiateViewController(withIdentifier: FeaturedTableViewController.storyboardid) as! FeaturedTableViewController
             self.present(destination, animated: true, completion: nil)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if indexPath.item == 1 {
+            print("at the 2nd item in the list")
         }
     }
 

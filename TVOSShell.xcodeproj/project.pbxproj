@@ -26,6 +26,8 @@
 		D50123401ECE78E7003854B3 /* TopFeaturedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */; };
 		D50123421ECEB6FD003854B3 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D50123411ECEB6FD003854B3 /* SearchCell.xib */; };
 		D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */; };
+		D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */; };
+		D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopFeaturedView.swift; sourceTree = "<group>"; };
 		D50123411ECEB6FD003854B3 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
 		D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBottomBarNavigation.swift; sourceTree = "<group>"; };
+		D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,8 @@
 				D501231E1EC3C6CF003854B3 /* 2nd-Featured */,
 				D50123261EC64303003854B3 /* Upcoming Events */,
 				D501232B1EC8DA5C003854B3 /* VideoDetailViewController.swift */,
+				D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */,
+				D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -254,6 +260,7 @@
 				D501232E1ECA42A4003854B3 /* ScrollMainViewController.swift in Sources */,
 				D501233B1ECE3AF7003854B3 /* ScrollingImageView.swift in Sources */,
 				D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */,
+				D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */,
 				D50123091EC3C179003854B3 /* AppDelegate.swift in Sources */,
 				D50123281EC64318003854B3 /* UpcomingEventsViewController.swift in Sources */,
 				D501232A1EC6462B003854B3 /* UpcomingEventsCell.swift in Sources */,
@@ -267,6 +274,7 @@
 				D50123231EC3CC27003854B3 /* RandomColors.swift in Sources */,
 				D501231D1EC3C606003854B3 /* FeaturedTableViewController.swift in Sources */,
 				D501231A1EC3C5B6003854B3 /* MainViewController.swift in Sources */,
+				D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

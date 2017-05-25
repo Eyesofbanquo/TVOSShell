@@ -34,22 +34,6 @@ class VideoDetailViewController: UIViewController {
         //self.backgroundImageCache.setObject(nil, forKey: "image")
         //self.backgroundImageCache.setValue(nil, forKey: "image")
         
-
-        
-        /* Set a thumbnail real quick */
-        /*DispatchQueue.main.async {
-            guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
-            let asset:AVURLAsset = AVURLAsset(url: url, options: nil)
-            let imageGenerator:AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
-            let time:CMTime = CMTime(seconds: 0, preferredTimescale: 1)
-            do {
-                let cgImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
-                let image = UIImage(cgImage: cgImage)
-                self.backgroundImage.image = image
-            } catch {
-                fatalError()
-            }
-        }*/
         
         
         /* Set a gradient on the image in the background */
@@ -64,12 +48,16 @@ class VideoDetailViewController: UIViewController {
         
     }
     
+    func displayBottomNavigation(_ sender:UISwipeGestureRecognizer){
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        /* Grab the thumbnail of the video on a background thread */
         DispatchQueue.global().async {
             let image:UIImage?
-            
             if self.backgroundImageCache.object(forKey: "image") == nil {
                 guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
                 let asset:AVURLAsset = AVURLAsset(url: url, options: nil)
@@ -109,7 +97,7 @@ class VideoDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        self.backgroundImageCache = nil
+        self.backgroundImageCache.removeAllObjects()
     }
     
     func returnToCategories(_ sender:UIButton) {
@@ -122,8 +110,8 @@ class VideoDetailViewController: UIViewController {
         let player:AVPlayer = AVPlayer(playerItem: playerItem)
         
         // Create a new AVPlayerViewController and pass it a reference to the player.
-        let controller = AVPlayerViewController()
-        controller.player = player
+        let controller = CustomVideoPlayerController(player: player)
+        //controller.player = player
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: controller.player?.currentItem)
         

@@ -107,7 +107,8 @@ extension SearchViewController:UICollectionViewDataSource {
 
 extension SearchViewController:UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print("Updating")
+        guard let text = searchController.searchBar.text, text.characters.count > 1 else { return }
+        
     }
 }
 

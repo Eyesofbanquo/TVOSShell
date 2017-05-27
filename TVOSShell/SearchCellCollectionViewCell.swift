@@ -26,17 +26,17 @@ class SearchCellCollectionViewCell: UICollectionViewCell {
         //create changes to this item if it is current focused
         if context.nextFocusedView == self {
             coordinator.addCoordinatedAnimations({
+                self.backgroundColor = UIColor.red
                 self.addParallaxMotionEffects(tiltValue: 0.25, panValue: 5.0)
             }, completion: nil)
         }
         //undo changes to the focused it
         if context.previouslyFocusedView == self {
             coordinator.addCoordinatedAnimations({
+                self.backgroundColor = UIColor.green
                 self.motionEffects = []
             }, completion: nil)
         }
-        if self.isFocused {
-            
-        }
+
     }
 }

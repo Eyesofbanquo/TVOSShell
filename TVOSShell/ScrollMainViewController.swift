@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ScrollMainViewController: UIViewController {
     
@@ -27,6 +28,8 @@ class ScrollMainViewController: UIViewController {
     
     var featuredVideos:[UIImage?]!
     
+    var urlSession:URLSession!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +45,58 @@ class ScrollMainViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self._backgroundImage.addSubview(blurEffectView)
         
+        //Testing purposes
+        let url = URL(string: "https://stage-swatv.wieck.com/api/v1/authenticate")
+        let configuration:URLSessionConfiguration = URLSessionConfiguration.default
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+        let json:[String:Any] = ["email":"markim@wieck.com","password":"test"]
+        //let body = try? JSONSerialization.jsonObject(with: ["email":"markim@wieck.com", "password":"test"], options: .allowFragments)
+        let body = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        urlRequest.httpBody = body
+        urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        self.urlSession = URLSession.shared
         
+        var task2:URLSessionDataTask = URLSessionDataTask()
+        
+        let task = self.urlSession.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            if let httpResponse = response as? HTTPURLResponse, let fields = httpResponse.allHeaderFields as? [String: String] {
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: response!.url!)
+                for cookie in cookies {
+                    var cookieProperties = [HTTPCookiePropertyKey:Any]()
+                    cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+                    cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+                    cookieProperties[HTTPCookiePropertyKey.domain] = cookie.domain
+                    cookieProperties[HTTPCookiePropertyKey.path] = cookie.path
+                    cookieProperties[HTTPCookiePropertyKey.version] = cookie.version
+                    cookieProperties[HTTPCookiePropertyKey.expires] = Date().addingTimeInterval(313546000)
+                    let newCookie = HTTPCookie(properties: cookieProperties)
+                    //HTTPCookieStorage.shared.setCookie(newCookie!)
+                    print("name: \(cookie.name)")
+                    //task2.resume()
+                }
+            }
+            print(statusCode)
+        })
+        //task.resume()
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "stage-swatv.wieck.com"
+        urlComponents.path = "/api/v1/search"
+        let queryItems:[URLQueryItem] = [URLQueryItem(name: "facets", value: "{}"), URLQueryItem(name: "query", value: "simpsons"), URLQueryItem(name: "types", value:"[\"video\", \"photo\"]")]
+        urlComponents.queryItems = queryItems
+        print(urlComponents.url)
+
+        urlRequest = URLRequest(url: urlComponents.url!)
+        
+        task2 = self.urlSession.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            print(response)
+        })
+       // task2.resume()
         //Set up the image cache to store the images loaded from the API
         self.imageCache = NSCache()
         

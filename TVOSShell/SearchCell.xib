@@ -27,6 +27,9 @@
                 <constraint firstItem="EhZ-VH-2h6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vLa-sj-ghB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="_cellImage" destination="EhZ-VH-2h6" id="jRG-5T-H3B"/>
+            </connections>
             <point key="canvasLocation" x="-197" y="274"/>
         </view>
     </objects>

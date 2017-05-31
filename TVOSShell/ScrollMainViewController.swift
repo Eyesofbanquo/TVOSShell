@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 class ScrollMainViewController: UIViewController {
     
@@ -16,6 +18,7 @@ class ScrollMainViewController: UIViewController {
     @IBOutlet weak var _backgroundImage:UIImageView!
     var scrollViewWidth:CGFloat!
     var scrollViewHeight:CGFloat!
+    var authenticated:Bool!
     let numberOfScrollViewPages:CGFloat! = 3.0
     let collectionView_cell_name:String = "video_cell"
     
@@ -30,77 +33,124 @@ class ScrollMainViewController: UIViewController {
     
     var urlSession:URLSession!
     
+    var viewmodel:VM?
+    
+    var loadDataOperationQueue:OperationQueue!
+    //var blockOperation:BlockOperation!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Configure the collection view
         self._collectionView.delegate = self
         self._collectionView.dataSource = self
         self._collectionView.remembersLastFocusedIndexPath = true
 
-        
+        //Create the background blur effect
         let blurEffect:UIBlurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self._backgroundImage.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self._backgroundImage.addSubview(blurEffectView)
         
+        //Configure the view model
+        self.viewmodel = ViewModel()
+        
         //Testing purposes
         let url = URL(string: "https://stage-swatv.wieck.com/api/v1/authenticate")
-        let configuration:URLSessionConfiguration = URLSessionConfiguration.default
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
         let json:[String:Any] = ["email":"markim@wieck.com","password":"test"]
-        //let body = try? JSONSerialization.jsonObject(with: ["email":"markim@wieck.com", "password":"test"], options: .allowFragments)
         let body = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        self.urlSession = URLSession.shared
         
-        var task2:URLSessionDataTask = URLSessionDataTask()
         
-        let task = self.urlSession.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            let statusCode = (response as! HTTPURLResponse).statusCode
-            if let httpResponse = response as? HTTPURLResponse, let fields = httpResponse.allHeaderFields as? [String: String] {
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: response!.url!)
-                for cookie in cookies {
-                    var cookieProperties = [HTTPCookiePropertyKey:Any]()
-                    cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
-                    cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
-                    cookieProperties[HTTPCookiePropertyKey.domain] = cookie.domain
-                    cookieProperties[HTTPCookiePropertyKey.path] = cookie.path
-                    cookieProperties[HTTPCookiePropertyKey.version] = cookie.version
-                    cookieProperties[HTTPCookiePropertyKey.expires] = Date().addingTimeInterval(313546000)
-                    let newCookie = HTTPCookie(properties: cookieProperties)
-                    //HTTPCookieStorage.shared.setCookie(newCookie!)
-                    print("name: \(cookie.name)")
-                    //task2.resume()
-                }
+        
+        //Set up the image cache to store the images loaded from the API
+        self.imageCache = NSCache()
+        
+        //Create operation queue for queuing array cleaning
+        self.loadDataOperationQueue = OperationQueue()
+        //
+
+        
+        /*load videos from the API*/
+        /* Keep the alamofire requests */
+        self.authenticated = false
+        Alamofire.request(urlRequest).responseJSON(completionHandler: {
+            response in
+            switch response.result {
+            case .success( _):
+                //on success fire the other API request
+                guard let data = response.data else { return }
+                _ = JSON(data: data)
+                self.authenticated = true
+                
+                //load the video data - possibly place this inside the viewmodel
+                self.loadData()
+                
+            case .failure( _): break
+                
             }
-            print(statusCode)
         })
-        //task.resume()
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        if authenticated {
+            self.loadData()
+        }
+    }
+    
+    func loadData(){
+        //Rebuild the next URLRequest
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "stage-swatv.wieck.com"
         urlComponents.path = "/api/v1/search"
-        let queryItems:[URLQueryItem] = [URLQueryItem(name: "facets", value: "{}"), URLQueryItem(name: "query", value: "simpsons"), URLQueryItem(name: "types", value:"[\"video\", \"photo\"]")]
+        let queryItems:[URLQueryItem] = [URLQueryItem(name: "facets", value: "{}"), URLQueryItem(name: "query", value: "SWA"), URLQueryItem(name: "types", value:"[\"video\", \"photo\"]")]
         urlComponents.queryItems = queryItems
-        print(urlComponents.url)
+        
+        let urlRequest = URLRequest(url: urlComponents.url!)
+        
+        //Perform the next request to load all of the videos
+        Alamofire.request(urlRequest).responseJSON(completionHandler: {
+            searchResponse in
+            guard let data = searchResponse.data else { return }
+            let jsonResponse = JSON(data: data)   
+            
+            for doc in jsonResponse["docs"] {
+                let object = doc.1
+                
+                let videoItem:Video = SWAVideo(id: object["key"]["id"].stringValue, title: object["title"].stringValue, thumbnailUri: object["thumbnailUri"].stringValue, date: object["date"].stringValue, duration: object["duration"].doubleValue, category: [])
+                
+                self.viewmodel?.addDataItem(item: videoItem)
+                
+            }
+            let blockOperation:BlockOperation = BlockOperation()
+            blockOperation.addExecutionBlock {
+                //Scrub the view model array to rid of duplicates
+                let swaArray:[SWAVideo] = Array(self.viewmodel!.data) as! [SWAVideo]
+                let scrubbedSet:Set<SWAVideo> = Set(swaArray)
+                let scrubbedArray:[SWAVideo] = Array(scrubbedSet)
+                self.viewmodel?.release()
 
-        urlRequest = URLRequest(url: urlComponents.url!)
-        
-        task2 = self.urlSession.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            print(response)
+                for item in scrubbedArray {
+                    self.viewmodel?.addDataItem(item: item)
+                }
+                
+            }
+            //DispatchQueue.main.async
+            self.loadDataOperationQueue.addOperation(blockOperation)
+            self.loadDataOperationQueue.addOperation {
+                //self.blockOperation
+            }
+            
         })
-       // task2.resume()
-        //Set up the image cache to store the images loaded from the API
-        self.imageCache = NSCache()
-        
-        /*load videos from the API*/
     }
     
     override func didReceiveMemoryWarning() {
@@ -114,7 +164,7 @@ class ScrollMainViewController: UIViewController {
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocus(in: context, with: coordinator)
         
-        
+        //If the next cell is a videocell then set the featured image to be the same as the video cell image
         guard let video_cell = context.nextFocusedView as? VideoCell else { return }
         self._topFeaturedView.featuredImageView.image = video_cell._videoImage.image
 
@@ -123,24 +173,11 @@ class ScrollMainViewController: UIViewController {
         UIView.animate(withDuration: 0.22, animations: {
             self._topFeaturedView.layer.opacity = 0.0
         })
-       /* coordinator.addCoordinatedAnimations({
-            UIView.setAnimationCurve(.easeIn)
-            UIView.animate(withDuration: UIView.inheritedAnimationDuration * 20, animations: {
-                self._topFeaturedView.layer.opacity = 0.0
-            })
-        }, completion: nil)*/
         UIView.setAnimationCurve(.easeInOut)
         UIView.animate(withDuration: 0.22, animations: {
             self._topFeaturedView.layer.opacity = 1.0
             
         })
-        /*coordinator.addCoordinatedAnimations({
-            UIView.setAnimationCurve(.easeIn)
-            UIView.animate(withDuration: UIView.inheritedAnimationDuration * 20, animations: {
-                self._topFeaturedView.layer.opacity = 1.0
-
-            })
-        }, completion: nil)*/
         
     }
     
@@ -161,11 +198,6 @@ class ScrollMainViewController: UIViewController {
 
 extension ScrollMainViewController:UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        func newFucntion() {
-            
-        }
-        
         guard let videoCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionView_cell_name, for: indexPath) as? VideoCell else { return UICollectionViewCell() }
         
         /*Overrode this function to add the ability to reset the cell exactly how I want to */
@@ -194,7 +226,6 @@ extension ScrollMainViewController:UICollectionViewDelegate {
         default:
             videoCell._videoImage.image = UIImage(named: "dummyimage1")
         }
-        //videoCell.positionInCollectionView = indexPath.item
         return videoCell
     }
     
@@ -222,8 +253,15 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             searchController.searchBar.keyboardAppearance = .dark
             
             resultsController.searchController = searchController
+            resultsController.viewmodel = ViewModel()
+            resultsController.viewmodel?.copyData(self.viewmodel)
 
-            self.present(searchController, animated: true, completion: nil)
+            self.present(searchController, animated: true, completion: {
+                [weak self] in
+                //guard let strongSelf = self else { return }
+                //resultsController.viewmodel?.copyData(strongSelf.viewmodel)
+                //resultsController.viewmodel?.copyData(self?.viewmodel)
+            })
             break
         case self.modelCount - 1:
             /* The last item in the list should be the settings item which will allow the user to log in and out of the tvOS app. Logging in and out should only be used for switching users and not to maintain multiple accounts for the same user */

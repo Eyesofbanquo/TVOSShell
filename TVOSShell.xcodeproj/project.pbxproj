@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFAA596C0C6A66BC4EECF3E3 /* Pods_TVOSShell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D42E48F6A358B7D5D1DCDC2 /* Pods_TVOSShell.framework */; };
 		D50123091EC3C179003854B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50123081EC3C179003854B3 /* AppDelegate.swift */; };
 		D501230E1EC3C179003854B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D501230C1EC3C179003854B3 /* Main.storyboard */; };
 		D50123101EC3C179003854B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D501230F1EC3C179003854B3 /* Assets.xcassets */; };
@@ -28,9 +29,15 @@
 		D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */; };
 		D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */; };
 		D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */; };
+		D5D2CB9A1EDDFAC5004F66A2 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB991EDDFAC5004F66A2 /* Video.swift */; };
+		D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */; };
+		D5D2CB9E1EDE0241004F66A2 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9D1EDE0241004F66A2 /* VM.swift */; };
+		D5D2CBA01EDE0517004F66A2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		309F9D68A181CAF94924D176 /* Pods-TVOSShell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSShell.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TVOSShell/Pods-TVOSShell.debug.xcconfig"; sourceTree = "<group>"; };
+		7D42E48F6A358B7D5D1DCDC2 /* Pods_TVOSShell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVOSShell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D50123051EC3C179003854B3 /* TVOSShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVOSShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D50123081EC3C179003854B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D501230D1EC3C179003854B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,6 +61,11 @@
 		D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBottomBarNavigation.swift; sourceTree = "<group>"; };
 		D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayerController.swift; sourceTree = "<group>"; };
+		D5D2CB991EDDFAC5004F66A2 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWAVideo.swift; sourceTree = "<group>"; };
+		D5D2CB9D1EDE0241004F66A2 /* VM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
+		D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewModel.swift; path = ../ViewModel.swift; sourceTree = "<group>"; };
+		F4F822EEEB56BFFEDA562AC3 /* Pods-TVOSShell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSShell.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVOSShell/Pods-TVOSShell.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,17 +73,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFAA596C0C6A66BC4EECF3E3 /* Pods_TVOSShell.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A3913D7213CE9249E74DEF8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				309F9D68A181CAF94924D176 /* Pods-TVOSShell.debug.xcconfig */,
+				F4F822EEEB56BFFEDA562AC3 /* Pods-TVOSShell.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		255262DDD3D8D8903808E9D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7D42E48F6A358B7D5D1DCDC2 /* Pods_TVOSShell.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D50122FC1EC3C179003854B3 = {
 			isa = PBXGroup;
 			children = (
 				D50123071EC3C179003854B3 /* TVOSShell */,
 				D50123061EC3C179003854B3 /* Products */,
+				1A3913D7213CE9249E74DEF8 /* Pods */,
+				255262DDD3D8D8903808E9D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +127,10 @@
 				D50123081EC3C179003854B3 /* AppDelegate.swift */,
 				D501230F1EC3C179003854B3 /* Assets.xcassets */,
 				D50123111EC3C179003854B3 /* Info.plist */,
+				D5D2CB991EDDFAC5004F66A2 /* Video.swift */,
+				D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */,
+				D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */,
+				D5D2CB9D1EDE0241004F66A2 /* VM.swift */,
 			);
 			path = TVOSShell;
 			sourceTree = "<group>";
@@ -191,9 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D50123141EC3C179003854B3 /* Build configuration list for PBXNativeTarget "TVOSShell" */;
 			buildPhases = (
+				0D17ED5E4773F6D2433D9649 /* [CP] Check Pods Manifest.lock */,
 				D50123011EC3C179003854B3 /* Sources */,
 				D50123021EC3C179003854B3 /* Frameworks */,
 				D50123031EC3C179003854B3 /* Resources */,
+				CCF9DB32F39CB3695D26B725 /* [CP] Embed Pods Frameworks */,
+				56374597EB9CAB2F7F1BF849 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -252,6 +291,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D17ED5E4773F6D2433D9649 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		56374597EB9CAB2F7F1BF849 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TVOSShell/Pods-TVOSShell-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCF9DB32F39CB3695D26B725 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TVOSShell/Pods-TVOSShell-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D50123011EC3C179003854B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -260,6 +347,7 @@
 				D501232E1ECA42A4003854B3 /* ScrollMainViewController.swift in Sources */,
 				D501233B1ECE3AF7003854B3 /* ScrollingImageView.swift in Sources */,
 				D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */,
+				D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */,
 				D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */,
 				D50123091EC3C179003854B3 /* AppDelegate.swift in Sources */,
 				D50123281EC64318003854B3 /* UpcomingEventsViewController.swift in Sources */,
@@ -267,11 +355,14 @@
 				D501233E1ECE5DDD003854B3 /* Winona.swift in Sources */,
 				D50123201EC3C8DF003854B3 /* FeaturedTableViewCell.swift in Sources */,
 				D501232C1EC8DA5C003854B3 /* VideoDetailViewController.swift in Sources */,
+				D5D2CBA01EDE0517004F66A2 /* ViewModel.swift in Sources */,
 				D50123401ECE78E7003854B3 /* TopFeaturedView.swift in Sources */,
 				D50123341ECCE7EF003854B3 /* SearchViewController.swift in Sources */,
+				D5D2CB9E1EDE0241004F66A2 /* VM.swift in Sources */,
 				D50123251EC3CDE7003854B3 /* FeaturedCollectionViewCell.swift in Sources */,
 				D50123301ECA4979003854B3 /* VideoCell.swift in Sources */,
 				D50123231EC3CC27003854B3 /* RandomColors.swift in Sources */,
+				D5D2CB9A1EDDFAC5004F66A2 /* Video.swift in Sources */,
 				D501231D1EC3C606003854B3 /* FeaturedTableViewController.swift in Sources */,
 				D501231A1EC3C5B6003854B3 /* MainViewController.swift in Sources */,
 				D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */,
@@ -387,6 +478,7 @@
 		};
 		D50123151EC3C179003854B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 309F9D68A181CAF94924D176 /* Pods-TVOSShell.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -401,6 +493,7 @@
 		};
 		D50123161EC3C179003854B3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4F822EEEB56BFFEDA562AC3 /* Pods-TVOSShell.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

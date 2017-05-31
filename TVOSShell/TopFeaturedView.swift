@@ -29,6 +29,16 @@ class TopFeaturedView: UIView {
         self.featuredImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         self.featuredImageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         self.featuredImageView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        
+        /* Set a gradient on the image in the background */
+        let gradientLayer:CAGradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.featuredImageView.bounds
+        gradientLayer.colors = [
+            UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1).cgColor,
+            UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
+        self.featuredImageView.layer.mask = gradientLayer
     }
     
     override func didMoveToWindow() {

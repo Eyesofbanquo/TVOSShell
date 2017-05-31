@@ -24,6 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
+        
+        //Authenticate
+        Winona.auth {
+            //Perform network searches
+            Winona.search(facets: ["Featured":["main", "instruction video"]], completionHandler: {
+                response in
+                print(response)
+            })
+        }
+        
         return true
     }
 

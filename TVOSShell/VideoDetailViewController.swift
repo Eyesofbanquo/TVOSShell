@@ -23,7 +23,12 @@ class VideoDetailViewController: UIViewController {
     
     var controller:AVPlayerViewController!
     
+    static var  storyboard_id:String = {
+        return "video_detail_controller"
+    }()
+    
     var backgroundImageCache:NSCache<NSString, UIImage>!
+    var videoURLString:String!
     var videoIsPlaying:Bool!
     
     //For the video player
@@ -45,6 +50,8 @@ class VideoDetailViewController: UIViewController {
         self.backgroundImage.layer.opacity = 0.0
         self.backgroundImageCache = NSCache()
         self.videoIsPlaying = false
+        
+        self.loadThumbnailBackground(self.videoURLString)
         
         /* Set a gradient on the image in the background */
         let gradientLayer:CAGradientLayer = CAGradientLayer()
@@ -73,18 +80,13 @@ class VideoDetailViewController: UIViewController {
         
     }
     
-    func displayBottomNavigation(_ sender:UISwipeGestureRecognizer){
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
+    func loadThumbnailBackground(_ urlString:String){
+        print(urlString)
         /* Grab the thumbnail of the video on a background thread */
         DispatchQueue.global().async {
             let image:UIImage?
             if self.backgroundImageCache.object(forKey: "image") == nil {
-                guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
+                guard let url = URL(string: urlString) else { return }
                 let asset:AVURLAsset = AVURLAsset(url: url, options: nil)
                 let imageGenerator:AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
                 imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
@@ -116,7 +118,10 @@ class VideoDetailViewController: UIViewController {
                 self.backgroundImage.image = self.backgroundImageCache.object(forKey: "image")
             }
         }
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)    
         //For the video player
         self.width = self.view.bounds.width
 
@@ -129,36 +134,24 @@ class VideoDetailViewController: UIViewController {
         self.bottomNavigationView.isUserInteractionEnabled = true
     }
     
-    /*override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        for item in presses {
-            if item.type == .menu {
-                if videoIsPlaying {
-                    guard self.controller != nil else { return }
-                    // Notify Child View Controller
-                    self.controller.willMove(toParentViewController: nil)
-                    
-                    // Remove Child View From Superview
-                    self.controller.view.removeFromSuperview()
-                    
-                    // Notify Child View Controller
-                    self.controller.removeFromParentViewController()
-                }
-            }
-        }
-    }*/
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         self.backgroundImageCache.removeAllObjects()
     }
     
+    static func playVideo(withURL urlString:String){
+        
+    }
+    
+    
     func returnToCategories(_ sender:UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
     func playVideo(_ sender:UIButton){
-        guard let url = URL(string: "https://wieck-swa-production.s3.amazonaws.com/videos/056c0b9e14e5c48338468f8ede20c4b7387ae14f/source.mov") else { return }
+        guard let url = URL(string: self.videoURLString) else { return }
         let playerItem:AVPlayerItem = AVPlayerItem(url: url)
         let player:AVPlayer = AVPlayer(playerItem: playerItem)
         

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 extension UISearchBar {
     override open var canBecomeFocused:Bool {
@@ -26,9 +28,10 @@ class SearchViewController: UIViewController {
     var searchTextField:UITextField!
     var oldBounds:CGRect!
 
-    var viewmodel:VM?
+    var viewmodel:VM!
     
     var downloadImageSession:URLSession!
+    var filteredResults:[Video]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +58,7 @@ class SearchViewController: UIViewController {
         self.view.addSubview(self._collectionView)
         
         self.downloadImageSession = URLSession.shared
+        self.filteredResults = []
         
     }
     
@@ -98,10 +102,13 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.searchCellId, for: indexPath) as? SearchCellCollectionViewCell else { return UICollectionViewCell() }
-        guard   let vm = self.viewmodel,
-                let swavideo = vm.data[indexPath.item] as? SWAVideo,
+       // guard   let vm = self.viewmodel,
+        if self.filteredResults.count == 0 {
+            return cell
+        }
+        guard   let swavideo = self.filteredResults[indexPath.item] as? SWAVideo,
                 let url = URL(string: swavideo.thumbnailUri)
-            else { return UICollectionViewCell() }
+            else { return cell }
         
         //Download the image
         self.downloadImageSession.dataTask(with: url) {
@@ -122,12 +129,46 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
         //apply image to the uiimageview
         
         
-        
-        //cell._cellImage.image = swavideo.thumbnailImage
-        
-        //cell.backgroundColor = UIColor.green
-        
         return cell
+        
+    }
+    
+    /* WHen you select the collection view you'll need to build the stage-wieck api url to make another request that will get you the information for each individual video from the s3 bucket */
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = indexPath.item
+        let urlString = "https://stage-swatv.wieck.com/api/v1/videos/\(self.filteredResults[index].id)/720p"
+        
+        var urlRequest:URLRequest = URLRequest(url: URL(string:urlString)!)
+        urlRequest.httpMethod = "GET"
+        
+        var urlComponents:URLComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "stage-swatv.wieck.com"
+        urlComponents.path = "/api/v1/videos/\(self.filteredResults[index].id)"
+        let videoURL = urlComponents.url!
+        
+        
+        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: VideoDetailViewController.storyboard_id) as? VideoDetailViewController else { return }
+        
+        Alamofire.request(urlComponents).responseJSON(completionHandler: {
+            response in
+            switch response.result {
+            case .success(_):
+                let json = JSON(data: response.data!)
+                let downloads = json["downloads"]
+                print(downloads)
+                if downloads["source"] != JSON.null {
+                    vc.videoURLString = downloads["source"]["uri"].stringValue
+                    print(downloads["source"].stringValue)
+                } else if downloads["720p"] != JSON.null {
+                    vc.videoURLString = downloads["720p"]["uri"].stringValue
+                }
+                self.present(vc, animated: true, completion: nil)
+            case .failure(_):
+                break
+            }
+        })
         
     }
 }
@@ -136,14 +177,26 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
 extension SearchViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let vm = self.viewmodel else { return 0 }
-        return vm.data.count
+        if self.filteredResults.count == 0 {
+            return vm.data.count
+        }
+        return self.filteredResults.count
     }
 }
 
 extension SearchViewController:UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text, text.characters.count > 1 else { return }
-        
+        guard let text = searchController.searchBar.text, text.characters.count >= 0 else { return }
+        self.filteredResults = self.viewmodel.data.filter({
+            item in
+            if item.title.lowercased().contains(text.lowercased()) {
+                //self._collectionView.reloadData()
+                return true
+            }
+            return false
+        })
+        self._collectionView.reloadData()
+
     }
 }
 

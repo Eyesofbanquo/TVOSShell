@@ -63,6 +63,29 @@
             </objects>
             <point key="canvasLocation" x="173" y="824"/>
         </scene>
+        <!--Splash Screen View Controller-->
+        <scene sceneID="xAu-7K-v4M">
+            <objects>
+                <viewController storyboardIdentifier="splash_screen" id="hG3-f7-LlP" customClass="SplashScreenViewController" customModule="TVOSShell" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dt4-mb-uqu"/>
+                        <viewControllerLayoutGuide type="bottom" id="wp9-nd-eFc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HSx-xn-g3W">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="airplane" translatesAutoresizingMaskIntoConstraints="NO" id="SIX-wb-fEI">
+                                <rect key="frame" x="619" y="358" width="683" height="364"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AwV-LY-VG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="439" y="-1905"/>
+        </scene>
         <!--Featured-->
         <scene sceneID="oC3-2s-Uzd">
             <objects>
@@ -292,7 +315,7 @@
         <!--Main View-->
         <scene sceneID="V02-Cb-T36">
             <objects>
-                <viewController storyboardIdentifier="scrollViewTestController" title="Main View" id="rRe-2u-WkA" customClass="ScrollMainViewController" customModule="TVOSShell" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main_screen" title="Main View" id="rRe-2u-WkA" customClass="ScrollMainViewController" customModule="TVOSShell" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ixq-y9-wli"/>
                         <viewControllerLayoutGuide type="bottom" id="MSC-dL-Qru"/>
@@ -451,6 +474,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="airplane" width="294" height="312"/>
         <image name="dummyimage1" width="1641" height="654"/>
     </resources>
 </document>

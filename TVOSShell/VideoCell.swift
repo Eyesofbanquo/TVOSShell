@@ -15,7 +15,7 @@ class VideoCell: UICollectionViewCell {
 
     
     var focusedConstraint:NSLayoutConstraint!
-    
+        
     override func awakeFromNib() {
         //Move the title text down once the imageView gains focus
         focusedConstraint = self._videoTitle.topAnchor.constraint(equalTo: self._videoImage.focusedFrameGuide.bottomAnchor, constant: 50)

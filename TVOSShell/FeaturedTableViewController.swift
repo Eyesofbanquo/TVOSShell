@@ -17,12 +17,16 @@ class FeaturedTableViewController: UIViewController {
     @IBOutlet weak var _tableView:UITableView!
     
     let model:[[UIColor]] = [[UIColor.red, UIColor.black, UIColor.blue,UIColor.red, UIColor.black, UIColor.blue,UIColor.red, UIColor.black, UIColor.blue],[UIColor.red, UIColor.black, UIColor.blue],[UIColor.red, UIColor.black, UIColor.blue]]
+    
+    //Inject the values for these two variables
+    var videos:[[Video]]!
+    var subcategories:[SubCategory]!
+    
     let categorySectionHeaders:[String] = ["Featured", "Your Videos 1", "Your Videos 2"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         
         //Assign this viewcontrolelr as the delegate and datasource for its UITableView
         self._tableView.delegate = self

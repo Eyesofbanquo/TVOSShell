@@ -13,6 +13,8 @@ import SwiftyJSON
 
 class ScrollMainViewController: UIViewController {
     
+    static let storyboard_id:String = "main_screen"
+    
     @IBOutlet weak var _topFeaturedView:TopFeaturedView!
     @IBOutlet weak var _collectionView:UICollectionView!
     @IBOutlet weak var _backgroundImage:UIImageView!
@@ -23,28 +25,49 @@ class ScrollMainViewController: UIViewController {
     let collectionView_cell_name:String = "video_cell"
     
     var imageCache:NSCache<NSString, UIImage>!
-
-    
-    /* For testing purposes only */
-    //let modelCount:Int = 5
-    
     
     var featuredVideos:[UIImage?]!
     
     var urlSession:URLSession!
     
-    var viewmodel:VM!
+    var viewmodel:VM! //Injectable
+    var ij:InnerJoint! //Injectable
     
     var loadDataOperationQueue:OperationQueue!
-    var categories:[String] = ["Featured", "B-Roll", "Instructional"]
+    
+    
+    var categories:[DataStore.Category]! //Injectable
+    
+    
     lazy var modelCount:Int = {
-        return 2 + self.categories.count
-        
+        if let categories = self.ij.categories {
+            return 2 + categories.count
+        } else {
+            return 2
+        }
+        //return 2 + self.categories.count
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Remove the items that came before this view
+        var removableIndices:[Int] = []
+        if let controllers = navigationController?.viewControllers {
+            for (index, views) in controllers.enumerated() {
+                if !(views is ScrollMainViewController) {
+                    removableIndices.append(index)
+                    //navigationController?.viewControllers.remove(at: index)
+                }
+            }
+        }
+        for i in removableIndices {
+            self.navigationController?.viewControllers.remove(at: i)
+        }
+        
+        //self.ij = InnerJoint()
+        //self.ij.categories = self.categories
         
         //Configure the collection view
         self._collectionView.delegate = self
@@ -58,8 +81,6 @@ class ScrollMainViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self._backgroundImage.addSubview(blurEffectView)
         
-        //Configure the view model
-        self.viewmodel = ViewModel()
         
         //Testing purposes
         let url = URL(string: "https://stage-swatv.wieck.com/api/v1/authenticate")
@@ -70,37 +91,13 @@ class ScrollMainViewController: UIViewController {
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
-        
-        
         //Set up the image cache to store the images loaded from the API
         self.imageCache = NSCache()
         
         //Create operation queue for queuing array cleaning
         self.loadDataOperationQueue = OperationQueue()
-        //
 
-        
-        /*load videos from the API*/
-        /* Keep the alamofire requests */
         self.authenticated = false
-        /*Alamofire.request(urlRequest).responseJSON(completionHandler: {
-            response in
-            switch response.result {
-            case .success( _):
-                //on success fire the other API request
-                guard let data = response.data else { return }
-                _ = JSON(data: data)
-                self.authenticated = true
-                
-                //load the video data - possibly place this inside the viewmodel
-                self.loadData(query: "featured")
-                
-            case .failure( _): break
-                
-            }
-        })*/
-        print(DataStore.videos[DataStore.Category.featured]?.count)
-
 
     }
     
@@ -110,54 +107,6 @@ class ScrollMainViewController: UIViewController {
         if authenticated {
             //self.loadData(query: "featured")
         }
-    }
-    
-    //Right now the query is the same as the category
-    func loadData(query:String){
-        //Rebuild the next URLRequest
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "stage-swatv.wieck.com"
-        urlComponents.path = "/api/v1/search"
-        let queryItems:[URLQueryItem] = [URLQueryItem(name: "facets", value: "{}"), URLQueryItem(name: "query", value: query), URLQueryItem(name: "types", value:"[\"video\", \"photo\"]")]
-        urlComponents.queryItems = queryItems
-        
-        let urlRequest = URLRequest(url: urlComponents.url!)
-        
-        //Perform the next request to load all of the videos
-        Alamofire.request(urlRequest).responseJSON(completionHandler: {
-            searchResponse in
-            guard let data = searchResponse.data else { return }
-            let jsonResponse = JSON(data: data)   
-            
-            for doc in jsonResponse["docs"] {
-                let object = doc.1
-                
-                let videoItem:Video = SWAVideo(id: object["key"]["id"].stringValue, category: .main, title: object["title"].stringValue, thumbnailUri: object["thumbnailUri"].stringValue, date: object["date"].stringValue, duration: object["duration"].doubleValue)
-               // print(videoItem.thumbnailUri)
-                self.viewmodel.addDataItem(item: videoItem)
-                
-            }
-            let blockOperation:BlockOperation = BlockOperation()
-            blockOperation.addExecutionBlock {
-                //Scrub the view model array to rid of duplicates
-                let swaArray:[SWAVideo] = Array(self.viewmodel!.data) as! [SWAVideo]
-                let scrubbedSet:Set<SWAVideo> = Set(swaArray)
-                let scrubbedArray:[SWAVideo] = Array(scrubbedSet)
-                self.viewmodel.release()
-
-                for item in scrubbedArray {
-                    self.viewmodel.addDataItem(item: item)
-                }
-                
-            }
-            //DispatchQueue.main.async
-            self.loadDataOperationQueue.addOperation(blockOperation)
-
-            //reload the the collection view to update the thumbnails
-            self._collectionView.reloadData()
-            
-        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -231,33 +180,44 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             videoCell._videoImage.image = self.imageCache.object(forKey: imageName)
             videoCell._videoTitle.text = "Settings"
         default:
-            //videoCell._videoImage.image = UIImage(named: "dummyimage1")
-            //take the first video from the search and use that to provide an icon for the main collectionview
-            var thumbnailURI:String = ""
-            /*if self.viewmodel.data.count > 0 {
-                switch self.viewmodel.data[indexPath.item].category[0] {
-                case "featured":
-                    thumbnailURI = self.viewmodel.data[indexPath.item].thumbnailUri
-                case "b-roll":
-                    thumbnailURI = self.viewmodel.data[indexPath.item].thumbnailUri
-                case "instructional":
-                    thumbnailURI = self.viewmodel.data[indexPath.item].thumbnailUri
-                default:
-                    thumbnailURI = self.viewmodel.data[indexPath.item].thumbnailUri
-                }
-                let urlSession:URLSession = URLSession.shared
-                urlSession.dataTask(with: URL(string: thumbnailURI)!) {
-                    data, response, error in
-                    let image:UIImage? = UIImage(data: data!)
-                    DispatchQueue.main.async {
-                        videoCell._videoImage.image = image
-                        videoCell._videoTitle.text = self.viewmodel.data[indexPath.item].category[0]
+            if let categories = self.ij.categories {
+                videoCell._videoTitle.text = categories[indexPath.item - 1].rawValue
+                switch categories[indexPath.item - 1] {
+                case .featured:
+                    //If the image doesn't exist in cache then download and store in cache else load from cache
+                    if self.imageCache.object(forKey: DataStore.Category.featured.rawValue as NSString) == nil {
+                        if let firstThumbnailInCategory = self.ij.firstItem(in: .featured, with: .main)?.thumbnailUri {
+                            Alamofire.request(firstThumbnailInCategory).responseData {
+                                response in
+                                guard let data = response.data else { return }
+                                let image:UIImage? = UIImage(data: data)
+                                self.imageCache.setObject(image!, forKey: DataStore.Category.featured.rawValue as NSString)
+                                videoCell._videoImage.image = image
+                            }
+                        }
+                    } else {
+                        videoCell._videoImage.image = self.imageCache.object(forKey: DataStore.Category.featured.rawValue as NSString)
                     }
-                }.resume()
-            } else {
-                videoCell._videoImage.image = UIImage(named: "dummyimage1")
-            }*/
-            
+                case .b_roll:
+                    print(self.ij.data(for: .b_roll))
+                    //If the image doesn't exist in cache then download and store in cache else load from cache
+                    if self.imageCache.object(forKey: DataStore.Category.b_roll.rawValue as NSString) == nil {
+                        if let firstThumbnailInCategory = self.ij.firstItem(in: .b_roll, with: .featured)?.thumbnailUri {
+                            Alamofire.request(firstThumbnailInCategory).responseData {
+                                response in
+                                guard let data = response.data else { return }
+                                let image:UIImage? = UIImage(data: data)
+                                self.imageCache.setObject(image!, forKey: DataStore.Category.b_roll.rawValue as NSString)
+                                videoCell._videoImage.image = image
+                            }
+                        }
+                    } else {
+                        videoCell._videoImage.image = self.imageCache.object(forKey: DataStore.Category.b_roll.rawValue as NSString)
+                    }
+                    
+                default: break
+                }
+            }
         }
         return videoCell
     }
@@ -269,7 +229,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         /* grab the current cell and the Storyboard instance since we will be using this Storyboard instance to create a SearchViewController from our Main Storyboard */
-        let currentCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionView_cell_name, for: indexPath)
+        let currentCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionView_cell_name, for: indexPath) as! VideoCell
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         switch indexPath.item {
@@ -307,6 +267,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             break
         default:
             let destination:FeaturedTableViewController = storyboard.instantiateViewController(withIdentifier: FeaturedTableViewController.storyboardid) as! FeaturedTableViewController
+            print(self.categories[indexPath.item - 1])
             self.present(destination, animated: true, completion: nil)
         }
     }

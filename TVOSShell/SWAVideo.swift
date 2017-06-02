@@ -32,7 +32,9 @@ struct SWAVideo:Video {
             image = i
         })
         return image
+        
     }
+    
     
     /*var videoURL:URL?{
         

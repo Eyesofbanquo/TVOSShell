@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import AVFoundation
+import Alamofire
 
 /* This view controller will be the default detail view controller for all videos for this app. So this will be the inbetween from selecting a video to actually displaying it since this view controller should have all video information for display for the user */
 class VideoDetailViewController: UIViewController {
@@ -51,6 +52,12 @@ class VideoDetailViewController: UIViewController {
         self.backgroundImageCache = NSCache()
         self.videoIsPlaying = false
         
+        self.videoURLString = "https://stage-swatv.wieck.com/api/v1/videos/rAcK/preview.mp4"
+        Alamofire.request(self.videoURLString).response {
+            response in
+            print(response)
+        }
+        
         self.loadThumbnailBackground(self.videoURLString)
         
         /* Set a gradient on the image in the background */
@@ -91,6 +98,7 @@ class VideoDetailViewController: UIViewController {
                 let imageGenerator:AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
                 imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
                 imageGenerator.requestedTimeToleranceBefore = kCMTimeZero
+                print(asset)
                 
                 let time:CMTime = CMTime(seconds: 0, preferredTimescale: 1)
                 do {
@@ -152,7 +160,9 @@ class VideoDetailViewController: UIViewController {
     
     func playVideo(_ sender:UIButton){
         guard let url = URL(string: self.videoURLString) else { return }
-        let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+        let asset:AVURLAsset = AVURLAsset(url: url)
+        //let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+        let playerItem:AVPlayerItem = AVPlayerItem(asset: asset)
         let player:AVPlayer = AVPlayer(playerItem: playerItem)
         
         // Create a new AVPlayerViewController and pass it a reference to the player.

@@ -11,10 +11,18 @@ import Foundation
 class ViewModel:VM {
     
     var data:[Video]
+    var categories:[DataStore.Category]
     
-    required init(){
+    init() {
         self.data = []
+        self.categories = []
     }
+    
+    required init(categories:[DataStore.Category]){
+        self.data = []
+        self.categories = categories
+    }
+
     
     func addDataItem(item: Video) {
         self.data.append(item)

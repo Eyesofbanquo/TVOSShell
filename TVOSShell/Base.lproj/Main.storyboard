@@ -118,18 +118,29 @@
                                                         <size key="itemSize" width="400" height="400"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="200" maxY="0.0"/>
+                                                        <inset key="sectionInset" minX="50" minY="0.0" maxX="200" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featured_cell" id="wbP-rr-KJ8" customClass="FeaturedCollectionViewCell" customModule="TVOSShell" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                                            <rect key="frame" x="50" y="0.0" width="400" height="400"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d0r-uI-saT">
+                                                                        <rect key="frame" x="8" y="8" width="384" height="384"/>
+                                                                    </imageView>
+                                                                </subviews>
                                                             </view>
+                                                            <constraints>
+                                                                <constraint firstItem="d0r-uI-saT" firstAttribute="top" secondItem="wbP-rr-KJ8" secondAttribute="topMargin" id="Kq9-Ob-rl2"/>
+                                                                <constraint firstItem="d0r-uI-saT" firstAttribute="leading" secondItem="wbP-rr-KJ8" secondAttribute="leadingMargin" id="O2c-kG-UcU"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="d0r-uI-saT" secondAttribute="trailing" id="bVm-7N-drL"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="d0r-uI-saT" secondAttribute="bottom" id="v9e-BU-yHC"/>
+                                                            </constraints>
                                                             <connections>
-                                                                <segue destination="Kdb-CU-bHo" kind="show" id="2eM-gH-Tnr"/>
+                                                                <outlet property="imageView" destination="d0r-uI-saT" id="Cos-Fx-Ora"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>

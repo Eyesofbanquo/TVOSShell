@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class FeaturedTableViewController: UIViewController {
     
@@ -56,15 +58,23 @@ class FeaturedTableViewController: UIViewController {
         return false
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+        if segue.identifier == "to_VideoDetailViewController" {
+            if let destination = segue.destination as? VideoDetailViewController {
+                if let cell = sender as? FeaturedCollectionViewCell {
+                    
+                }
+            }
+            
+        }
+    }*/
+ 
 
 }
 
@@ -83,7 +93,8 @@ extension FeaturedTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         //return section == 0 ? "" : self.categorySectionHeaders[section]
-        return self.categorySectionHeaders[section]
+        return self.subcategories[section].rawValue
+       // return self.categorySectionHeaders[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,7 +131,7 @@ extension FeaturedTableViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: featured_cell, for: indexPath) as? FeaturedCollectionViewCell else { return UICollectionViewCell() }
-        cell.backgroundColor = model[collectionView.tag][indexPath.item]
+        //cell.backgroundColor = model[collectionView.tag][indexPath.item]
         
         //load the image data
         let urlString = self.videos[collectionView.tag][indexPath.item].thumbnailUri
@@ -135,6 +146,37 @@ extension FeaturedTableViewController: UICollectionViewDelegate {
         }.resume()
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let destination:VideoDetailViewController = storyboard.instantiateViewController(withIdentifier: VideoDetailViewController.storyboard_id) as! VideoDetailViewController
+        let urlString = "https://stage-swatv.wieck.com/api/v1/videos/\(self.videos[collectionView.tag][indexPath.item].id)/720p"
+
+        var urlComponents:URLComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "stage-swatv.wieck.com"
+        urlComponents.path = "/api/v1/videos/\(self.videos[collectionView.tag][indexPath.item].id)"
+        let videoURL = urlComponents.url!
+        
+        destination.video = self.videos[collectionView.tag][indexPath.item]
+        Alamofire.request(urlComponents).responseJSON(completionHandler: {
+            response in
+            switch response.result {
+            case .success(_):
+                let json = JSON(data: response.data!)
+                let downloads = json["downloads"]
+                if downloads["source"] != JSON.null {
+                    destination.videoURLString = downloads["source"]["uri"].stringValue
+                } else if downloads["720p"] != JSON.null {
+                    destination.videoURLString = downloads["720p"]["uri"].stringValue
+                }
+                self.present(destination, animated: true, completion: nil)
+            case .failure(_):
+                break
+            }
+        })
+
     }
 }
 

@@ -153,7 +153,7 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
         
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: VideoDetailViewController.storyboard_id) as? VideoDetailViewController else { return }
-        
+        vc.video = self.filteredResults[indexPath.item]
         Alamofire.request(urlComponents).responseJSON(completionHandler: {
             response in
             switch response.result {

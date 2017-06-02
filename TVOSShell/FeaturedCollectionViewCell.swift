@@ -11,7 +11,7 @@ import UIKit
 class FeaturedCollectionViewCell: UICollectionViewCell {
     //@IBOutlet weak var testView:UIView!
     
-    var imageView:UIImageView!
+    @IBOutlet weak var imageView:UIImageView!
     
     override var canBecomeFocused: Bool {
         return true
@@ -21,9 +21,10 @@ class FeaturedCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         //self.setNeedsFocusUpdate()
-        self.imageView = UIImageView(frame: self.frame)
+        /*self.imageView = UIImageView(frame: self.bounds)
         self.imageView.adjustsImageWhenAncestorFocused = true
-        self.addSubview(self.imageView)
+        self.imageView.center = self.center
+        self.addSubview(self.imageView)*/
         
     }
     
@@ -31,9 +32,9 @@ class FeaturedCollectionViewCell: UICollectionViewCell {
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         coordinator.addCoordinatedAnimations({
             if self.isFocused {
-                self.layer.opacity = 0.0
+                //self.layer.opacity = 0.0
             } else {
-                self.layer.opacity = 1.0
+                //self.layer.opacity = 1.0
             }
         }, completion: nil)
     }

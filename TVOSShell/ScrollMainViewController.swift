@@ -263,7 +263,6 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             break
         default:
             let destination:FeaturedTableViewController = storyboard.instantiateViewController(withIdentifier: FeaturedTableViewController.storyboardid) as! FeaturedTableViewController
-            //print(self.categories[indexPath.item - 1])
             if let categories = self.ij.categories {
                 let currentCategory = categories[indexPath.item - 1]
                 switch currentCategory {
@@ -274,7 +273,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
                 case .b_roll:
                     destination.category = .b_roll
                     destination.subcategories = [.featured]
-                    destination.videos = ij.data(for: .featured)
+                    destination.videos = ij.data(for: .b_roll)
                 default: break
                 }
             }

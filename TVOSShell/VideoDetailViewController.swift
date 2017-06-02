@@ -32,6 +32,8 @@ class VideoDetailViewController: UIViewController {
     var videoURLString:String!  //Injectable
     var videoIsPlaying:Bool!
     
+    var video:Video! //Injectable
+    
     //For the video player
     var bottomNavigationView:VideoBottomBarNavigation!
     var width:CGFloat!
@@ -52,11 +54,11 @@ class VideoDetailViewController: UIViewController {
         self.backgroundImageCache = NSCache()
         self.videoIsPlaying = false
         
-        //self.videoURLString = "https://stage-swatv.wieck.com/api/v1/videos/rAcK/preview.mp4"
-        /*Alamofire.request(self.videoURLString).response {
-            response in
-            print(response)
-        }*/
+        self.videoTitle.text = self.video.title
+        self.videoDate.text = self.video.date
+        self.videoCategories.text = self.video.category.rawValue
+        self.videoDescription.text = String(self.video.duration)
+        
         
         self.loadThumbnailBackground(self.videoURLString)
         

@@ -18,11 +18,14 @@ class FeaturedTableViewController: UIViewController {
     
     let model:[[UIColor]] = [[UIColor.red, UIColor.black, UIColor.blue,UIColor.red, UIColor.black, UIColor.blue,UIColor.red, UIColor.black, UIColor.blue],[UIColor.red, UIColor.black, UIColor.blue],[UIColor.red, UIColor.black, UIColor.blue]]
     
-    //Inject the values for these two variables
+    //Inject the values for these variables
     var videos:[[Video]]!
     var subcategories:[SubCategory]!
+    var category:DataStore.Category!
     
     let categorySectionHeaders:[String] = ["Featured", "Your Videos 1", "Your Videos 2"]
+    
+    var imageCache:NSCache<NSString, UIImage>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,9 @@ class FeaturedTableViewController: UIViewController {
         self._tableView.dataSource = self
         self._tableView.remembersLastFocusedIndexPath = false
         
+        self.imageCache = NSCache()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +48,7 @@ class FeaturedTableViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        self.imageCache.removeAllObjects()
     }
     
     /* Disable tableview focusing in favor for focusing on collectionview items inside each tableview row */
@@ -96,14 +103,14 @@ extension FeaturedTableViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return model.count
+        return self.subcategories.count
     }
 }
 
 /* Extensions for UICollectionView */
 extension FeaturedTableViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model[collectionView.tag].count
+        return self.videos[collectionView.tag].count
     }
 
 
@@ -114,6 +121,18 @@ extension FeaturedTableViewController: UICollectionViewDelegate {
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: featured_cell, for: indexPath) as? FeaturedCollectionViewCell else { return UICollectionViewCell() }
         cell.backgroundColor = model[collectionView.tag][indexPath.item]
+        
+        //load the image data
+        let urlString = self.videos[collectionView.tag][indexPath.item].thumbnailUri
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) {
+            data, response, error in
+            guard let data = data else { return }
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                cell.imageView.image = image
+            }
+        }.resume()
         
         return cell
     }

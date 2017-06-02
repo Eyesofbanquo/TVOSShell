@@ -41,6 +41,12 @@ class DataStore {
         
         var categories:[Category]?
         
+        var allData:[Video] {
+            return DataStore.videos.flatMap({
+                (key, value) in
+                return value
+            })
+        }
         
         func firstItem(in category:DataStore.Category, with sub:SubCategory) -> Video? {
             for videos in self.data(for: category) {

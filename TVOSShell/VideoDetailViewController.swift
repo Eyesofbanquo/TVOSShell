@@ -1,4 +1,4 @@
-//
+////
 //  VideoDetailViewController.swift
 //  TVOSShell
 //
@@ -29,7 +29,7 @@ class VideoDetailViewController: UIViewController {
     }()
     
     var backgroundImageCache:NSCache<NSString, UIImage>!
-    var videoURLString:String!
+    var videoURLString:String!  //Injectable
     var videoIsPlaying:Bool!
     
     //For the video player
@@ -52,11 +52,11 @@ class VideoDetailViewController: UIViewController {
         self.backgroundImageCache = NSCache()
         self.videoIsPlaying = false
         
-        self.videoURLString = "https://stage-swatv.wieck.com/api/v1/videos/rAcK/preview.mp4"
-        Alamofire.request(self.videoURLString).response {
+        //self.videoURLString = "https://stage-swatv.wieck.com/api/v1/videos/rAcK/preview.mp4"
+        /*Alamofire.request(self.videoURLString).response {
             response in
             print(response)
-        }
+        }*/
         
         self.loadThumbnailBackground(self.videoURLString)
         
@@ -161,8 +161,8 @@ class VideoDetailViewController: UIViewController {
     func playVideo(_ sender:UIButton){
         guard let url = URL(string: self.videoURLString) else { return }
         let asset:AVURLAsset = AVURLAsset(url: url)
-        //let playerItem:AVPlayerItem = AVPlayerItem(url: url)
-        let playerItem:AVPlayerItem = AVPlayerItem(asset: asset)
+        let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+        //let playerItem:AVPlayerItem = AVPlayerItem(asset: asset)
         let player:AVPlayer = AVPlayer(playerItem: playerItem)
         
         // Create a new AVPlayerViewController and pass it a reference to the player.
@@ -192,11 +192,6 @@ class VideoDetailViewController: UIViewController {
         //Force a focus update
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
-        
-        // Modally present the player and call the player's play() method when complete.
-        /*present(self.controller, animated: true) {
-            //player.play()
-        }*/
     }
     
     func displayBottomView(_ sender: UISwipeGestureRecognizer) {

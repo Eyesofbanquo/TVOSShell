@@ -11,6 +11,8 @@ import UIKit
 class FeaturedCollectionViewCell: UICollectionViewCell {
     //@IBOutlet weak var testView:UIView!
     
+    var imageView:UIImageView!
+    
     override var canBecomeFocused: Bool {
         return true
     }
@@ -19,7 +21,10 @@ class FeaturedCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         //self.setNeedsFocusUpdate()
-
+        self.imageView = UIImageView(frame: self.frame)
+        self.imageView.adjustsImageWhenAncestorFocused = true
+        self.addSubview(self.imageView)
+        
     }
     
     /* This function allows the UICollectionViewCell to give visual confirmation that the focus engine has shifted to it */

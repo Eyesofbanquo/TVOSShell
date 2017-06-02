@@ -23,12 +23,15 @@ class SearchViewController: UIViewController {
     
     let searchCellId:String = "search_cell"
     
-    var defaultCollectionViewTopConstraint:NSLayoutYAxisAnchor!
-    let searchControllerFocusGuide:UIFocusGuide = UIFocusGuide()
+    //var defaultCollectionViewTopConstraint:NSLayoutYAxisAnchor!
+    //let searchControllerFocusGuide:UIFocusGuide = UIFocusGuide()
+    
     var searchTextField:UITextField!
     var oldBounds:CGRect!
 
     var viewmodel:VM!
+    
+    var ij:InnerJoint! //Injectable
     
     var downloadImageSession:URLSession!
     var filteredResults:[Video]!
@@ -69,7 +72,7 @@ class SearchViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.view.addLayoutGuide(searchControllerFocusGuide)
+        //self.view.addLayoutGuide(searchControllerFocusGuide)
         
         self.oldBounds = self._collectionView.bounds
         
@@ -176,18 +179,18 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
 
 extension SearchViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let vm = self.viewmodel else { return 0 }
-        if self.filteredResults.count == 0 {
+        //guard let vm = self.viewmodel else { return 0 }
+        /*if self.filteredResults.count == 0 {
             return vm.data.count
-        }
+        }*/
         return self.filteredResults.count
     }
 }
 
 extension SearchViewController:UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text, text.characters.count >= 0 else { return }
-        self.filteredResults = self.viewmodel.data.filter({
+        guard let text = searchController.searchBar.text, text.characters.count > 0 else { return }
+        self.filteredResults = self.ij.allData.filter({
             item in
             if item.title.lowercased().contains(text.lowercased()) {
                 //self._collectionView.reloadData()

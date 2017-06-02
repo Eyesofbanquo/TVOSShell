@@ -246,15 +246,11 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             searchController.searchBar.keyboardAppearance = .dark
             
             resultsController.searchController = searchController
-            resultsController.viewmodel = ViewModel()
-            resultsController.viewmodel?.copyData(self.viewmodel)
+            //resultsController.viewmodel = ViewModel()
+            resultsController.ij = InnerJoint()
+            //resultsController.viewmodel?.copyData(self.viewmodel)
 
-            self.present(searchController, animated: true, completion: {
-                [weak self] in
-                //guard let strongSelf = self else { return }
-                //resultsController.viewmodel?.copyData(strongSelf.viewmodel)
-                //resultsController.viewmodel?.copyData(self?.viewmodel)
-            })
+            self.present(searchController, animated: true, completion: nil)
             break
         case self.modelCount - 1:
             /* The last item in the list should be the settings item which will allow the user to log in and out of the tvOS app. Logging in and out should only be used for switching users and not to maintain multiple accounts for the same user */
@@ -267,7 +263,21 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             break
         default:
             let destination:FeaturedTableViewController = storyboard.instantiateViewController(withIdentifier: FeaturedTableViewController.storyboardid) as! FeaturedTableViewController
-            print(self.categories[indexPath.item - 1])
+            //print(self.categories[indexPath.item - 1])
+            if let categories = self.ij.categories {
+                let currentCategory = categories[indexPath.item - 1]
+                switch currentCategory {
+                case .featured:
+                    destination.category = .featured
+                    destination.subcategories = [.main, .instruction_video]
+                    destination.videos = ij.data(for: .featured)
+                case .b_roll:
+                    destination.category = .b_roll
+                    destination.subcategories = [.featured]
+                    destination.videos = ij.data(for: .featured)
+                default: break
+                }
+            }
             self.present(destination, animated: true, completion: nil)
         }
     }

@@ -33,6 +33,7 @@
 		D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */; };
 		D5D2CB9E1EDE0241004F66A2 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9D1EDE0241004F66A2 /* VM.swift */; };
 		D5D2CBA01EDE0517004F66A2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */; };
+		D5D2CBA21EDF5F9A004F66A2 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CBA11EDF5F9A004F66A2 /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWAVideo.swift; sourceTree = "<group>"; };
 		D5D2CB9D1EDE0241004F66A2 /* VM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
 		D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewModel.swift; path = ../ViewModel.swift; sourceTree = "<group>"; };
+		D5D2CBA11EDF5F9A004F66A2 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F4F822EEEB56BFFEDA562AC3 /* Pods-TVOSShell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSShell.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVOSShell/Pods-TVOSShell.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				D5D2CB9F1EDE0517004F66A2 /* ViewModel.swift */,
 				D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */,
 				D5D2CB9D1EDE0241004F66A2 /* VM.swift */,
+				D5D2CBA11EDF5F9A004F66A2 /* DataStore.swift */,
 			);
 			path = TVOSShell;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				D50123231EC3CC27003854B3 /* RandomColors.swift in Sources */,
 				D5D2CB9A1EDDFAC5004F66A2 /* Video.swift in Sources */,
 				D501231D1EC3C606003854B3 /* FeaturedTableViewController.swift in Sources */,
+				D5D2CBA21EDF5F9A004F66A2 /* DataStore.swift in Sources */,
 				D501231A1EC3C5B6003854B3 /* MainViewController.swift in Sources */,
 				D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */,
 			);

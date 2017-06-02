@@ -21,7 +21,27 @@ class Winona {
         case search
     }
     
-    static func search(facets:[String:[String]], completionHandler:((DataResponse<Any>) -> Void)?){
+    static func searches(facets:[String:[String]], completionHandler:((DataStore.Category, SubCategory, (DataResponse<Any>)) -> Void)?){
+        //Get the index for the first category
+        var categoryIndex = facets.startIndex
+        //While there are more indices in the dictionary continue to search. else stop searching
+        while categoryIndex != facets.endIndex {
+            for subCategory in facets[categoryIndex].value {
+                guard let category = DataStore.Category(string: facets[categoryIndex].key) else { return }
+                guard let sub = DataStore.Category.Sub(rawValue: subCategory) else { return }
+                
+                self.search(facets: [category.rawValue:[sub.rawValue]], completionHandler: {
+                    response in
+                    guard let completion = completionHandler else { return }
+                    completion(category, sub, response)
+                })
+            }
+            
+            categoryIndex = facets.index(after: categoryIndex)
+        }
+    }
+    
+    private static func search(facets:[String:[String]], completionHandler:((DataResponse<Any>) -> Void)?){
         //Build the url string
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -69,11 +89,11 @@ class Winona {
             guard let completion = completionHandler else { return }
             completion(response)
         }
-        
-        
-        
     }
-    
+
+    /// Request authorization from SWA API
+    ///
+    /// - Parameter completionHandler: What will be performed upon successful authorization
     static func auth(completionHandler:(() -> Void)?){
         
         //Build the url string
@@ -93,10 +113,8 @@ class Winona {
         self.urlRequest?.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
         guard let request = urlRequest else { return }
-        
         Alamofire.request(request).responseJSON(completionHandler: {
             response in
-            print(response)
             guard let completion = completionHandler else { return }
             completion()
         })

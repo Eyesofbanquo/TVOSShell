@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,15 +25,109 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
-        
+
+        /* This will be loading up on the splash screen */
         //Authenticate
         Winona.auth {
             //Perform network searches
-            Winona.search(facets: ["Featured":["main", "instruction video"]], completionHandler: {
-                response in
-                print(response)
+            var featuredFacets:[String:[String]] = ["B-Roll":["featured"],"Featured": ["main"]]
+            var facets:[String:[String]] = ["Featured": ["main"]]
+            /*Winona.searches(facets: featuredFacets, completionHandler: {
+                category, sub, response in
+                
+                guard let data = response.data else { return }
+                
+                //create the json object using SwiftyJSON
+                let json = JSON(data: data)
+                
+                //create the category these videos fall under - make this a function in datastore
+                //let category:DataStore.Category = .featured
+                
+                var videos:[Video] = []
+                
+                for doc in json["docs"] {
+                    let object = doc.1
+                    let duration:Double = object["duration"].doubleValue
+                    let title:String = object["title"].stringValue
+                    let id:String = object["key"]["id"].stringValue
+                    let thumbnailUri:String = object["thumbnailUri"].stringValue
+                    let date:String = object["date"].stringValue
+                    
+                    let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
+                    videos.append(swaVideo)
+                    //print(videos)
+                    DataStore.add(to: category, video: swaVideo)
+                }
+            })*/
+            
+            Winona.searches(facets: featuredFacets, completionHandler: {
+                category, sub, response in
+                guard let data = response.data else { return }
+
+                //create the json object using SwiftyJSON
+                let json = JSON(data: data)
+                
+                //create the category these videos fall under - make this a function in datastore
+                //let category:DataStore.Category = .featured
+                
+                var videos:[Video] = []
+                
+                for doc in json["docs"] {
+                    let object = doc.1
+                    let duration:Double = object["duration"].doubleValue
+                    let title:String = object["title"].stringValue
+                    let id:String = object["key"]["id"].stringValue
+                    let thumbnailUri:String = object["thumbnailUri"].stringValue
+                    let date:String = object["date"].stringValue
+                    
+                    let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
+                    DataStore.add(to: category, video: swaVideo)
+
+                }
+                print(DataStore.videos[category])
+                
+                
+                
             })
+            /*Winona.search(facets: ["Featured":["main"]], completionHandler: {
+                response in
+                switch response.result {
+                case .success(_):
+                    guard let data = response.data else { return }
+                    //print(response)
+
+                    DataStore.loadFromAPI(data: data, to: .featured, with: .main)
+                    
+                    //create the json object using SwiftyJSON
+                    let json = JSON(data: data)
+                    
+                    //create the category these videos fall under - make this a function in datastore
+                    let category:DataStore.Category = .featured
+                    
+                    var videos:[Video] = []
+                    
+                    for doc in json["docs"] {
+                        let object = doc.1
+                        let duration:Double = object["duration"].doubleValue
+                        let title:String = object["title"].stringValue
+                        let id:String = object["key"]["id"].stringValue
+                        let thumbnailUri:String = object["thumbnailUri"].stringValue
+                        let date:String = object["date"].stringValue
+                        let c:DataStore.Category.Sub = .main
+                        
+                        let swaVideo:SWAVideo = SWAVideo(id: id, category: c, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
+                        videos.append(swaVideo)
+                        DataStore.add(to: category, video: swaVideo)
+                    }
+                    print(DataStore.videos[category])
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            })*/
         }
+        //DispatchGroup.notify(DataStore.dispatchGroup)
+       
         
         return true
     }

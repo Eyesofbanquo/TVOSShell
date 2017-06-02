@@ -10,12 +10,15 @@ import Foundation
 import UIKit
 
 struct SWAVideo:Video {
+
     private(set) var id:String
+    private(set) var category: DataStore.Category.Sub
+
     private(set) var title:String
     private(set) var thumbnailUri:String
     private(set) var date:String
     private(set) var duration:Double
-    private(set) var category: [String]
+    //private(set) var category: [String]
     
     var thumbnailImage:UIImage? {
         let session = URLSession.shared

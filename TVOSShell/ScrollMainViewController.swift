@@ -99,6 +99,8 @@ class ScrollMainViewController: UIViewController {
                 
             }
         })*/
+        print(DataStore.videos[DataStore.Category.featured]?.count)
+
 
     }
     
@@ -131,7 +133,7 @@ class ScrollMainViewController: UIViewController {
             for doc in jsonResponse["docs"] {
                 let object = doc.1
                 
-                let videoItem:Video = SWAVideo(id: object["key"]["id"].stringValue, title: object["title"].stringValue, thumbnailUri: object["thumbnailUri"].stringValue, date: object["date"].stringValue, duration: object["duration"].doubleValue, category: [query])
+                let videoItem:Video = SWAVideo(id: object["key"]["id"].stringValue, category: .main, title: object["title"].stringValue, thumbnailUri: object["thumbnailUri"].stringValue, date: object["date"].stringValue, duration: object["duration"].doubleValue)
                // print(videoItem.thumbnailUri)
                 self.viewmodel.addDataItem(item: videoItem)
                 
@@ -154,6 +156,7 @@ class ScrollMainViewController: UIViewController {
 
             //reload the the collection view to update the thumbnails
             self._collectionView.reloadData()
+            
         })
     }
     
@@ -231,7 +234,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
             //videoCell._videoImage.image = UIImage(named: "dummyimage1")
             //take the first video from the search and use that to provide an icon for the main collectionview
             var thumbnailURI:String = ""
-            if self.viewmodel.data.count > 0 {
+            /*if self.viewmodel.data.count > 0 {
                 switch self.viewmodel.data[indexPath.item].category[0] {
                 case "featured":
                     thumbnailURI = self.viewmodel.data[indexPath.item].thumbnailUri
@@ -253,7 +256,7 @@ extension ScrollMainViewController:UICollectionViewDelegate {
                 }.resume()
             } else {
                 videoCell._videoImage.image = UIImage(named: "dummyimage1")
-            }
+            }*/
             
         }
         return videoCell

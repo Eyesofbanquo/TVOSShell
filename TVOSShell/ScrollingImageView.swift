@@ -9,48 +9,48 @@
 import UIKit
 
 class ScrollingImageView: UIImageView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+  
+  /*
+   // Only override draw() if you perform custom drawing.
+   // An empty implementation adversely affects performance during animation.
+   override func draw(_ rect: CGRect) {
+   // Drawing code
+   }
+   */
+  
+  var performAction:((Int) -> Void)?
+  private var position:Int?
+  
+  func setup(pos:Int, image:UIImage?, action:((Int) -> Void)?) {
+    self.performAction = action
+    self.image = image
+    self.position = pos
+  }
+  
+  
+  override var canBecomeFocused: Bool {
+    return true
+  }
+  
+  override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     
-    var performAction:((Int) -> Void)?
-    private var position:Int?
-    
-    func setup(pos:Int, image:UIImage?, action:((Int) -> Void)?) {
-        self.performAction = action
-        self.image = image
-        self.position = pos
-    }
-
-    
-    override var canBecomeFocused: Bool {
-        return true
+    if context.focusHeading == .right {
+      print("to the right")
+    } else if context.focusHeading == .left {
     }
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        
-        if context.focusHeading == .right {
-            print("to the right")
-        } else if context.focusHeading == .left {
-        }
-        
-        //This is behavior when the view has just lost focus
-        if context.previouslyFocusedView == self {
-            
-            coordinator.addCoordinatedAnimations({
-                self.backgroundColor = UIColor.red
-            }, completion: nil)
-        }
-        
-        //Behavior for when this view obtains focus
-        if context.nextFocusedView == self {
-            
-        }
+    //This is behavior when the view has just lost focus
+    if context.previouslyFocusedView == self {
+      
+      coordinator.addCoordinatedAnimations({
+        self.backgroundColor = UIColor.red
+      }, completion: nil)
     }
-
+    
+    //Behavior for when this view obtains focus
+    if context.nextFocusedView == self {
+      
+    }
+  }
+  
 }

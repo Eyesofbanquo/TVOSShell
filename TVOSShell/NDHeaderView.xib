@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="appleTV" orientation="landscape">
+        <adaptation id="light"/>
+    </device>
+    <dependencies>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NDHeader" customModule="TVOSShell" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="1920" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDF-RB-3Vh">
+                    <rect key="frame" x="0.0" y="0.0" width="1920" height="70"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wigaoighaghawgwahg" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhb-7e-SQm">
+                            <rect key="frame" x="8" y="12" width="382" height="46"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="lhb-7e-SQm" secondAttribute="bottom" constant="12" id="Fc9-bi-AmC"/>
+                        <constraint firstItem="lhb-7e-SQm" firstAttribute="leading" secondItem="iDF-RB-3Vh" secondAttribute="leading" constant="8" id="Gt2-Zh-QKA"/>
+                        <constraint firstItem="lhb-7e-SQm" firstAttribute="top" secondItem="iDF-RB-3Vh" secondAttribute="top" constant="12" id="nvY-Vw-CSD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="iDF-RB-3Vh" secondAttribute="trailing" id="64u-G5-lcL"/>
+                <constraint firstAttribute="bottom" secondItem="iDF-RB-3Vh" secondAttribute="bottom" id="Mkf-Z7-I8Q"/>
+                <constraint firstItem="iDF-RB-3Vh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dmw-pY-Oxq"/>
+                <constraint firstItem="iDF-RB-3Vh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mIo-Y8-PiF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="titleLabel" destination="lhb-7e-SQm" id="1HR-hq-paX"/>
+            </connections>
+        </view>
+    </objects>
+</document>

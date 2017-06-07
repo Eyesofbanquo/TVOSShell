@@ -9,11 +9,11 @@
 import Foundation
 
 protocol Video {
-    var id:String { get }
-    var thumbnailUri:String { get }
-    var date:String { get }
-    var title:String { get }
-    var duration:Double { get }
-    var category:DataStore.Category.Sub { get }
-    
+  var id:String { get }
+  var thumbnailUri:String { get }
+  var date:String { get }
+  var title:String { get }
+  var duration:Double { get }
+  var category:DataStore.Category.Sub { get }
+  
 }

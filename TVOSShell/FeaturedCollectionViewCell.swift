@@ -9,33 +9,33 @@
 import UIKit
 
 class FeaturedCollectionViewCell: UICollectionViewCell {
-    //@IBOutlet weak var testView:UIView!
+  //@IBOutlet weak var testView:UIView!
+  
+  @IBOutlet weak var imageView:UIImageView!
+  
+  override var canBecomeFocused: Bool {
+    return true
+  }
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
     
-    @IBOutlet weak var imageView:UIImageView!
+    //self.setNeedsFocusUpdate()
+    /*self.imageView = UIImageView(frame: self.bounds)
+     self.imageView.adjustsImageWhenAncestorFocused = true
+     self.imageView.center = self.center
+     self.addSubview(self.imageView)*/
     
-    override var canBecomeFocused: Bool {
-        return true
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        //self.setNeedsFocusUpdate()
-        /*self.imageView = UIImageView(frame: self.bounds)
-        self.imageView.adjustsImageWhenAncestorFocused = true
-        self.imageView.center = self.center
-        self.addSubview(self.imageView)*/
-        
-    }
-    
-    /* This function allows the UICollectionViewCell to give visual confirmation that the focus engine has shifted to it */
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        coordinator.addCoordinatedAnimations({
-            if self.isFocused {
-                //self.layer.opacity = 0.0
-            } else {
-                //self.layer.opacity = 1.0
-            }
-        }, completion: nil)
-    }
+  }
+  
+  /* This function allows the UICollectionViewCell to give visual confirmation that the focus engine has shifted to it */
+  override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    coordinator.addCoordinatedAnimations({
+      if self.isFocused {
+        //self.layer.opacity = 0.0
+      } else {
+        //self.layer.opacity = 1.0
+      }
+    }, completion: nil)
+  }
 }

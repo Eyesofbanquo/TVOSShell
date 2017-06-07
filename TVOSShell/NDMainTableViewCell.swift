@@ -20,7 +20,7 @@ class NDMainTableViewCell: UITableViewCell {
     
     let nib = UINib(nibName: "NDMainCollectionViewCell", bundle: nil)
     collectionView.register(nib, forCellWithReuseIdentifier: "nd_main_collection_view_cell")
-    
+    //collectionView.remembersLastFocusedIndexPath = true
     collectionView.reloadData()
   }
   
@@ -37,5 +37,7 @@ class NDMainTableViewCell: UITableViewCell {
     
     // Configure the view for the selected state
   }
+  
+  
   
 }

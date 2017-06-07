@@ -34,6 +34,12 @@
 		D55D69C41EE81FF700BAFB0C /* NDHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D69C31EE81FF700BAFB0C /* NDHeaderView.xib */; };
 		D55D69C61EE8216700BAFB0C /* NDMainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D69C51EE8216700BAFB0C /* NDMainCollectionViewCell.swift */; };
 		D55D69C81EE8240500BAFB0C /* NDMainCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D69C71EE8240500BAFB0C /* NDMainCollectionViewCell.xib */; };
+		D55D69C91EE895B000BAFB0C /* MundoSansStd-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBB11EE73816004F66A2 /* MundoSansStd-MediumItalic.otf */; };
+		D55D69CA1EE895B200BAFB0C /* MundoSansStd.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBB21EE73816004F66A2 /* MundoSansStd.otf */; };
+		D55D69CB1EE895B400BAFB0C /* MundoSansStd-Med.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBB01EE73816004F66A2 /* MundoSansStd-Med.otf */; };
+		D55D69CC1EE895B600BAFB0C /* MundoSansStd-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBAF1EE73816004F66A2 /* MundoSansStd-Italic.otf */; };
+		D55D69CD1EE895B800BAFB0C /* MundoSansStd-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBAE1EE73816004F66A2 /* MundoSansStd-BoldItalic.otf */; };
+		D55D69CE1EE895BA00BAFB0C /* MundoSansStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBAD1EE73816004F66A2 /* MundoSansStd-Bold.otf */; };
 		D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */; };
 		D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */; };
 		D5D2CB9A1EDDFAC5004F66A2 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB991EDDFAC5004F66A2 /* Video.swift */; };
@@ -360,13 +366,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55D69CC1EE895B600BAFB0C /* MundoSansStd-Italic.otf in Resources */,
+				D55D69CE1EE895BA00BAFB0C /* MundoSansStd-Bold.otf in Resources */,
+				D55D69CA1EE895B200BAFB0C /* MundoSansStd.otf in Resources */,
 				D50123421ECEB6FD003854B3 /* SearchCell.xib in Resources */,
 				D50123101EC3C179003854B3 /* Assets.xcassets in Resources */,
 				D55D69C41EE81FF700BAFB0C /* NDHeaderView.xib in Resources */,
 				D55D69C81EE8240500BAFB0C /* NDMainCollectionViewCell.xib in Resources */,
 				D55D69C01EE7431300BAFB0C /* CategoryCellView.xib in Resources */,
+				D55D69C91EE895B000BAFB0C /* MundoSansStd-MediumItalic.otf in Resources */,
+				D55D69CB1EE895B400BAFB0C /* MundoSansStd-Med.otf in Resources */,
 				D55D69BC1EE73E8B00BAFB0C /* fontawesome-webfont.ttf in Resources */,
 				D501230E1EC3C179003854B3 /* Main.storyboard in Resources */,
+				D55D69CD1EE895B800BAFB0C /* MundoSansStd-BoldItalic.otf in Resources */,
 				D5D2CBA71EE72C39004F66A2 /* New_Design.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

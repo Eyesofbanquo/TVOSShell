@@ -17,6 +17,10 @@ class NDMainTableViewCell: UITableViewCell {
     collectionView.dataSource = d
     collectionView.delegate = d
     collectionView.tag = row
+    
+    let nib = UINib(nibName: "NDMainCollectionViewCell", bundle: nil)
+    collectionView.register(nib, forCellWithReuseIdentifier: "nd_main_collection_view_cell")
+    
     collectionView.reloadData()
   }
   

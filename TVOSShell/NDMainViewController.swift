@@ -73,10 +73,6 @@ extension NDMainViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    /*let v = UIView()
-    v.backgroundColor = .red
-    
-    return v*/
     let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
     let header = cell as! NDHeader
     header.titleLabel.text = "yeet"
@@ -84,7 +80,7 @@ extension NDMainViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 70.0
+    return 100.0
   }
 }
 
@@ -94,9 +90,9 @@ extension NDMainViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nd_category_collection_cell", for: indexPath) as! NDMainCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nd_main_collection_view_cell", for: indexPath) as! NDMainCollectionViewCell
     
-    cell.contentView.backgroundColor = modelColors[collectionView.tag][indexPath.item]
+    cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
     
     return cell
   }
@@ -108,7 +104,7 @@ extension NDMainViewController: UICollectionViewDelegate {
 
 extension NDMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: -70.0, left: 20.0, bottom: 0.0, right: 20.0)
+    return UIEdgeInsets(top: -100.0, left: 20.0, bottom: 0.0, right: 20.0)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

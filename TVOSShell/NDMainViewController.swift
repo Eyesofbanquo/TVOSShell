@@ -74,12 +74,12 @@ extension NDMainViewController: UITableViewDelegate {
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     guard let toRow = currentTopCollectionViewRow else { return 600.0 }
-    print(indexPath.section)
+    //print(indexPath.section)
     
     //The top row number that is returned is the collectionView.tag of the UICollectionViewCEll you're currently going to. This section is the section you want to be at 600.0. Every other section should be at 284.0
-    if toRow != indexPath.section {
+    /*if toRow != indexPath.section {
       return 284.0
-    }
+    }*/
     return 600.0
   }
   //unc tableViewinsets
@@ -93,7 +93,7 @@ extension NDMainViewController: UITableViewDataSource {
   }
   /* You control the number of rows total by controlling the number of sections = categories in the app */
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 2
+    return 5
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,7 +118,7 @@ extension NDMainViewController: UITableViewDataSource {
 
 extension NDMainViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 2
+    return 20
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -142,11 +142,11 @@ extension NDMainViewController: UICollectionViewDelegateFlowLayout {
   
   
   
-  /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 30.0
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 30.0
-  }*/
+    return 40.0
+  }
 }

@@ -12,6 +12,10 @@ class NDMainTableViewCell: UITableViewCell {
   
   @IBOutlet weak var collectionView:UICollectionView!
   
+  override func awakeFromNib() {
+    print("awoken")
+  }
+  
   func setup<D: UICollectionViewDelegate & UICollectionViewDataSource>(delegate: D?, at row: Int){
     guard let d = delegate else { return }
     collectionView.dataSource = d
@@ -26,8 +30,14 @@ class NDMainTableViewCell: UITableViewCell {
   }
   
   override func prepareForReuse() {
-    super.prepareForReuse()
-    self.contentView.backgroundColor = UIColor.clear
+    self.alpha = 1.0
+    self.contentView.alpha = 1.0
+  }
+  
+  func applyFocusChanges(opacity: CGFloat) {
+    self.alpha = opacity
+    self.contentView.alpha = opacity
+    //self.isHidden = true
   }
   
   override var preferredFocusEnvironments: [UIFocusEnvironment] {

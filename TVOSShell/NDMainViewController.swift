@@ -12,6 +12,7 @@ class NDMainViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   
+  
   var modelCount: Int = {
     return 2
   }()
@@ -20,7 +21,8 @@ class NDMainViewController: UIViewController {
   
   var currentTopCollectionViewRow: Int!
   
-  var initialTopFrame:CGRect!
+  var initialTopCellFrame: CGRect!
+  var initialTopHeaderFrame: CGRect!
   
   override var preferredFocusEnvironments: [UIFocusEnvironment] {
     return [tableView]
@@ -28,14 +30,17 @@ class NDMainViewController: UIViewController {
   
   var previousRow:Int!
   var currentRow:Int!
+  var hiddenRows: Set<Int>!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     tableView.dataSource = self
     tableView.delegate = self
+    //tableView.prefetchDataSource = self
     tableView.sectionFooterHeight = 0.0
     tableView.rowHeight = 284.0
+    hiddenRows = []
     
     //currentTopCollectionViewRow = 0
     
@@ -57,42 +62,46 @@ extension NDMainViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     guard let currentCell = cell as? NDMainTableViewCell else { return }
     currentCell.setup(delegate: self, at: indexPath.section)
-    //cell.initialize(delegate: self, at: indexPath.row)
   }
   
   func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     
     //only returning 1-3 since at the ends the indexPath guard statement will exit this function
     
+    if context.focusHeading == .up {
+        print("yup")
+      
+    }
     
     if context.focusHeading == .down {
-      
-      guard let pIndexPath = context.previouslyFocusedIndexPath,
-        let nIndexPath = context.nextFocusedIndexPath
-        else { return }
-      previousRow = pIndexPath.section
-      currentRow = nIndexPath.section
-      
-      //print(previousRow)
-      print("current row: \(currentRow) and previous row: \(previousRow)")
-      //When focusHeading down then the currentRow will be what you're going to while the previous row is what's above
-      
-      let previousCell = tableView.cellForRow(at: pIndexPath)
-      let previousHeader = tableView.headerView(forSection: pIndexPath.section)
-      let nextCell = tableView.cellForRow(at: nIndexPath)
-      
-      if initialTopFrame == nil {
-        initialTopFrame = tableView.convert(previousCell!.frame, to: tableView.superview)
+      if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let previousCell = tableView.cellForRow(at: previousIndexPath) as? NDMainTableViewCell, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell, let previousHeader = tableView.headerView(forSection: previousIndexPath.section), let nextHeader = tableView.headerView(forSection: nextIndexPath.section) {
+        hiddenRows.update(with: previousIndexPath.section)
+        previousCell.contentView.alpha = 1.0
+        print(hiddenRows)
+        //previousCell.contentView.alpha = 0
+        /*if initialTopCellFrame == nil {
+          initialTopCellFrame = tableView.convert(previousCell.frame, to: tableView.superview)
+          initialTopHeaderFrame = tableView.convert(previousHeader.frame, to: tableView.superview)
+        }
+        hiddenRows.append(previousIndexPath.section)
+        //previousCell.applyFocusChanges(opacity: 0.0)
+        //nextHeader.contentView.alpha = 0.0
+        //previousHeader.contentView.alpha = 0.0
+        //nextCell.layoutSubviews()
+        print(previousIndexPath.section)
+        tableView.beginUpdates()
+        previousCell.applyFocusChanges(opacity: 0.0)
+        nextCell.applyFocusChanges(opacity: 1.0)
+        tableView.endUpdates()
+        coordinator.addCoordinatedAnimations({
+          
+          
+
+        }, completion: {
+          //nextCell.frame = self.initialTopCellFrame
+          //nextHeader.frame = self.initialTopHeaderFrame
+        })*/
       }
-      
-      coordinator.addCoordinatedAnimations({
-        //previousCell?.alpha = 0.5
-        //previousHeader?.alpha = 0.5
-      }, completion: {
-        //nextCell?.frame = self.initialTopFrame
-        //nextCell?.frame = previousCell!.frame
-      })
-      //tableView.deque
     }
     
     //Focus heading up means current row = above row and previous row = below row
@@ -121,6 +130,20 @@ extension NDMainViewController: UITableViewDelegate {
   
 }
 
+/*extension NDMainViewController: UITableViewDataSourcePrefetching {
+  /*func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    print("prefetchRowsAt \(indexPaths)")
+    for indexPath in indexPaths {
+      //print(indexPath.row)
+      //let cell = tableView.cellForRow(at: indexPath)
+      //cell?.layoutSubviews()
+    }
+  }
+  func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+    print("canceled prefetch")
+  }*/
+}*/
+
 extension NDMainViewController: UITableViewDataSource {
   /* Return 1 which means each section can only have 1 row */
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,12 +156,17 @@ extension NDMainViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
-    cell.prepareForReuse()
+    if hiddenRows.contains(indexPath.section) {
+      cell.contentView.alpha = 0.1
+      return cell
+    }
+    //cell.prepareForReuse()
     return cell
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
+    
     let header = cell as! NDHeader
     header.titleLabel.text = "Category Name"
     return header

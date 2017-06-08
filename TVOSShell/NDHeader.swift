@@ -17,6 +17,9 @@ class NDHeader: UITableViewHeaderFooterView {
    // Drawing code
    }
    */
+  override var canBecomeFocused: Bool {
+    return false
+  }
   @IBOutlet weak var titleLabel:UILabel!
   
 }

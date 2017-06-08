@@ -152,6 +152,7 @@
                             <constraint firstItem="1cH-1c-gPB" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="rMj-45-wd7"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="tableView" destination="eE7-Gi-10X" id="C0o-JR-Kai"/>
                     </connections>

@@ -27,6 +27,7 @@ class NDMainTableViewCell: UITableViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
+    self.contentView.backgroundColor = UIColor.clear
   }
   
   override var preferredFocusEnvironments: [UIFocusEnvironment] {

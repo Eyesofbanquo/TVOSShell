@@ -53,11 +53,11 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     createConstraints()
     
-    if context.focusHeading == .down || context.focusHeading == .up{
+    /*if context.focusHeading == .down || context.focusHeading == .up{
       delegate?.currentTopCollectionViewRow = currentRow
-      delegate?.tableView.beginUpdates()
-      delegate?.tableView.endUpdates()
-    }
+      //delegate?.tableView.beginUpdates()
+      //delegate?.tableView.endUpdates()
+    }*/
     
     //Adjust the height of the cell whenever it is focused/unfocused
     if self == context.nextFocusedView {

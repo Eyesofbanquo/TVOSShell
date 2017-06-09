@@ -88,6 +88,7 @@ extension NDMainViewController: UITableViewDelegate {
     if context.focusHeading == .up {
       if let nextIndexPath = context.nextFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
         //hiddenRows.popLast()
+        //This section number should equal the model-count for the UITableView - 1
         if nextIndexPath.section == 3 {
           shrinkCell = false
           let indexSet: IndexSet = [nextIndexPath.section]
@@ -98,11 +99,6 @@ extension NDMainViewController: UITableViewDelegate {
     
     if context.focusHeading == .down {
       if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let previousCell = tableView.cellForRow(at: previousIndexPath) as? NDMainTableViewCell, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell, let previousHeader = tableView.headerView(forSection: previousIndexPath.section), let nextHeader = tableView.headerView(forSection: nextIndexPath.section) {
-        if !hiddenRows.contains(previousIndexPath.section){
-          //tableView.beginUpdates()
-          //hiddenRows.append(previousIndexPath.section)
-          //previousCell.contentView.alpha = 0.1
-        }
         
         //only 5 elements so you've reached the bottom when the section = 4. Enable the top focus guide to allow upward movement
         if nextIndexPath.section == 4 {
@@ -114,9 +110,6 @@ extension NDMainViewController: UITableViewDelegate {
         print(hiddenRows)
       }
     }
-    
-    //Focus heading up means current row = above row and previous row = below row
-    
   }
   
   /* Disable tableview focusing in favor for focusing on collectionview items inside each tableview row */
@@ -124,18 +117,6 @@ extension NDMainViewController: UITableViewDelegate {
     return false
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    /*guard let toRow = currentTopCollectionViewRow else { return 600.0 }
-     //print(indexPath.section)
-     
-     //The top row number that is returned is the collectionView.tag of the UICollectionViewCEll you're currently going to. This section is the section you want to be at 600.0. Every other section should be at 284.0
-     if toRow == indexPath.section {
-     print(indexPath.section)
-     return 600.0
-     }
-     /*if toRow != indexPath.section {
-     return 284.0
-     }*/
-     return 284.0*/
     if shrinkCell && indexPath.section == 3 {
       //print("this row \(indexPath.section) will be hidden")
       return 284.0

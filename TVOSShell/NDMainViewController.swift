@@ -30,7 +30,9 @@ class NDMainViewController: UIViewController {
   
   var previousRow:Int!
   var currentRow:Int!
-  var hiddenRows: Set<Int>!
+  var hiddenRows: [Int]!
+  var focusGuide: UIFocusGuide!
+  var shrinkCell: Bool!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -43,10 +45,23 @@ class NDMainViewController: UIViewController {
     hiddenRows = []
     
     //currentTopCollectionViewRow = 0
+    shrinkCell = false
     
     //register the header view
     let nib = UINib(nibName: "NDHeaderView", bundle: nil)
     tableView.register(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    focusGuide = UIFocusGuide()
+    self.view.addLayoutGuide(focusGuide)
+    
+    focusGuide.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+    focusGuide.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+    focusGuide.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+    focusGuide.isEnabled = false
   }
   
   override func didReceiveMemoryWarning() {
@@ -62,6 +77,8 @@ extension NDMainViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     guard let currentCell = cell as? NDMainTableViewCell else { return }
     currentCell.setup(delegate: self, at: indexPath.section)
+    
+    
   }
   
   func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -69,38 +86,32 @@ extension NDMainViewController: UITableViewDelegate {
     //only returning 1-3 since at the ends the indexPath guard statement will exit this function
     
     if context.focusHeading == .up {
-        print("yup")
-      
+      if let nextIndexPath = context.nextFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
+        //hiddenRows.popLast()
+        if nextIndexPath.section == 3 {
+          shrinkCell = false
+          let indexSet: IndexSet = [nextIndexPath.section]
+          tableView.reloadSections(indexSet, with: .automatic)
+        }
+      }
     }
     
     if context.focusHeading == .down {
       if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let previousCell = tableView.cellForRow(at: previousIndexPath) as? NDMainTableViewCell, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell, let previousHeader = tableView.headerView(forSection: previousIndexPath.section), let nextHeader = tableView.headerView(forSection: nextIndexPath.section) {
-        hiddenRows.update(with: previousIndexPath.section)
-        previousCell.contentView.alpha = 1.0
-        print(hiddenRows)
-        //previousCell.contentView.alpha = 0
-        /*if initialTopCellFrame == nil {
-          initialTopCellFrame = tableView.convert(previousCell.frame, to: tableView.superview)
-          initialTopHeaderFrame = tableView.convert(previousHeader.frame, to: tableView.superview)
+        if !hiddenRows.contains(previousIndexPath.section){
+          //tableView.beginUpdates()
+          //hiddenRows.append(previousIndexPath.section)
+          //previousCell.contentView.alpha = 0.1
         }
-        hiddenRows.append(previousIndexPath.section)
-        //previousCell.applyFocusChanges(opacity: 0.0)
-        //nextHeader.contentView.alpha = 0.0
-        //previousHeader.contentView.alpha = 0.0
-        //nextCell.layoutSubviews()
-        print(previousIndexPath.section)
-        tableView.beginUpdates()
-        previousCell.applyFocusChanges(opacity: 0.0)
-        nextCell.applyFocusChanges(opacity: 1.0)
-        tableView.endUpdates()
-        coordinator.addCoordinatedAnimations({
-          
-          
-
-        }, completion: {
-          //nextCell.frame = self.initialTopCellFrame
-          //nextHeader.frame = self.initialTopHeaderFrame
-        })*/
+        
+        //only 5 elements so you've reached the bottom when the section = 4. Enable the top focus guide to allow upward movement
+        if nextIndexPath.section == 4 {
+          //focusGuide.isEnabled = true
+          shrinkCell = true
+          let indexSet: IndexSet = [nextIndexPath.section]
+          tableView.reloadSections(indexSet, with: .fade)
+        }
+        print(hiddenRows)
       }
     }
     
@@ -125,24 +136,15 @@ extension NDMainViewController: UITableViewDelegate {
      return 284.0
      }*/
      return 284.0*/
-    return 284.0
+    if shrinkCell && indexPath.section == 3 {
+      //print("this row \(indexPath.section) will be hidden")
+      return 284.0
+    }
+    return 600.0
+    
   }
   
 }
-
-/*extension NDMainViewController: UITableViewDataSourcePrefetching {
-  /*func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-    print("prefetchRowsAt \(indexPaths)")
-    for indexPath in indexPaths {
-      //print(indexPath.row)
-      //let cell = tableView.cellForRow(at: indexPath)
-      //cell?.layoutSubviews()
-    }
-  }
-  func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-    print("canceled prefetch")
-  }*/
-}*/
 
 extension NDMainViewController: UITableViewDataSource {
   /* Return 1 which means each section can only have 1 row */
@@ -157,7 +159,7 @@ extension NDMainViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
     if hiddenRows.contains(indexPath.section) {
-      cell.contentView.alpha = 0.1
+      //cell.contentView.alpha = 0.1
       return cell
     }
     //cell.prepareForReuse()

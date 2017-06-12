@@ -11,45 +11,55 @@ import UIKit
 class NDMainViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var favoritesButton: UIIconLabel!
+  @IBOutlet weak var searchButton: UIIconLabel!
+  @IBOutlet weak var settingsButton: UIIconLabel!
+  @IBOutlet weak var swaLogo: UIImageView!
+  
+  var tableViewTopConstraint: NSLayoutConstraint!
+  var tableViewScrolledTopConstraint: NSLayoutConstraint!
   
   
   var modelCount: Int = {
-    return 2
+    return 5
   }()
   
   var modelColors: [[UIColor]] = generateRandomData()
   
-  var currentTopCollectionViewRow: Int!
-  
-  var initialTopCellFrame: CGRect!
-  var initialTopHeaderFrame: CGRect!
+  //var initialTopCellFrame: CGRect!
+  //var initialTopHeaderFrame: CGRect!
   
   override var preferredFocusEnvironments: [UIFocusEnvironment] {
     return [tableView]
   }
   
-  var previousRow:Int!
-  var currentRow:Int!
-  var hiddenRows: [Int]!
+  //var hiddenRows: [Int]!
+  
   var focusGuide: UIFocusGuide!
   var shrinkCell: Bool!
+
+  var topBarFocusGuide: UIFocusGuide!
+  var topBarItems: [UIView]!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     tableView.dataSource = self
     tableView.delegate = self
-    //tableView.prefetchDataSource = self
     tableView.sectionFooterHeight = 0.0
     tableView.rowHeight = 284.0
-    hiddenRows = []
     
-    //currentTopCollectionViewRow = 0
+    //This property will determine if the second to last view shrinks or not
     shrinkCell = false
     
     //register the header view
     let nib = UINib(nibName: "NDHeaderView", bundle: nil)
     tableView.register(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
+    
+    topBarItems = [favoritesButton, settingsButton, searchButton, swaLogo]
+    
+    tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
+    tableViewTopConstraint.isActive = true
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +72,19 @@ class NDMainViewController: UIViewController {
     focusGuide.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
     focusGuide.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
     focusGuide.isEnabled = false
+    
+    //This focus guide will allow the user to go from the tableview to the top bar and back
+    topBarFocusGuide = UIFocusGuide()
+    view.addLayoutGuide(topBarFocusGuide)
+    topBarFocusGuide.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+    topBarFocusGuide.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+    topBarFocusGuide.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+    topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
+    
+    tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+    
+    //tableView.topAnchor = tableViewTopConstraint
+    
   }
   
   override func didReceiveMemoryWarning() {
@@ -69,30 +92,74 @@ class NDMainViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
+  override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    super.didUpdateFocus(in: context, with: coordinator)
+    
+    if context.focusHeading == .down {
+      if context.previouslyFocusedView is UIIconLabel {
+        topBarFocusGuide.preferredFocusEnvironments = [tableView]
+      }
+    }
+    
+    //If the previous focus item is a collectionviewcell and the next item is not then that means you've hit the focus guide and you should reset the preferredfocusenvironments
+    if context.focusHeading == .up {
+      if let previouslyFocusedView = context.previouslyFocusedView as? UICollectionViewCell {
+        if !(context.nextFocusedView! is UICollectionViewCell) {
+          topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
+        }
+        //Do this because the preferredFocusEnvironments is still going to be the tableview so once you hit this focusguide the next focusedView will be the tableview which will return a UICollectionViewCell (basically you're locked in the tableview). So you check to see if the nextFocusedView is a CollectionCell and if it is then set the preferredfocusenvironments to the favoritesbutton
+        if context.nextFocusedView! is UICollectionViewCell {
+          topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
+        }
+      }
+    }
+    
+    /*if case .down = context.focusHeading {
+      
+    }*/
+  }
+  
 }
 
 
 
 extension NDMainViewController: UITableViewDelegate {
+  
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     guard let currentCell = cell as? NDMainTableViewCell else { return }
     currentCell.setup(delegate: self, at: indexPath.section)
-    
-    
   }
   
   func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-    
-    //only returning 1-3 since at the ends the indexPath guard statement will exit this function
-    
     if context.focusHeading == .up {
+      
       if let nextIndexPath = context.nextFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
-        //hiddenRows.popLast()
-        //This section number should equal the model-count for the UITableView - 1
-        if nextIndexPath.section == 3 {
-          shrinkCell = false
-          let indexSet: IndexSet = [nextIndexPath.section]
-          tableView.reloadSections(indexSet, with: .automatic)
+        
+        //Bring the top bar back
+        if nextIndexPath.section == 0 {
+          coordinator.addCoordinatedAnimations({
+            for view in self.topBarItems {
+              if view is UIIconLabel {
+                view.alpha = 0.5
+              } else {
+                view.alpha = 1.0
+              }
+            }
+          
+          }, completion: {
+            self.tableViewScrolledTopConstraint.isActive = false
+            self.tableViewTopConstraint.isActive = true
+          })
+        }
+        
+        //This section number should equal the model-count for the UITableView - 1 | model-count - 2 since section starts at 0
+        if nextIndexPath.section == modelCount - 2 {
+          coordinator.addCoordinatedAnimations({
+            self.shrinkCell = false
+            let indexSet: IndexSet = [nextIndexPath.section]
+            tableView.reloadSections(indexSet, with: .automatic)
+          }, completion: nil)
+          
         }
       }
     }
@@ -100,14 +167,24 @@ extension NDMainViewController: UITableViewDelegate {
     if context.focusHeading == .down {
       if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let previousCell = tableView.cellForRow(at: previousIndexPath) as? NDMainTableViewCell, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell, let previousHeader = tableView.headerView(forSection: previousIndexPath.section), let nextHeader = tableView.headerView(forSection: nextIndexPath.section) {
         
+        //On the first step going down make sure you hide the top bar. ANimate it up
+        if nextIndexPath.section == 1 {
+          coordinator.addCoordinatedAnimations({
+            for view in self.topBarItems {
+              view.alpha = 0.0
+            }
+          }, completion: {
+            self.tableViewTopConstraint.isActive = false
+            self.tableViewScrolledTopConstraint.isActive = true
+          })
+        }
+        
         //only 5 elements so you've reached the bottom when the section = 4. Enable the top focus guide to allow upward movement
-        if nextIndexPath.section == 4 {
-          //focusGuide.isEnabled = true
+        if nextIndexPath.section == modelCount - 1 {
           shrinkCell = true
           let indexSet: IndexSet = [nextIndexPath.section]
           tableView.reloadSections(indexSet, with: .fade)
         }
-        print(hiddenRows)
       }
     }
   }
@@ -127,6 +204,16 @@ extension NDMainViewController: UITableViewDelegate {
   
 }
 
+extension NDMainViewController: UITableViewDataSourcePrefetching {
+  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    
+  }
+  
+  func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+    
+  }
+}
+
 extension NDMainViewController: UITableViewDataSource {
   /* Return 1 which means each section can only have 1 row */
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,15 +221,15 @@ extension NDMainViewController: UITableViewDataSource {
   }
   /* You control the number of rows total by controlling the number of sections = categories in the app */
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 5
+    return modelCount
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
-    if hiddenRows.contains(indexPath.section) {
-      //cell.contentView.alpha = 0.1
+    
+    /*if hiddenRows.contains(indexPath.section) {
       return cell
-    }
+    }*/
     //cell.prepareForReuse()
     return cell
   }
@@ -158,8 +245,6 @@ extension NDMainViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 100.0
   }
-  
-  
 }
 
 extension NDMainViewController: UICollectionViewDataSource {
@@ -176,9 +261,6 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     return cell
   }
-}
-
-extension NDMainViewController: UICollectionViewDelegate {
 }
 
 extension NDMainViewController: UICollectionViewDelegateFlowLayout {

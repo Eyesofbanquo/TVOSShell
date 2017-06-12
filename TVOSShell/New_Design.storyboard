@@ -30,63 +30,36 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_background" translatesAutoresizingMaskIntoConstraints="NO" id="1cH-1c-gPB">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugb-E9-Qxm" userLabel="Top Navigation Bar">
-                                <rect key="frame" x="20" y="20" width="1880" height="128"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="K3x-p2-kKd">
-                                        <rect key="frame" x="1664" y="45" width="172" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOR-qJ-Qd2">
-                                                <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
-                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="alpha">
-                                                        <real key="value" value="0.5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vq-QC-XLb">
-                                                <rect key="frame" x="68" y="0.0" width="36" height="38"/>
-                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="alpha">
-                                                        <real key="value" value="0.5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyb-dw-Ovr">
-                                                <rect key="frame" x="134" y="0.0" width="38" height="38"/>
-                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="alpha">
-                                                        <real key="value" value="0.5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_logo" translatesAutoresizingMaskIntoConstraints="NO" id="agj-65-7jg">
-                                        <rect key="frame" x="8" y="28" width="342" height="72"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="342" id="IFj-vd-5Zc"/>
-                                            <constraint firstAttribute="height" constant="72" id="fHH-8h-H0E"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <label opaque="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oim-aA-XfB" customClass="UIIconLabel" customModule="TVOSShell" customModuleProvider="target">
+                                <rect key="frame" x="1829" y="45" width="33" height="38"/>
                                 <constraints>
-                                    <constraint firstItem="agj-65-7jg" firstAttribute="leading" secondItem="Ugb-E9-Qxm" secondAttribute="leading" constant="8" id="HJl-bL-aq7"/>
-                                    <constraint firstAttribute="height" constant="128" id="aar-8o-D8I"/>
-                                    <constraint firstItem="agj-65-7jg" firstAttribute="top" secondItem="Ugb-E9-Qxm" secondAttribute="top" constant="28" id="o4L-oS-BQD"/>
+                                    <constraint firstAttribute="height" constant="38" id="TBo-nR-skD"/>
+                                    <constraint firstAttribute="width" constant="33" id="sH9-xE-ueY"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iwe-a9-yeb" customClass="UIIconLabel" customModule="TVOSShell" customModuleProvider="target">
+                                <rect key="frame" x="1696" y="45" width="40" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="OeR-iM-uVo"/>
+                                    <constraint firstAttribute="width" constant="40" id="rM2-NY-tgE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="822-fa-4tq" customClass="UIIconLabel" customModule="TVOSShell" customModuleProvider="target">
+                                <rect key="frame" x="1766" y="45" width="33" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="DrH-EY-o3k"/>
+                                    <constraint firstAttribute="height" constant="38" id="trT-ek-EJE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="600" sectionHeaderHeight="70" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Gi-10X">
                                 <rect key="frame" x="0.0" y="156" width="1920" height="924"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -134,26 +107,39 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_logo" translatesAutoresizingMaskIntoConstraints="NO" id="peA-c0-nG6">
+                                <rect key="frame" x="28" y="28" width="342" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="342" id="JOA-2j-jaQ"/>
+                                    <constraint firstAttribute="height" constant="72" id="Yn3-tk-MzJ"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="eE7-Gi-10X" secondAttribute="trailing" constant="-20" id="2T6-hP-j8z"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Ugb-E9-Qxm" secondAttribute="bottom" constant="932" id="8EA-bq-vtE"/>
+                            <constraint firstItem="peA-c0-nG6" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="28" id="6b2-X9-AmE"/>
                             <constraint firstItem="TKv-6N-fis" firstAttribute="top" secondItem="1cH-1c-gPB" secondAttribute="bottom" id="9GN-bZ-Pzm"/>
-                            <constraint firstItem="Ugb-E9-Qxm" firstAttribute="trailing" secondItem="3t9-Qv-sNG" secondAttribute="trailingMargin" id="Dhk-tC-Xw9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ugb-E9-Qxm" secondAttribute="trailing" id="HgN-ES-fLN"/>
                             <constraint firstItem="eE7-Gi-10X" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="NBR-cn-Puv"/>
-                            <constraint firstItem="Ugb-E9-Qxm" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="20" id="Rsz-rz-sbn"/>
-                            <constraint firstItem="Ugb-E9-Qxm" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" id="YqW-BN-hip"/>
+                            <constraint firstItem="822-fa-4tq" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="45" id="SZy-nP-X8I"/>
+                            <constraint firstItem="822-fa-4tq" firstAttribute="leading" secondItem="Iwe-a9-yeb" secondAttribute="trailing" constant="30" id="Yrq-mw-dx7"/>
                             <constraint firstItem="1cH-1c-gPB" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" id="bSk-Pi-7BV"/>
-                            <constraint firstItem="eE7-Gi-10X" firstAttribute="top" secondItem="Ugb-E9-Qxm" secondAttribute="bottom" constant="8" id="cXh-S5-RLM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1cH-1c-gPB" secondAttribute="trailing" constant="-20" id="eQI-6r-YAG"/>
-                            <constraint firstItem="Ugb-E9-Qxm" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="20" id="oel-Ln-0LD"/>
+                            <constraint firstItem="peA-c0-nG6" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="8" id="hn5-9Q-haC"/>
+                            <constraint firstItem="Oim-aA-XfB" firstAttribute="top" secondItem="3t9-Qv-sNG" secondAttribute="topMargin" constant="45" id="jDB-eA-yTM"/>
+                            <constraint firstItem="Oim-aA-XfB" firstAttribute="leading" secondItem="822-fa-4tq" secondAttribute="trailing" constant="30" id="lX8-NO-ate"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Oim-aA-XfB" secondAttribute="trailing" constant="38" id="njP-ZR-4k3"/>
+                            <constraint firstItem="eE7-Gi-10X" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="156" id="o9Z-vq-4Wd"/>
                             <constraint firstItem="TKv-6N-fis" firstAttribute="top" secondItem="eE7-Gi-10X" secondAttribute="bottom" id="pJd-8C-Fyb"/>
+                            <constraint firstItem="Iwe-a9-yeb" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="45" id="qfE-eP-3gJ"/>
                             <constraint firstItem="1cH-1c-gPB" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="rMj-45-wd7"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
+                        <outlet property="favoritesButton" destination="Iwe-a9-yeb" id="uTI-Lp-feb"/>
+                        <outlet property="searchButton" destination="822-fa-4tq" id="EOu-OF-dhK"/>
+                        <outlet property="settingsButton" destination="Oim-aA-XfB" id="z6O-Yv-pn3"/>
+                        <outlet property="swaLogo" destination="peA-c0-nG6" id="fke-IZ-x40"/>
                         <outlet property="tableView" destination="eE7-Gi-10X" id="C0o-JR-Kai"/>
                     </connections>
                 </viewController>

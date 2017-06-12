@@ -27,6 +27,8 @@
 		D50123401ECE78E7003854B3 /* TopFeaturedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */; };
 		D50123421ECEB6FD003854B3 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D50123411ECEB6FD003854B3 /* SearchCell.xib */; };
 		D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */; };
+		D5437BFB1EEB3D2700460D58 /* UIIconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437BFA1EEB3D2700460D58 /* UIIconLabel.swift */; };
+		D5437BFD1EEB3E1100460D58 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437BFC1EEB3E1100460D58 /* NavigationBar.swift */; };
 		D55D69BC1EE73E8B00BAFB0C /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBB31EE738F4004F66A2 /* fontawesome-webfont.ttf */; };
 		D55D69BE1EE742ED00BAFB0C /* NDMainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D69BD1EE742ED00BAFB0C /* NDMainTableViewCell.swift */; };
 		D55D69C01EE7431300BAFB0C /* CategoryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D69BF1EE7431300BAFB0C /* CategoryCellView.xib */; };
@@ -76,6 +78,8 @@
 		D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopFeaturedView.swift; sourceTree = "<group>"; };
 		D50123411ECEB6FD003854B3 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
 		D50123431ECEB788003854B3 /* SearchCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		D5437BFA1EEB3D2700460D58 /* UIIconLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIIconLabel.swift; sourceTree = "<group>"; };
+		D5437BFC1EEB3E1100460D58 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		D55D69BD1EE742ED00BAFB0C /* NDMainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDMainTableViewCell.swift; sourceTree = "<group>"; };
 		D55D69BF1EE7431300BAFB0C /* CategoryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCellView.xib; sourceTree = "<group>"; };
 		D55D69C11EE81FD600BAFB0C /* NDHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDHeader.swift; sourceTree = "<group>"; };
@@ -240,6 +244,8 @@
 			children = (
 				D501233A1ECE3AF7003854B3 /* ScrollingImageView.swift */,
 				D501233F1ECE78E7003854B3 /* TopFeaturedView.swift */,
+				D5437BFA1EEB3D2700460D58 /* UIIconLabel.swift */,
+				D5437BFC1EEB3E1100460D58 /* NavigationBar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				D501233B1ECE3AF7003854B3 /* ScrollingImageView.swift in Sources */,
 				D5D2CBA41EE0FC1B004F66A2 /* SplashScreenViewController.swift in Sources */,
 				D55D69BE1EE742ED00BAFB0C /* NDMainTableViewCell.swift in Sources */,
+				D5437BFD1EEB3E1100460D58 /* NavigationBar.swift in Sources */,
 				D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */,
 				D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */,
 				D55D69C61EE8216700BAFB0C /* NDMainCollectionViewCell.swift in Sources */,
@@ -451,6 +458,7 @@
 				D50123281EC64318003854B3 /* UpcomingEventsViewController.swift in Sources */,
 				D501232A1EC6462B003854B3 /* UpcomingEventsCell.swift in Sources */,
 				D501233E1ECE5DDD003854B3 /* Winona.swift in Sources */,
+				D5437BFB1EEB3D2700460D58 /* UIIconLabel.swift in Sources */,
 				D50123201EC3C8DF003854B3 /* FeaturedTableViewCell.swift in Sources */,
 				D501232C1EC8DA5C003854B3 /* VideoDetailViewController.swift in Sources */,
 				D5D2CBA01EDE0517004F66A2 /* ViewModel.swift in Sources */,

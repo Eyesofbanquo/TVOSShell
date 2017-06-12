@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="MundoSansStd-Bold.otf">
+            <string>MundoSansStd-Bold</string>
+        </array>
         <array key="fontawesome-webfont.ttf">
             <string>FontAwesome</string>
         </array>
@@ -146,6 +149,182 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3wc-XO-quv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="185" y="257"/>
+        </scene>
+        <!--Video Player-->
+        <scene sceneID="cGD-D7-QlJ">
+            <objects>
+                <viewController storyboardIdentifier="video_player" title="Video Player" id="EUf-gs-ltP" customClass="NDVideoPlayerViewController" customModule="TVOSShell" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="igo-Ec-nyE"/>
+                        <viewControllerLayoutGuide type="bottom" id="3A0-qz-JWK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ihy-Gg-rOC">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz6-t5-eix">
+                                <rect key="frame" x="45" y="206" width="760" height="362"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="760" id="32a-cW-HVd"/>
+                                    <constraint firstAttribute="height" constant="362" id="Efg-Jw-LSl"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6js-X4-m1v">
+                                <rect key="frame" x="45" y="39" width="760" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="3yh-HR-uFI"/>
+                                    <constraint firstAttribute="width" constant="760" id="BwS-gn-B6Q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRc-ee-O33">
+                                <rect key="frame" x="45" y="119" width="170" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="8WO-EU-zZ2"/>
+                                    <constraint firstAttribute="width" constant="170" id="nNV-cD-GCX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27H-7y-Qgz">
+                                <rect key="frame" x="245" y="119" width="165" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="GJW-jd-lAd"/>
+                                    <constraint firstAttribute="width" constant="165" id="Ty6-e0-WIW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="3Rc-Zf-FNg">
+                                <rect key="frame" x="45" y="720" width="760" height="300"/>
+                                <subviews>
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUV-9s-Lkf" userLabel="Resume Playing" customClass="NDVideoPlayerControl" customModule="TVOSShell" customModuleProvider="target" colorLabel="IBBuiltInLabel-Red">
+                                        <rect key="frame" x="0.0" y="0.0" width="760" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l75-ud-SRr">
+                                                <rect key="frame" x="30" y="17" width="30" height="46"/>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VI-Q5-VuV">
+                                                <rect key="frame" x="105" y="22" width="88" height="46"/>
+                                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="7Bt-Tt-JoJ"/>
+                                            <constraint firstItem="l75-ud-SRr" firstAttribute="leading" secondItem="bUV-9s-Lkf" secondAttribute="leading" constant="30" id="IpL-mR-sf7"/>
+                                            <constraint firstItem="0VI-Q5-VuV" firstAttribute="top" secondItem="bUV-9s-Lkf" secondAttribute="top" constant="22" id="YN4-nF-qHx"/>
+                                            <constraint firstItem="l75-ud-SRr" firstAttribute="top" secondItem="bUV-9s-Lkf" secondAttribute="top" constant="17" id="YaQ-35-Ifk"/>
+                                            <constraint firstAttribute="width" constant="760" id="bIO-rK-g78"/>
+                                            <constraint firstItem="0VI-Q5-VuV" firstAttribute="leading" secondItem="l75-ud-SRr" secondAttribute="trailing" constant="45" id="bQO-48-pla"/>
+                                            <constraint firstAttribute="bottom" secondItem="l75-ud-SRr" secondAttribute="bottom" constant="17" id="sZ6-aN-0XO"/>
+                                            <constraint firstAttribute="bottom" secondItem="0VI-Q5-VuV" secondAttribute="bottom" constant="12" id="z5r-f0-9bn"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="icon" destination="l75-ud-SRr" id="1aD-Lh-LVY"/>
+                                            <outlet property="text" destination="0VI-Q5-VuV" id="DTh-DE-eAm"/>
+                                        </connections>
+                                    </view>
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXf-yL-zvV" userLabel="Restart Video" customClass="NDVideoPlayerControl" customModule="TVOSShell" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="110" width="760" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-vT-FUb">
+                                                <rect key="frame" x="30" y="17" width="22" height="46"/>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY FROM BEGINNING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWV-1u-1SP">
+                                                <rect key="frame" x="102" y="17" width="416" height="46"/>
+                                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="vWV-1u-1SP" firstAttribute="leading" secondItem="pXO-vT-FUb" secondAttribute="trailing" constant="50" id="E1V-2O-Zz4"/>
+                                            <constraint firstAttribute="height" constant="80" id="FMZ-yz-KP0"/>
+                                            <constraint firstAttribute="bottom" secondItem="pXO-vT-FUb" secondAttribute="bottom" constant="17" id="Gqe-FZ-H2G"/>
+                                            <constraint firstAttribute="bottom" secondItem="vWV-1u-1SP" secondAttribute="bottom" constant="17" id="K91-Sx-Glf"/>
+                                            <constraint firstAttribute="width" constant="760" id="Xak-gb-VQb"/>
+                                            <constraint firstItem="vWV-1u-1SP" firstAttribute="top" secondItem="nXf-yL-zvV" secondAttribute="top" constant="17" id="Ypq-oP-o5k"/>
+                                            <constraint firstItem="pXO-vT-FUb" firstAttribute="top" secondItem="nXf-yL-zvV" secondAttribute="top" constant="17" id="bEc-ct-qpp"/>
+                                            <constraint firstItem="pXO-vT-FUb" firstAttribute="leading" secondItem="nXf-yL-zvV" secondAttribute="leading" constant="30" id="pmI-jd-ebP"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="icon" destination="pXO-vT-FUb" id="3yd-0I-ZWk"/>
+                                        </connections>
+                                    </view>
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wSw-bi-bsj" userLabel="Favorite Video" customClass="NDVideoPlayerControl" customModule="TVOSShell" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="220" width="760" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twt-4M-cKU">
+                                                <rect key="frame" x="30" y="17" width="38" height="46"/>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAVE TO FAVORITES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-eh-sy8">
+                                                <rect key="frame" x="98" y="20" width="340" height="43"/>
+                                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="E2w-eh-sy8" firstAttribute="top" secondItem="wSw-bi-bsj" secondAttribute="top" constant="20" id="0HP-d3-H8q"/>
+                                            <constraint firstAttribute="width" constant="760" id="FxL-Ac-C7n"/>
+                                            <constraint firstItem="Twt-4M-cKU" firstAttribute="leading" secondItem="wSw-bi-bsj" secondAttribute="leading" constant="30" id="WPM-uW-Xrt"/>
+                                            <constraint firstAttribute="bottom" secondItem="Twt-4M-cKU" secondAttribute="bottom" constant="17" id="auJ-6l-WTy"/>
+                                            <constraint firstAttribute="bottom" secondItem="E2w-eh-sy8" secondAttribute="bottom" constant="17" id="gN5-fL-ffN"/>
+                                            <constraint firstItem="E2w-eh-sy8" firstAttribute="leading" secondItem="Twt-4M-cKU" secondAttribute="trailing" constant="30" id="nZR-UY-PtA"/>
+                                            <constraint firstAttribute="height" constant="80" id="u9P-7V-PKo"/>
+                                            <constraint firstItem="Twt-4M-cKU" firstAttribute="top" secondItem="wSw-bi-bsj" secondAttribute="top" constant="17" id="wYY-vx-Uxe"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="icon" destination="Twt-4M-cKU" id="Rvv-w1-v6m"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="zz6-t5-eix" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="206" id="9w3-80-xor"/>
+                            <constraint firstItem="27H-7y-Qgz" firstAttribute="leading" secondItem="wRc-ee-O33" secondAttribute="trailing" constant="30" id="CoV-YA-80d"/>
+                            <constraint firstItem="6js-X4-m1v" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="39" id="NE6-qY-Bhm"/>
+                            <constraint firstItem="3Rc-Zf-FNg" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="Q1i-7k-Uxo"/>
+                            <constraint firstItem="6js-X4-m1v" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="QcD-77-eVP"/>
+                            <constraint firstItem="3A0-qz-JWK" firstAttribute="top" secondItem="3Rc-Zf-FNg" secondAttribute="bottom" constant="60" id="Qkb-jl-5NK"/>
+                            <constraint firstItem="wRc-ee-O33" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="119" id="ctA-vS-urs"/>
+                            <constraint firstItem="wRc-ee-O33" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="dtn-Zx-BX4"/>
+                            <constraint firstItem="zz6-t5-eix" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="jbl-sM-sjJ"/>
+                            <constraint firstItem="27H-7y-Qgz" firstAttribute="top" secondItem="ihy-Gg-rOC" secondAttribute="topMargin" constant="119" id="uyu-X1-wzb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="favorite" destination="wSw-bi-bsj" id="GZA-Rc-RrV"/>
+                        <outlet property="play" destination="bUV-9s-Lkf" id="mqh-pv-08H"/>
+                        <outlet property="restart" destination="nXf-yL-zvV" id="06d-zF-g7M"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a1n-kf-PZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2330" y="239"/>
         </scene>
     </scenes>
     <resources>

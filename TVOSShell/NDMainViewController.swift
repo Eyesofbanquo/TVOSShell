@@ -33,7 +33,7 @@ class NDMainViewController: UIViewController {
     return [tableView]
   }
   
-  //var hiddenRows: [Int]!
+  var hiddenRows: [Int]!
   
   var focusGuide: UIFocusGuide!
   var shrinkCell: Bool!
@@ -60,6 +60,7 @@ class NDMainViewController: UIViewController {
     
     tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
     tableViewTopConstraint.isActive = true
+    hiddenRows = []
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -145,7 +146,6 @@ extension NDMainViewController: UITableViewDelegate {
                 view.alpha = 1.0
               }
             }
-          
           }, completion: {
             self.tableViewScrolledTopConstraint.isActive = false
             self.tableViewTopConstraint.isActive = true
@@ -185,6 +185,16 @@ extension NDMainViewController: UITableViewDelegate {
           let indexSet: IndexSet = [nextIndexPath.section]
           tableView.reloadSections(indexSet, with: .fade)
         }
+        
+        
+        /*if nextIndexPath.section < modelCount - 1 {
+          shrinkCell = true
+          //let indexSet: IndexSet = [nextIndexPath.section]
+          //tableView.reloadSections(indexSet, with: .fade)
+          let indexSet: IndexSet = [context.previouslyFocusedIndexPath!.section]
+          hiddenRows.append(context.previouslyFocusedIndexPath!.section)
+          tableView.reloadSections(indexSet, with: .fade)
+        }*/
       }
     }
   }
@@ -194,10 +204,13 @@ extension NDMainViewController: UITableViewDelegate {
     return false
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if shrinkCell && indexPath.section == 3 {
+    if shrinkCell && indexPath.section == modelCount - 2 {
       //print("this row \(indexPath.section) will be hidden")
       return 284.0
     }
+    /*if shrinkCell && hiddenRows.contains(indexPath.section) {
+      return 1.0
+    }*/
     return 600.0
     
   }
@@ -248,6 +261,7 @@ extension NDMainViewController: UITableViewDataSource {
 }
 
 extension NDMainViewController: UICollectionViewDataSource {
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 20
   }
@@ -260,6 +274,12 @@ extension NDMainViewController: UICollectionViewDataSource {
     cell.delegate = self
     
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
+    let videoPlayerController = storyboard.instantiateViewController(withIdentifier: "video_player") as! NDVideoPlayerViewController
+    self.present(videoPlayerController, animated: true, completion: nil)
   }
 }
 

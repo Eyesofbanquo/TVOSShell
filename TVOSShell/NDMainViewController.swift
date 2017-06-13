@@ -214,7 +214,7 @@ extension NDMainViewController: UITableViewDelegate {
     /*if shrinkCell && hiddenRows.contains(indexPath.section) {
       return 1.0
     }*/
-    return 600.0
+    return 800.0
     
   }
   

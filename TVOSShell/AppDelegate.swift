@@ -74,10 +74,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           if completed {
             let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
             guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
-            destination.ij = InnerJoint()
-            destination.ij.categories = [.featured, .b_roll]
-            navigationController.pushViewController(destination, animated: true)
-            print(destination.ij.allData)            
+            //destination.ij = InnerJoint()
+            //destination.ij.categories = [.featured, .b_roll]
+            //navigationController.pushViewController(destination, animated: true)
+            //print(destination.ij.allData)
           }
         })
       })

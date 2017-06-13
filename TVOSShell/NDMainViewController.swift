@@ -26,9 +26,6 @@ class NDMainViewController: UIViewController {
   
   var modelColors: [[UIColor]] = generateRandomData()
   
-  //var initialTopCellFrame: CGRect!
-  //var initialTopHeaderFrame: CGRect!
-  
   override var preferredFocusEnvironments: [UIFocusEnvironment] {
     return [tableView]
   }
@@ -38,8 +35,11 @@ class NDMainViewController: UIViewController {
   var focusGuide: UIFocusGuide!
   var shrinkCell: Bool!
 
+  //For the top bar navigation that holds the SWA logo and 3 buttons
   var topBarFocusGuide: UIFocusGuide!
   var topBarItems: [UIView]!
+  
+  var ij: InnerJoint!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -61,6 +61,9 @@ class NDMainViewController: UIViewController {
     tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
     tableViewTopConstraint.isActive = true
     hiddenRows = []
+    
+    //Load the videos from the API. This is temporary atm
+    
   }
   
   override func viewDidAppear(_ animated: Bool) {

@@ -14,6 +14,12 @@ class NDVideoPlayerViewController: UIViewController {
   @IBOutlet weak var restart: NDVideoPlayerControl!
   @IBOutlet weak var favorite: NDVideoPlayerControl!
   
+  @IBOutlet weak var video_title: UILabel!
+  @IBOutlet weak var date: UILabel!
+  @IBOutlet weak var duration: UILabel!
+  
+  var video: Video!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     

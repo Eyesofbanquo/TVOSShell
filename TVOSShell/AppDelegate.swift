@@ -40,6 +40,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Winona.auth(completionHandler: {
       let facets: [String: [String]] = ["B-Roll":["featured"],"Featured": ["main", "instruction video"]]
       
+      //Gain access to the datastore using this class. This class is the equivalent of a viewmodel
+      let ij:InnerJoint = InnerJoint()
+      
+      Winona.searches(facets: facets, completionHandler: {
+        category, sub, response in
+        
+        guard let data = response.data else { return }
+        
+        //create the json object using SwiftyJSON
+        let json = JSON(data: data)
+        
+        for doc in json["docs"] {
+          let object = doc.1
+          let duration:Double = object["duration"].doubleValue
+          let title:String = object["title"].stringValue
+          let id:String = object["key"]["id"].stringValue
+          let thumbnailUri:String = object["thumbnailUri"].stringValue
+          let date:String = object["date"].stringValue
+          
+          let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
+          ij.add(to: category, video: swaVideo)
+          //DataStore.add(to: category, video: swaVideo)
+          
+        }
+      })?.notify(queue: .main, execute: {
+        //Execute once all of the API loading has been completed
+        UIView.animate(withDuration: 0.4, animations: {
+          
+        }, completion: {
+          completed in
+          //Once the animation is completed inject the available categories into the next controller then launch
+          if completed {
+            let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+            guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
+            destination.ij = InnerJoint()
+            destination.ij.categories = [.featured, .b_roll]
+            navigationController.pushViewController(destination, animated: true)
+            print(destination.ij.allData)            
+          }
+        })
+      })
+
+      
     })
     
     //self.window?.rootViewController = navigationController

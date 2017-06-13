@@ -54,7 +54,6 @@ class VideoBottomBarNavigation: UIView {
     self.collectionView.register(cell, forCellWithReuseIdentifier: searchCellId)
     self.collectionView.dataSource = self
     self.collectionView.delegate = self
-    //self.collectionView.remembersLastFocusedIndexPath = true
     
     self.isUserInteractionEnabled = true
     imageEffectView.contentView.addSubview(self.collectionView)

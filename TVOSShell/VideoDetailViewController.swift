@@ -85,8 +85,6 @@ class VideoDetailViewController: UIViewController {
     swipeDownGesture.isEnabled = false
     self.view.addGestureRecognizer(swipeUpGesture)
     self.view.addGestureRecognizer(swipeDownGesture)
-    
-    
   }
   
   func loadThumbnailBackground(_ urlString:String){

@@ -173,34 +173,32 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6js-X4-m1v">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6js-X4-m1v">
                                 <rect key="frame" x="45" y="39" width="760" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="3yh-HR-uFI"/>
                                     <constraint firstAttribute="width" constant="760" id="BwS-gn-B6Q"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRc-ee-O33">
-                                <rect key="frame" x="45" y="119" width="170" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRc-ee-O33">
+                                <rect key="frame" x="45" y="119" width="91" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="8WO-EU-zZ2"/>
-                                    <constraint firstAttribute="width" constant="170" id="nNV-cD-GCX"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27H-7y-Qgz">
-                                <rect key="frame" x="245" y="119" width="165" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DURATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27H-7y-Qgz">
+                                <rect key="frame" x="166" y="119" width="191" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="GJW-jd-lAd"/>
-                                    <constraint firstAttribute="width" constant="165" id="Ty6-e0-WIW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="3Rc-Zf-FNg">
@@ -317,9 +315,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="date" destination="wRc-ee-O33" id="vJJ-0E-dsv"/>
+                        <outlet property="duration" destination="27H-7y-Qgz" id="l0M-MH-wyb"/>
                         <outlet property="favorite" destination="wSw-bi-bsj" id="GZA-Rc-RrV"/>
                         <outlet property="play" destination="bUV-9s-Lkf" id="mqh-pv-08H"/>
                         <outlet property="restart" destination="nXf-yL-zvV" id="06d-zF-g7M"/>
+                        <outlet property="video_title" destination="6js-X4-m1v" id="1TS-QX-pyX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1n-kf-PZv" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -35,12 +35,13 @@ class DataStore {
     }
   }
   
-  /* This class will power the DataStore
-   Possibly replace view models */
+  /// The ViewModel for this project
   class InnerJoint {
     
+    /// This contains all the categories specific to this IJ
     var categories:[Category]?
     
+    /// Retrieve all the data in one array from the DataStore
     var allData:[Video] {
       return DataStore.videos.flatMap({
         (key, value) in
@@ -48,6 +49,12 @@ class DataStore {
       })
     }
     
+    /// Retrieve the first item from the given category and subcategory
+    ///
+    /// - Parameters:
+    ///   - category: The category you'd like to target.
+    ///   - sub: The subcategory you'd like to target. This is a sub-array inside the category's array in the data store.
+    /// - Returns: Returns an Optional Video object since the video may not exist if the category doesn't exist.
     func firstItem(in category:DataStore.Category, with sub:SubCategory) -> Video? {
       for videos in self.data(for: category) {
         if videos[0].category == sub {
@@ -57,10 +64,19 @@ class DataStore {
       return nil
     }
     
+    /// Retrieve the specific data array for the provided cateogry
+    ///
+    /// - Parameter category: The category array you'd like to receive from the DataStore
+    /// - Returns: Return the category array which will contain subcategory arrays for the given category
     func data(for category:DataStore.Category) -> [[Video]] {
       return DataStore.modelData(for:category)
     }
     
+    /// Add videos to the DataStore using this function.
+    ///
+    /// - Parameters:
+    ///   - category: The category you'd like to target
+    ///   - video: The video you'd like to add to the category's DataStore
     func add(to category:Category, video:Video) {
       DataStore.add(to: category, video: video)
     }
@@ -76,7 +92,7 @@ class DataStore {
   }()
   
   
-  //Set this so that this class cannot be instantiated thus officially making it a singleton
+  /// Set this so that this class cannot be instantiated thus officially making it a singleton
   private init(){
     
   }

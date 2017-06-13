@@ -20,9 +20,7 @@ class NDMainViewController: UIViewController {
   var tableViewScrolledTopConstraint: NSLayoutConstraint!
   
   
-  var modelCount: Int = {
-    return 5
-  }()
+  
   
   var modelColors: [[UIColor]] = generateRandomData()
   
@@ -41,13 +39,19 @@ class NDMainViewController: UIViewController {
   
   var ij: InnerJoint!
   
+  var anchorPosition: CGFloat = 0.0
+  
+  var modelCount: Int {
+    return 5
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.sectionFooterHeight = 0.0
-    tableView.rowHeight = 284.0
+    //tableView.sectionFooterHeight = 0.0
+    //tableView.rowHeight = 284.0
     
     //This property will determine if the second to last view shrinks or not
     shrinkCell = false
@@ -58,8 +62,8 @@ class NDMainViewController: UIViewController {
     
     topBarItems = [favoritesButton, settingsButton, searchButton, swaLogo]
     
-    tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
-    tableViewTopConstraint.isActive = true
+    tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+    //tableViewTopConstraint.isActive = true
     hiddenRows = []
     
     //Load the videos from the API. This is temporary atm
@@ -88,7 +92,9 @@ class NDMainViewController: UIViewController {
     tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
     
     //tableView.topAnchor = tableViewTopConstraint
-    
+    /*Winona.dispatchGroup.notify(queue: .main, execute: {
+      print("jobs have been completed")
+    })*/
   }
   
   override func didReceiveMemoryWarning() {
@@ -117,10 +123,6 @@ class NDMainViewController: UIViewController {
         }
       }
     }
-    
-    /*if case .down = context.focusHeading {
-      
-    }*/
   }
   
 }
@@ -141,6 +143,7 @@ extension NDMainViewController: UITableViewDelegate {
         
         //Bring the top bar back
         if nextIndexPath.section == 0 {
+          topBarFocusGuide.isEnabled = true
           coordinator.addCoordinatedAnimations({
             for view in self.topBarItems {
               if view is UIIconLabel {
@@ -158,7 +161,7 @@ extension NDMainViewController: UITableViewDelegate {
         //This section number should equal the model-count for the UITableView - 1 | model-count - 2 since section starts at 0
         if nextIndexPath.section == modelCount - 2 {
           coordinator.addCoordinatedAnimations({
-            self.shrinkCell = false
+            //self.shrinkCell = false
             let indexSet: IndexSet = [nextIndexPath.section]
             tableView.reloadSections(indexSet, with: .automatic)
           }, completion: nil)
@@ -172,9 +175,13 @@ extension NDMainViewController: UITableViewDelegate {
         
         //On the first step going down make sure you hide the top bar. ANimate it up
         if nextIndexPath.section == 1 {
+          topBarFocusGuide.isEnabled = false
+
           coordinator.addCoordinatedAnimations({
             for view in self.topBarItems {
-              view.alpha = 0.0
+              if view is UIIconLabel {
+                view.alpha = 0.0
+              }
             }
           }, completion: {
             self.tableViewTopConstraint.isActive = false
@@ -184,11 +191,10 @@ extension NDMainViewController: UITableViewDelegate {
         
         //only 5 elements so you've reached the bottom when the section = 4. Enable the top focus guide to allow upward movement
         if nextIndexPath.section == modelCount - 1 {
-          shrinkCell = true
+          //shrinkCell = true
           let indexSet: IndexSet = [nextIndexPath.section]
           tableView.reloadSections(indexSet, with: .fade)
         }
-        
         
         /*if nextIndexPath.section < modelCount - 1 {
           shrinkCell = true
@@ -214,7 +220,7 @@ extension NDMainViewController: UITableViewDelegate {
     /*if shrinkCell && hiddenRows.contains(indexPath.section) {
       return 1.0
     }*/
-    return 800.0
+    return 800
     
   }
   
@@ -288,7 +294,7 @@ extension NDMainViewController: UICollectionViewDataSource {
 
 extension NDMainViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: -150.0, left: 20.0, bottom: 0.0, right: 20.0)
+    return UIEdgeInsets(top: 0.0, left: 30.0, bottom: 150.0, right: 20.0)
   }
   
   
@@ -298,6 +304,6 @@ extension NDMainViewController: UICollectionViewDelegateFlowLayout {
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 40.0
+    return 20.0
   }
 }

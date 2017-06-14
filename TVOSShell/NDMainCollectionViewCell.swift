@@ -21,7 +21,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   //focused constraints
   var titleLabelCenterXAnchorFocusedConstraint: NSLayoutConstraint!
   
-  @IBOutlet weak var descriptionLabel:UITextView!
+  var descriptionLabel:UITextView!
   
   private var animationDuration:TimeInterval = 0.4
   
@@ -59,7 +59,6 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     if self == context.nextFocusedView {
       
       self.titleLabel.alpha = 0.0
-      descriptionLabel.alpha = 1.0
 
       titleLabel.addParallaxMotionEffects(tiltValue: 0.2, panValue: 5.0)
       self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
@@ -69,8 +68,8 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       self.setFocusedState()
 
       //Add the description view to this collection view cell
-      /*if descriptionLabel != nil {
-        //createDescriptionLabel()
+      if descriptionLabel != nil {
+        createDescriptionLabel()
         coordinator.addCoordinatedAnimations({
           self.descriptionLabel.alpha = 1.0
         }, completion: nil)
@@ -78,12 +77,12 @@ class NDMainCollectionViewCell: UICollectionViewCell {
         })
       } else {
        
-        //createDescriptionLabel()
+        createDescriptionLabel()
         
         UIView.animate(withDuration: animationDuration, animations: {
           self.descriptionLabel.alpha = 1.0
         })
-      }*/
+      }
       
     } else if self == context.previouslyFocusedView {
       //descriptionLabel.alpha = 0.0

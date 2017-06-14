@@ -24,6 +24,8 @@ class NDMainViewController: UIViewController {
   
   var modelColors: [[UIColor]] = generateRandomData()
   
+  var previousTableViewOrigin: CGPoint = CGPoint.zero
+  
   override var preferredFocusEnvironments: [UIFocusEnvironment] {
     return [tableView]
   }
@@ -42,7 +44,10 @@ class NDMainViewController: UIViewController {
   var anchorPosition: CGFloat = 0.0
   
   var page: Int = 0
-  var scrolling: Bool = false
+  //var scrolling: Bool = false
+  var nextIndexPathSection: Int = 1
+  var previousIndexPath: IndexPath!
+  var nextIndexPath: IndexPath!
   
   var modelCount: Int {
     return 5
@@ -53,7 +58,7 @@ class NDMainViewController: UIViewController {
     
     tableView.dataSource = self
     tableView.delegate = self
-    //tableView.sectionFooterHeight = 0.0
+    tableView.sectionFooterHeight = 1.0
     //tableView.rowHeight = 284.0
     
     //This property will determine if the second to last view shrinks or not
@@ -70,6 +75,7 @@ class NDMainViewController: UIViewController {
     hiddenRows = []
     
     tableView.delegate = self
+    
     
     //Load the videos from the API. This is temporary atm
     
@@ -144,7 +150,7 @@ extension NDMainViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     if context.focusHeading == .up {
       
-      if let nextIndexPath = context.nextFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
+      if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
         
         //Bring the top bar back
         if nextIndexPath.section == 0 {
@@ -158,23 +164,12 @@ extension NDMainViewController: UITableViewDelegate {
               }
             }
           }, completion: {
-            //self.tableViewScrolledTopConstraint.isActive = false
-            //self.tableViewTopConstraint.isActive = true
           })
         }
         
-        //This section number should equal the model-count for the UITableView - 1 | model-count - 2 since section starts at 0
-        if nextIndexPath.section == modelCount - 2 {
-          coordinator.addCoordinatedAnimations({
-            //self.shrinkCell = false
-            //let indexSet: IndexSet = [nextIndexPath.section]
-            //tableView.reloadSections(indexSet, with: .automatic)
-          }, completion: nil)
-          
-        }
-        if page != 0 {
-          page = page - 1
-        }
+        //Used for the scrollview delegate
+        self.previousIndexPath = previousIndexPath
+        self.nextIndexPath = nextIndexPath
       }
     }
     
@@ -191,30 +186,13 @@ extension NDMainViewController: UITableViewDelegate {
                 view.alpha = 0.0
               }
             }
-          }, completion: {
-            //self.tableViewTopConstraint.isActive = false
-            //self.tableViewScrolledTopConstraint.isActive = true
           })
         }
         
-        //only 5 elements so you've reached the bottom when the section = 4. Enable the top focus guide to allow upward movement
-        if nextIndexPath.section == modelCount - 1 {
-          //shrinkCell = true
-          //let indexSet: IndexSet = [nextIndexPath.section]
-          //tableView.reloadSections(indexSet, with: .fade)
-        }
-        
-        /*if nextIndexPath.section < modelCount - 1 {
-          shrinkCell = true
-          //let indexSet: IndexSet = [nextIndexPath.section]
-          //tableView.reloadSections(indexSet, with: .fade)
-          let indexSet: IndexSet = [context.previouslyFocusedIndexPath!.section]
-          hiddenRows.append(context.previouslyFocusedIndexPath!.section)
-          tableView.reloadSections(indexSet, with: .fade)
-        }*/
-        if page < modelCount {
-          page = page + 1
-        }
+        //Used for the scrollview delegate
+
+        self.previousIndexPath = previousIndexPath
+        self.nextIndexPath = nextIndexPath
       }
     }
   }
@@ -224,15 +202,7 @@ extension NDMainViewController: UITableViewDelegate {
     return false
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if shrinkCell && indexPath.section == modelCount - 2 {
-      //print("this row \(indexPath.section) will be hidden")
-      //return 284.0
-    }
-    /*if shrinkCell && hiddenRows.contains(indexPath.section) {
-      return 1.0
-    }*/
     return 700
-    
   }
   
 }
@@ -290,12 +260,13 @@ extension NDMainViewController: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nd_main_collection_view_cell", for: indexPath) as! NDMainCollectionViewCell
     
     cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
-    cell.currentRow = collectionView.tag
-    cell.delegate = self
+    //cell.currentRow = collectionView.tag
+    //cell.delegate = self
     
     return cell
   }
   
+  /* Present the video player when the user selects a video. Make sure to send a video object to the video player */
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
     let videoPlayerController = storyboard.instantiateViewController(withIdentifier: "video_player") as! NDVideoPlayerViewController
@@ -319,44 +290,36 @@ extension NDMainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension NDMainViewController: UIScrollViewDelegate {
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    /*print("starting scroll")
-    if !scrolling {
-      UIView.animate(withDuration: 0.4, animations: {
-        self.scrolling = true
-        self.tableView.contentOffset = CGPoint(x: 0, y: 700 * self.page)
-      }) {
-        completed in
-        self.scrolling = false
-      }
-    }*/
-
-  }
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     
-    //tableView.rectFor
+    //print(targetContentOffset.pointee)
+    
+    let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     guard let index = indexPath else { return }
-    /*if index.section < modelCount - 2 {
+    //previousIndexPathSection = index.section
+    /*if index.section <  modelCount - 2 {
       targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section).origin
-    } else {
+      //tableView.focus
+    } else if index.section == modelCount - 2{
       targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section + 1).origin
+    } else {
+      targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section - 1 ).origin
     }*/
-    targetContentOffset.pointee = tableView.rectForHeader(inSection: page).origin
-  }
-  
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    print("stopped scrolling")
-    //scrollView
-    UIView.animate(withDuration: 0.1, animations: {
-      //self.tableView.contentOffset = CGPoint(x: 0, y: 700 * self.page)
-    })
-    //tableView.contentOffset = CGPoint(x: 0, y: 0)
-  }
-  
-  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    print("stopped dragging")
+    
+    targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section).origin
+    
+    if index.section == previousIndexPath.section {
+      targetContentOffset.pointee = tableView.rectForHeader(inSection: nextIndexPath.section).origin
 
+    }
+    
+    //targetContentOffset.pointee = tableView.rect(forSection: index.section).origin
+    /*if index.section == 0 {
+      targetContentOffset.pointee = tableView.rectForFooter(inSection: index.section).origin
+    } else {
+      targetContentOffset.pointee = tableView.rectForFooter(inSection: index.section).origin
+    }*/
+    //tableView.rect
   }
 }

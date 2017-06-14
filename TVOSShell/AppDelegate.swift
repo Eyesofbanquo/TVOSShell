@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           
           let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
           ij.add(to: category, video: swaVideo)
-          //DataStore.add(to: category, video: swaVideo)
           
         }
       })?.notify(queue: .main, execute: {

@@ -31,9 +31,7 @@ class NDVideoPlayerViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  /*override var preferredFocusEnvironments: [UIFocusEnvironment] {
-    return []
-  }*/
+ 
   
   /*
    // MARK: - Navigation

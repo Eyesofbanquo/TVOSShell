@@ -26,18 +26,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("Setting category to AVAudioSessionCategoryPlayback failed.")
     }
     
-    //let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    //guard let splashScreen = storyboard.instantiateViewController(withIdentifier: "splash_screen") as? SplashScreenViewController else { return false}
-    //let navigationController:UINavigationController = UINavigationController(rootViewController: splashScreen)
-    //navigationController.setNavigationBarHidden(true, animated: false)
+    let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+    guard let splashScreen = storyboard.instantiateViewController(withIdentifier: "splash_screen") as? SplashScreenViewController else { return false}
+    let navigationController:UINavigationController = storyboard.instantiateViewController(withIdentifier: "navigation_controller") as! UINavigationController
+    navigationController.pushViewController(splashScreen, animated: false)
+    navigationController.setNavigationBarHidden(true, animated: false)
     
-    let ndStoryboard: UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+    window?.rootViewController = navigationController
+    
+    /*let ndStoryboard: UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
     guard let mainView: NDMainViewController = ndStoryboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return false }
     let navigationController: UINavigationController = UINavigationController(rootViewController: mainView)
+    //navigationControlle
     navigationController.setNavigationBarHidden(true, animated: false)
     self.window?.rootViewController = navigationController
+    //navigationController.view.frame = CGRect(x: 0,y: 0, width: 1920, height: 1080)
+    //
+    //window?.makeKeyAndVisible()
     
-    Winona.auth(completionHandler: {
+    navigationController.navigationBar.shadowImage = UIImage()
+    navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController.navigationBar.clipsToBounds = true*/
+    
+    
+    /*Winona.auth(completionHandler: {
       let facets: [String: [String]] = ["B-Roll":["featured"],"Featured": ["main", "instruction video"]]
       
       //Gain access to the datastore using this class. This class is the equivalent of a viewmodel
@@ -73,16 +85,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           if completed {
             let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
             guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
-            //destination.ij = InnerJoint()
-            //destination.ij.categories = [.featured, .b_roll]
-            //navigationController.pushViewController(destination, animated: true)
-            //print(destination.ij.allData)
+            destination.ij = InnerJoint()
+            destination.ij.categories = [.featured, .b_roll]
+            navigationController.pushViewController(destination, animated: true)
+            //return true
+            print(destination.ij.allData)
           }
         })
       })
-
       
-    })
+      
+    })*/
     
     //self.window?.rootViewController = navigationController
     

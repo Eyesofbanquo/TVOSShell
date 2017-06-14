@@ -53,8 +53,9 @@ class SplashScreenViewController: UIViewController {
           completed in
           //Once the animation is completed inject the available categories into the next controller then launch
           if completed {
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let destination:ScrollMainViewController = storyboard.instantiateViewController(withIdentifier: ScrollMainViewController.storyboard_id) as? ScrollMainViewController else { return }
+            let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+            //guard let destination:ScrollMainViewController = storyboard.instantiateViewController(withIdentifier: ScrollMainViewController.storyboard_id) as? ScrollMainViewController else { return }
+            guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
             destination.ij = InnerJoint()
             destination.ij.categories = [.featured, .b_roll]
             self.navigationController?.pushViewController(destination, animated: true)

@@ -47,9 +47,6 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     
     titleLabelCenterXAnchorFocusedConstraint = titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0.0)
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
-    
-    //descriptionLabel.text = "wgoiangwgioanwoginawohinwaolkfkufkufkycjlycyjyuldluuouldludludtlukxtxtxtl;ud7d;86d7;d6d;6hinawoihnoawnhaowh"
-    
   }
   
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -59,9 +56,8 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     if self == context.nextFocusedView {
       
       self.titleLabel.alpha = 0.0
-
-      titleLabel.addParallaxMotionEffects(tiltValue: 0.2, panValue: 5.0)
-      self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
+      
+      //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
       })
@@ -86,7 +82,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       
     } else if self == context.previouslyFocusedView {
       //descriptionLabel.alpha = 0.0
-      self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height)
+      //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height)
       self.titleLabel.alpha = 0.0
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0

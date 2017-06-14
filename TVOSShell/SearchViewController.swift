@@ -23,9 +23,6 @@ class SearchViewController: UIViewController {
   
   let searchCellId:String = "search_cell"
   
-  //var defaultCollectionViewTopConstraint:NSLayoutYAxisAnchor!
-  //let searchControllerFocusGuide:UIFocusGuide = UIFocusGuide()
-  
   var searchTextField:UITextField!
   var oldBounds:CGRect!
   
@@ -105,7 +102,7 @@ extension SearchViewController:UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.searchCellId, for: indexPath) as? SearchCellCollectionViewCell else { return UICollectionViewCell() }
-    // guard   let vm = self.viewmodel,
+
     if self.filteredResults.count == 0 {
       return cell
     }
@@ -190,6 +187,7 @@ extension SearchViewController:UICollectionViewDataSource {
 extension SearchViewController:UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let text = searchController.searchBar.text, text.characters.count > 0 else { return }
+    guard ij.allData.count > 0 else { return }
     self.filteredResults = self.ij.allData.filter({
       item in
       if item.title.lowercased().contains(text.lowercased()) {

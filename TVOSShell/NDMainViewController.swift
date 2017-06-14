@@ -41,11 +41,6 @@ class NDMainViewController: UIViewController {
   
   var ij: InnerJoint!
   
-  var anchorPosition: CGFloat = 0.0
-  
-  var page: Int = 0
-  //var scrolling: Bool = false
-  var nextIndexPathSection: Int = 1
   var previousIndexPath: IndexPath!
   var nextIndexPath: IndexPath!
   
@@ -56,13 +51,23 @@ class NDMainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    //Remove the items that came before this view
+    var removableIndices:[Int] = []
+    if let controllers = navigationController?.viewControllers {
+      for (index, views) in controllers.enumerated() {
+        if !(views is NDMainViewController) {
+          removableIndices.append(index)
+          //navigationController?.viewControllers.remove(at: index)
+        }
+      }
+    }
+    for i in removableIndices {
+      self.navigationController?.viewControllers.remove(at: i)
+    }
+    
     tableView.dataSource = self
     tableView.delegate = self
     tableView.sectionFooterHeight = 1.0
-    //tableView.rowHeight = 284.0
-    
-    //This property will determine if the second to last view shrinks or not
-    shrinkCell = false
     
     //register the header view
     let nib = UINib(nibName: "NDHeaderView", bundle: nil)
@@ -72,14 +77,27 @@ class NDMainViewController: UIViewController {
     
     tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
     tableViewTopConstraint.isActive = true
-    hiddenRows = []
+    //hiddenRows = []
     
     tableView.delegate = self
     
     
-    //Load the videos from the API. This is temporary atm
+    //searchButton.target(forAction: #selector(NDMainViewController.random(_:)), withSender: self)
+    let searchTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSearchController(_:)))
+    searchButton.addGestureRecognizer(searchTap)
     
+    let favoritesTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadFavoritesController(_:)))
+    favoritesButton.addGestureRecognizer(favoritesTap)
+    
+    let settingsTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSettingsController(_:)))
+    settingsButton.addGestureRecognizer(settingsTap)
+    
+    //Load the videos from the API. This is temporary atm
+    print(ij.allData)
   }
+
+  
+  
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -100,7 +118,7 @@ class NDMainViewController: UIViewController {
     topBarFocusGuide.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
     topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
     
-    tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+    tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80)
     
     //tableView.topAnchor = tableViewTopConstraint
     /*Winona.dispatchGroup.notify(queue: .main, execute: {
@@ -150,7 +168,7 @@ extension NDMainViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     if context.focusHeading == .up {
       
-      if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath, let nextCell = tableView.cellForRow(at: nextIndexPath) as? NDMainTableViewCell {
+      if let nextIndexPath = context.nextFocusedIndexPath, let previousIndexPath = context.previouslyFocusedIndexPath {
         
         //Bring the top bar back
         if nextIndexPath.section == 0 {
@@ -164,6 +182,8 @@ extension NDMainViewController: UITableViewDelegate {
               }
             }
           }, completion: {
+            //self.tableViewTopConstraint.isActive = true
+            //self.tableViewScrolledTopConstraint.isActive = false
           })
         }
         
@@ -186,11 +206,13 @@ extension NDMainViewController: UITableViewDelegate {
                 view.alpha = 0.0
               }
             }
+          }, completion: {
+            //self.tableViewTopConstraint.isActive = false
+            //self.tableViewScrolledTopConstraint.isActive = true
           })
         }
         
         //Used for the scrollview delegate
-
         self.previousIndexPath = previousIndexPath
         self.nextIndexPath = nextIndexPath
       }
@@ -230,9 +252,6 @@ extension NDMainViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
     
-    /*if hiddenRows.contains(indexPath.section) {
-      return cell
-    }*/
     //cell.prepareForReuse()
     return cell
   }
@@ -246,7 +265,7 @@ extension NDMainViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 80.0
+    return 100.0
   }
 }
 
@@ -258,8 +277,8 @@ extension NDMainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nd_main_collection_view_cell", for: indexPath) as! NDMainCollectionViewCell
-    
-    cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
+    cell.backgroundColor = .clear
+    //cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
     //cell.currentRow = collectionView.tag
     //cell.delegate = self
     
@@ -297,29 +316,42 @@ extension NDMainViewController: UIScrollViewDelegate {
     
     let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     guard let index = indexPath else { return }
-    //previousIndexPathSection = index.section
-    /*if index.section <  modelCount - 2 {
-      targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section).origin
-      //tableView.focus
-    } else if index.section == modelCount - 2{
-      targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section + 1).origin
-    } else {
-      targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section - 1 ).origin
-    }*/
     
     targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section).origin
     
     if index.section == previousIndexPath.section {
       targetContentOffset.pointee = tableView.rectForHeader(inSection: nextIndexPath.section).origin
+      //targetContentOffset.pointee.y = targetContentOffset.pointee.y - 100
 
     }
+  }
+}
+
+extension NDMainViewController {
+  
+  func loadSearchController(_ sender: UITapGestureRecognizer) {
+    //print("load search")
+    let resultsController:SearchViewController = SearchViewController()
     
-    //targetContentOffset.pointee = tableView.rect(forSection: index.section).origin
-    /*if index.section == 0 {
-      targetContentOffset.pointee = tableView.rectForFooter(inSection: index.section).origin
-    } else {
-      targetContentOffset.pointee = tableView.rectForFooter(inSection: index.section).origin
-    }*/
-    //tableView.rect
+    let searchController:UISearchController = UISearchController(searchResultsController: resultsController)
+    
+    searchController.searchResultsUpdater = resultsController
+    searchController.obscuresBackgroundDuringPresentation = true
+    searchController.hidesNavigationBarDuringPresentation = false
+    searchController.searchBar.searchBarStyle = .minimal
+    searchController.searchBar.keyboardAppearance = .dark
+    
+    resultsController.searchController = searchController
+    resultsController.ij = InnerJoint()
+    
+    self.present(searchController, animated: true, completion: nil)
+  }
+  
+  func loadFavoritesController(_ sender: UITapGestureRecognizer) {
+    
+  }
+  
+  func loadSettingsController(_ sender: UITapGestureRecognizer) {
+    
   }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eWj-lN-sma">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AIj-NY-cpH">
     <device id="appleTV" orientation="landscape">
         <adaptation id="light"/>
     </device>
@@ -18,6 +18,20 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="elw-jk-Ix4">
+            <objects>
+                <navigationController storyboardIdentifier="navigation_controller" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="AIj-NY-cpH" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eKj-2o-lfU">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UWq-9l-Xbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1884" y="305"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="aYR-KT-hcG">
             <objects>
@@ -111,16 +125,16 @@
                                 </prototypes>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_logo" translatesAutoresizingMaskIntoConstraints="NO" id="peA-c0-nG6">
-                                <rect key="frame" x="28" y="28" width="342" height="72"/>
+                                <rect key="frame" x="28" y="8" width="598" height="140"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="342" id="JOA-2j-jaQ"/>
-                                    <constraint firstAttribute="height" constant="72" id="Yn3-tk-MzJ"/>
+                                    <constraint firstAttribute="width" constant="598" id="JOA-2j-jaQ"/>
+                                    <constraint firstAttribute="height" constant="140" id="Yn3-tk-MzJ"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="eE7-Gi-10X" secondAttribute="trailing" constant="-20" id="2T6-hP-j8z"/>
-                            <constraint firstItem="peA-c0-nG6" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="28" id="6b2-X9-AmE"/>
+                            <constraint firstItem="peA-c0-nG6" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="8" id="6b2-X9-AmE"/>
                             <constraint firstItem="TKv-6N-fis" firstAttribute="top" secondItem="1cH-1c-gPB" secondAttribute="bottom" id="9GN-bZ-Pzm"/>
                             <constraint firstItem="eE7-Gi-10X" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="NBR-cn-Puv"/>
                             <constraint firstItem="822-fa-4tq" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="45" id="SZy-nP-X8I"/>
@@ -326,6 +340,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1n-kf-PZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2330" y="239"/>
+        </scene>
+        <!--Splash Screen View Controller-->
+        <scene sceneID="rvw-cg-ejS">
+            <objects>
+                <viewController storyboardIdentifier="splash_screen" id="lbE-Yd-1kG" customClass="SplashScreenViewController" customModule="TVOSShell" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="e5x-gf-DSn"/>
+                        <viewControllerLayoutGuide type="bottom" id="JY8-6j-hEs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NCD-Fh-Pvm">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_background" translatesAutoresizingMaskIntoConstraints="NO" id="2Bq-vm-4I3">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_logo" translatesAutoresizingMaskIntoConstraints="NO" id="Wtr-HA-cce">
+                                <rect key="frame" x="471" y="279" width="979" height="522"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="979" id="ZRt-gg-dtE"/>
+                                    <constraint firstAttribute="height" constant="522" id="fRc-Of-bTJ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="JY8-6j-hEs" firstAttribute="top" secondItem="2Bq-vm-4I3" secondAttribute="bottom" id="HE0-qj-ELQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Bq-vm-4I3" secondAttribute="trailing" constant="-20" id="Kzr-VQ-Roq"/>
+                            <constraint firstItem="Wtr-HA-cce" firstAttribute="centerY" secondItem="NCD-Fh-Pvm" secondAttribute="centerY" id="Mcj-17-u3r"/>
+                            <constraint firstItem="Wtr-HA-cce" firstAttribute="centerX" secondItem="NCD-Fh-Pvm" secondAttribute="centerX" id="dva-6I-Aty"/>
+                            <constraint firstItem="2Bq-vm-4I3" firstAttribute="top" secondItem="e5x-gf-DSn" secondAttribute="bottom" id="kVg-8L-4DS"/>
+                            <constraint firstItem="2Bq-vm-4I3" firstAttribute="leading" secondItem="NCD-Fh-Pvm" secondAttribute="leadingMargin" constant="-20" id="pJm-0d-D3j"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dec-rf-xia" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="244" y="-1185"/>
         </scene>
     </scenes>
     <resources>

@@ -66,9 +66,6 @@ class ScrollMainViewController: UIViewController {
       self.navigationController?.viewControllers.remove(at: i)
     }
     
-    //self.ij = InnerJoint()
-    //self.ij.categories = self.categories
-    
     //Configure the collection view
     self._collectionView.delegate = self
     self._collectionView.dataSource = self

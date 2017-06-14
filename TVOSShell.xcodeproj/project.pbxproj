@@ -31,6 +31,7 @@
 		D5437BFD1EEB3E1100460D58 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437BFC1EEB3E1100460D58 /* NavigationBar.swift */; };
 		D5437BFF1EEF553400460D58 /* NDVideoPlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437BFE1EEF553400460D58 /* NDVideoPlayerControl.swift */; };
 		D5437C011EEF576900460D58 /* NDVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437C001EEF576900460D58 /* NDVideoPlayerViewController.swift */; };
+		D5437C031EF1CAFE00460D58 /* NDSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5437C021EF1CAFE00460D58 /* NDSearchViewController.swift */; };
 		D55D69BC1EE73E8B00BAFB0C /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5D2CBB31EE738F4004F66A2 /* fontawesome-webfont.ttf */; };
 		D55D69BE1EE742ED00BAFB0C /* NDMainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D69BD1EE742ED00BAFB0C /* NDMainTableViewCell.swift */; };
 		D55D69C01EE7431300BAFB0C /* CategoryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55D69BF1EE7431300BAFB0C /* CategoryCellView.xib */; };
@@ -84,6 +85,7 @@
 		D5437BFC1EEB3E1100460D58 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		D5437BFE1EEF553400460D58 /* NDVideoPlayerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVideoPlayerControl.swift; sourceTree = "<group>"; };
 		D5437C001EEF576900460D58 /* NDVideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVideoPlayerViewController.swift; sourceTree = "<group>"; };
+		D5437C021EF1CAFE00460D58 /* NDSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDSearchViewController.swift; sourceTree = "<group>"; };
 		D55D69BD1EE742ED00BAFB0C /* NDMainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDMainTableViewCell.swift; sourceTree = "<group>"; };
 		D55D69BF1EE7431300BAFB0C /* CategoryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCellView.xib; sourceTree = "<group>"; };
 		D55D69C11EE81FD600BAFB0C /* NDHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDHeader.swift; sourceTree = "<group>"; };
@@ -237,8 +239,6 @@
 		D50123321ECCE7C0003854B3 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				D50123331ECCE7EF003854B3 /* SearchViewController.swift */,
-				D50123411ECEB6FD003854B3 /* SearchCell.xib */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -297,6 +297,9 @@
 				D55D69C51EE8216700BAFB0C /* NDMainCollectionViewCell.swift */,
 				D55D69C71EE8240500BAFB0C /* NDMainCollectionViewCell.xib */,
 				D5437C001EEF576900460D58 /* NDVideoPlayerViewController.swift */,
+				D5437C021EF1CAFE00460D58 /* NDSearchViewController.swift */,
+				D50123331ECCE7EF003854B3 /* SearchViewController.swift */,
+				D50123411ECEB6FD003854B3 /* SearchCell.xib */,
 			);
 			name = NewDesign;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				D50123441ECEB788003854B3 /* SearchCellCollectionViewCell.swift in Sources */,
 				D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */,
 				D55D69C61EE8216700BAFB0C /* NDMainCollectionViewCell.swift in Sources */,
+				D5437C031EF1CAFE00460D58 /* NDSearchViewController.swift in Sources */,
 				D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */,
 				D50123091EC3C179003854B3 /* AppDelegate.swift in Sources */,
 				D50123281EC64318003854B3 /* UpcomingEventsViewController.swift in Sources */,

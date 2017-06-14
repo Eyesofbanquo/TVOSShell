@@ -33,7 +33,14 @@ class DataStore {
       case featured = "featured"
       case instruction_video = "instruction video"
     }
+    
+    enum Position: Int {
+      case featured = 0
+      case b_roll
+    }
   }
+  
+  
   
   /// The ViewModel for this project
   class InnerJoint {
@@ -47,6 +54,27 @@ class DataStore {
         (key, value) in
         return value
       })
+    }
+    
+    /// Get the data at a given position in the DataStore data structure
+    ///
+    /// - Parameter pos: the position to retrieve
+    /// - Returns: the videos at the given position
+    func data(atRow pos: Int) -> [Video] {
+      var category: DataStore.Category
+      switch pos {
+      case 0:
+        category = .featured
+      case 1:
+        category = .b_roll
+      default:
+        category = .featured
+      }
+      let array = data(for: category).flatMap({
+        video in
+        return video
+      })
+      return array
     }
     
     /// Retrieve the first item from the given category and subcategory

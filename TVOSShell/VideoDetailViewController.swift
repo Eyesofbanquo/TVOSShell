@@ -162,7 +162,6 @@ class VideoDetailViewController: UIViewController {
     guard let url = URL(string: self.videoURLString) else { return }
     let asset:AVURLAsset = AVURLAsset(url: url)
     let playerItem:AVPlayerItem = AVPlayerItem(url: url)
-    //let playerItem:AVPlayerItem = AVPlayerItem(asset: asset)
     let player:AVPlayer = AVPlayer(playerItem: playerItem)
     
     // Create a new AVPlayerViewController and pass it a reference to the player.

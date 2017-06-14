@@ -16,4 +16,20 @@ protocol Video {
   var duration:Double { get }
   var category:DataStore.Category.Sub { get }
   
+  
+  
+}
+
+extension Video {
+  func getTime() -> (minutes: Int, seconds: Double) {
+    let seconds = duration.truncatingRemainder(dividingBy: 60.0)
+    var totalDuration: Double = duration - seconds
+    var minutes: Int = 0
+    while totalDuration > 0 {
+      minutes = minutes + 1
+      totalDuration = totalDuration - 60
+    }
+    
+    return (minutes, seconds)
+  }
 }

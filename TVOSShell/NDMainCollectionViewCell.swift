@@ -12,6 +12,9 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var duration: UILabel!
+  @IBOutlet weak var durationView: UIView!
+  @IBOutlet weak var descriptionView: UIView!
   
   //Unfocused constraints
   @IBOutlet weak var titleLabelBottomAnchorConstraint: NSLayoutConstraint!
@@ -47,6 +50,8 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     
     titleLabelCenterXAnchorFocusedConstraint = titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0.0)
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
+    
+    durationView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
   }
   
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -67,7 +72,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       if descriptionLabel != nil {
         createDescriptionLabel()
         coordinator.addCoordinatedAnimations({
-          self.descriptionLabel.alpha = 1.0
+          self.descriptionView.alpha = 1.0
         }, completion: nil)
         UIView.animate(withDuration: animationDuration, animations: {
         })
@@ -76,7 +81,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
         createDescriptionLabel()
         
         UIView.animate(withDuration: animationDuration, animations: {
-          self.descriptionLabel.alpha = 1.0
+          self.descriptionView.alpha = 1.0
         })
       }
       
@@ -92,7 +97,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
 
       //remove the description view
       coordinator.addCoordinatedAnimations({
-        self.descriptionLabel.alpha = 0.0
+        self.descriptionView.alpha = 0.0
       }, completion: nil)
     }
     
@@ -101,9 +106,10 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   private func createDescriptionLabel() {
     //Reveal the caption UILabel
     descriptionLabel = UITextView()
-    descriptionLabel.alpha = 0.0
+    descriptionView.alpha = 0.0
     descriptionLabel.text = "wgoiangwgioanwoginawohinwaolkfkufkufkycjlycyjyuldluuouldludludtlukxtxtxtl;ud7d;86d7;d6d;6hinawoihnoawnhaowh"
-    self.addSubview(descriptionLabel)
+    descriptionView.addSubview(descriptionLabel)
+    //self.addSubview(descriptionLabel)
     
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20.0).isActive = true

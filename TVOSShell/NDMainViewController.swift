@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class NDMainViewController: UIViewController {
   
@@ -19,21 +21,14 @@ class NDMainViewController: UIViewController {
   var tableViewTopConstraint: NSLayoutConstraint!
   var tableViewScrolledTopConstraint: NSLayoutConstraint!
   
-  
-  
-  
-  var modelColors: [[UIColor]] = generateRandomData()
-  
-  var previousTableViewOrigin: CGPoint = CGPoint.zero
-  
   override var preferredFocusEnvironments: [UIFocusEnvironment] {
     return [tableView]
   }
   
-  var hiddenRows: [Int]!
+  //var hiddenRows: [Int]!
   
   var focusGuide: UIFocusGuide!
-  var shrinkCell: Bool!
+  //var shrinkCell: Bool!
 
   //For the top bar navigation that holds the SWA logo and 3 buttons
   var topBarFocusGuide: UIFocusGuide!
@@ -45,8 +40,11 @@ class NDMainViewController: UIViewController {
   var nextIndexPath: IndexPath!
   
   var modelCount: Int {
-    return 5
+    guard let categories = ij.categories else { return 0 }
+    return categories.count
   }
+  
+  var categoryNames: [String] = ["Gary's Takeoff", "Safety and Security", "Work Perks", "Office Space", "Extra Mile", "Around Our SysteM"]
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -93,7 +91,7 @@ class NDMainViewController: UIViewController {
     settingsButton.addGestureRecognizer(settingsTap)
     
     //Load the videos from the API. This is temporary atm
-    print(ij.allData)
+    //print(ij.allData)
   }
 
   
@@ -246,11 +244,16 @@ extension NDMainViewController: UITableViewDataSource {
   }
   /* You control the number of rows total by controlling the number of sections = categories in the app */
   func numberOfSections(in tableView: UITableView) -> Int {
-    return modelCount
+    if let categories = ij.categories {
+      return categories.count
+    }
+    return 0
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
+    
+    
     
     //cell.prepareForReuse()
     return cell
@@ -260,7 +263,7 @@ extension NDMainViewController: UITableViewDataSource {
     let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
     
     let header = cell as! NDHeader
-    header.titleLabel.text = "Category Name"
+    header.titleLabel.text = categoryNames[section].uppercased()
     return header
   }
   
@@ -272,7 +275,7 @@ extension NDMainViewController: UITableViewDataSource {
 extension NDMainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 20
+    return ij.data(atRow: collectionView.tag).count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -281,6 +284,75 @@ extension NDMainViewController: UICollectionViewDataSource {
     //cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
     //cell.currentRow = collectionView.tag
     //cell.delegate = self
+    
+    let urlString = ij.data(atRow: collectionView.tag)[indexPath.item].thumbnailUri
+    let url = URL(string: urlString)
+    /*URLSession.shared.dataTask(with: url!) {
+      data, response, error in
+      guard let data = data else { return }
+      let image = UIImage(data: data)
+      DispatchQueue.main.async {
+        cell.imageView.image = image
+      }
+      }.resume()*/
+    
+    let id = ij.data(atRow: collectionView.tag)[indexPath.item].id
+    
+    var urlComponents:URLComponents = URLComponents()
+    urlComponents.scheme = "https"
+    urlComponents.host = "stage-swatv.wieck.com"
+    urlComponents.path = "/api/v1/videos/\(id)"
+    //let videoURL = urlComponents.url!
+    
+    
+    
+    Alamofire.request(urlComponents).responseJSON(completionHandler: {
+      response in
+      switch response.result {
+        
+      case .success(_):
+        /*let json = JSON(data: response.data!)
+        let downloads = json["downloads"]
+        if downloads["source"] != JSON.null {
+          videoURLString = downloads["source"]["uri"].stringValue
+        } else if downloads["720p"] != JSON.null {
+          videoURLString = downloads["720p"]["uri"].stringValue
+        }*/
+        let json = JSON(data: response.data!)
+        print(json)
+        var videoURLString: String
+        videoURLString = json["downloads"]["720p"]["uri"].stringValue
+        let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
+        let thumbnailString = videoURLString.substring(to: index) + ".jpg"
+        
+        
+        let url = URL(string: thumbnailString)
+        URLSession.shared.dataTask(with: url!) {
+          data, response, error in
+          guard let data = data else { return }
+          let image = UIImage(data: data)
+          DispatchQueue.main.async {
+            cell.imageView.image = image
+          }
+          }.resume()
+        
+      case .failure(_):
+        break
+      }
+    })
+    
+    let duration = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().minutes
+    let seconds = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().seconds
+    
+    if duration == 1 {
+      cell.duration.text = "\(duration) min"
+    } else if duration > 1{
+      cell.duration.text = "\(duration) mins"
+    } else {
+      cell.duration.text = "\(ceil(seconds)) s"
+    }
+    //cell.duration.text = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().minutes
+    
     
     return cell
   }
@@ -312,7 +384,6 @@ extension NDMainViewController: UIScrollViewDelegate {
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     
-    //print(targetContentOffset.pointee)
     
     let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     guard let index = indexPath else { return }
@@ -321,8 +392,6 @@ extension NDMainViewController: UIScrollViewDelegate {
     
     if index.section == previousIndexPath.section {
       targetContentOffset.pointee = tableView.rectForHeader(inSection: nextIndexPath.section).origin
-      //targetContentOffset.pointee.y = targetContentOffset.pointee.y - 100
-
     }
   }
 }
@@ -330,7 +399,6 @@ extension NDMainViewController: UIScrollViewDelegate {
 extension NDMainViewController {
   
   func loadSearchController(_ sender: UITapGestureRecognizer) {
-    //print("load search")
     let resultsController:SearchViewController = SearchViewController()
     
     let searchController:UISearchController = UISearchController(searchResultsController: resultsController)

@@ -15,6 +15,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var duration: UILabel!
   @IBOutlet weak var durationView: UIView!
   @IBOutlet weak var descriptionView: UIView!
+  @IBOutlet weak var descriptionLabel: UILabel!
   
   //Unfocused constraints
   @IBOutlet weak var titleLabelBottomAnchorConstraint: NSLayoutConstraint!
@@ -24,7 +25,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   //focused constraints
   var titleLabelCenterXAnchorFocusedConstraint: NSLayoutConstraint!
   
-  var descriptionLabel:UITextView!
+  //var descriptionLabel:UITextView!
   
   private var animationDuration:TimeInterval = 0.4
   
@@ -46,12 +47,18 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    imageView.backgroundColor = .red
     
     titleLabelCenterXAnchorFocusedConstraint = titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0.0)
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
     
     durationView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    descriptionLabel.text = "iawnogawiohohwahoaoigowgiahgoihowawhawhi"
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    imageView.image = nil
   }
   
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -62,14 +69,16 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       
       self.titleLabel.alpha = 0.0
       
+      
       //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
+        self.descriptionView.alpha = 1.0
       })
       self.setFocusedState()
 
       //Add the description view to this collection view cell
-      if descriptionLabel != nil {
+      /*if descriptionLabel != nil {
         createDescriptionLabel()
         coordinator.addCoordinatedAnimations({
           self.descriptionView.alpha = 1.0
@@ -83,16 +92,18 @@ class NDMainCollectionViewCell: UICollectionViewCell {
         UIView.animate(withDuration: animationDuration, animations: {
           self.descriptionView.alpha = 1.0
         })
-      }
+      }*/
       
     } else if self == context.previouslyFocusedView {
       //descriptionLabel.alpha = 0.0
       //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height)
       self.titleLabel.alpha = 0.0
+      
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
+        self.descriptionView.alpha = 0.0
       })
-      //self.setUnFocusedState()
+      self.setUnFocusedState()
       titleLabel.motionEffects = []
 
       //remove the description view
@@ -103,7 +114,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     
   }
   
-  private func createDescriptionLabel() {
+  /*private func createDescriptionLabel() {
     //Reveal the caption UILabel
     descriptionLabel = UITextView()
     descriptionView.alpha = 0.0
@@ -119,7 +130,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     descriptionLabel.textContainer.maximumNumberOfLines = 3
     descriptionLabel.textContainer.lineBreakMode = .byTruncatingTail
     descriptionLabel.addParallaxMotionEffects(tiltValue: 0.0, panValue: 5.0)
-  }
+  }*/
   
   private func createConstraints(){
     
@@ -139,7 +150,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     //                                 titleLabelBottomAnchorUnfocusedConstraint
     //                                 titleLabelTopAnchorUnfocusedConstraint
     //titleLabelTopAnchorConstraint.isActive = true
-    titleLabelBottomAnchorConstraint.isActive = false
+   // titleLabelBottomAnchorConstraint.isActive = false
     titleLabelCenterXAnchorFocusedConstraint.isActive = true
     titleLabelLeftAnchorConstraint.isActive = false
     
@@ -147,9 +158,11 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   
   private func setUnFocusedState(){
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
-    //titleLabelTopAnchorConstraint.isActive = true
-    titleLabelBottomAnchorConstraint.isActive = true
     titleLabelLeftAnchorConstraint.isActive = true
+    //titleLabelBottomAnchorConstraint.isActive = true
+    //titleLabelLeftAnchorConstraint.isActive = true
+    //self.layoutIfNeeded()
+    //self.layoutSubviews()
   }
   
 }

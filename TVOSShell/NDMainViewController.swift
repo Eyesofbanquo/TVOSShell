@@ -284,6 +284,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     //cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
     //cell.currentRow = collectionView.tag
     //cell.delegate = self
+    cell.prepareForReuse()
     
     let urlString = ij.data(atRow: collectionView.tag)[indexPath.item].thumbnailUri
     let url = URL(string: urlString)
@@ -302,8 +303,6 @@ extension NDMainViewController: UICollectionViewDataSource {
     urlComponents.scheme = "https"
     urlComponents.host = "stage-swatv.wieck.com"
     urlComponents.path = "/api/v1/videos/\(id)"
-    //let videoURL = urlComponents.url!
-    
     
     
     Alamofire.request(urlComponents).responseJSON(completionHandler: {
@@ -311,13 +310,6 @@ extension NDMainViewController: UICollectionViewDataSource {
       switch response.result {
         
       case .success(_):
-        /*let json = JSON(data: response.data!)
-        let downloads = json["downloads"]
-        if downloads["source"] != JSON.null {
-          videoURLString = downloads["source"]["uri"].stringValue
-        } else if downloads["720p"] != JSON.null {
-          videoURLString = downloads["720p"]["uri"].stringValue
-        }*/
         let json = JSON(data: response.data!)
         print(json)
         var videoURLString: String
@@ -349,10 +341,8 @@ extension NDMainViewController: UICollectionViewDataSource {
     } else if duration > 1{
       cell.duration.text = "\(duration) mins"
     } else {
-      cell.duration.text = "\(ceil(seconds)) s"
+      cell.duration.text = "\(Int(ceil(seconds))) s"
     }
-    //cell.duration.text = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().minutes
-    
     
     return cell
   }

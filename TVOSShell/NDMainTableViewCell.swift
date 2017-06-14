@@ -22,6 +22,15 @@ class NDMainTableViewCell: UITableViewCell {
     collectionView.delegate = d
     collectionView.tag = row
     
+    /*let flowLayout = UICollectionViewFlowLayout()
+    flowLayout.itemSize = CGSize(width: 567.0, height: 364.0)
+    flowLayout.minimumLineSpacing = 20.0
+    flowLayout.minimumInteritemSpacing = 150
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20.0, bottom: 0.0, right: 50.0)
+    flowLayout.scrollDirection = .horizontal
+    collectionView.collectionViewLayout = flowLayout*/
+    
+    
     let nib = UINib(nibName: "NDMainCollectionViewCell", bundle: nil)
     collectionView.register(nib, forCellWithReuseIdentifier: "nd_main_collection_view_cell")
     collectionView.remembersLastFocusedIndexPath = false

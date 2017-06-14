@@ -21,7 +21,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   //focused constraints
   var titleLabelCenterXAnchorFocusedConstraint: NSLayoutConstraint!
   
-  var descriptionLabel:UITextView!
+  @IBOutlet weak var descriptionLabel:UITextView!
   
   private var animationDuration:TimeInterval = 0.4
   
@@ -48,21 +48,18 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     titleLabelCenterXAnchorFocusedConstraint = titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0.0)
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
     
+    //descriptionLabel.text = "wgoiangwgioanwoginawohinwaolkfkufkufkycjlycyjyuldluuouldludludtlukxtxtxtl;ud7d;86d7;d6d;6hinawoihnoawnhaowh"
+    
   }
   
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     createConstraints()
     
-    /*if context.focusHeading == .down || context.focusHeading == .up{
-      delegate?.currentTopCollectionViewRow = currentRow
-      //delegate?.tableView.beginUpdates()
-      //delegate?.tableView.endUpdates()
-    }*/
-    
     //Adjust the height of the cell whenever it is focused/unfocused
     if self == context.nextFocusedView {
       
       self.titleLabel.alpha = 0.0
+      descriptionLabel.alpha = 1.0
 
       titleLabel.addParallaxMotionEffects(tiltValue: 0.2, panValue: 5.0)
       self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
@@ -72,7 +69,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       self.setFocusedState()
 
       //Add the description view to this collection view cell
-      if descriptionLabel != nil {
+      /*if descriptionLabel != nil {
         //createDescriptionLabel()
         coordinator.addCoordinatedAnimations({
           self.descriptionLabel.alpha = 1.0
@@ -81,20 +78,21 @@ class NDMainCollectionViewCell: UICollectionViewCell {
         })
       } else {
        
-        createDescriptionLabel()
+        //createDescriptionLabel()
         
         UIView.animate(withDuration: animationDuration, animations: {
           self.descriptionLabel.alpha = 1.0
         })
-      }
+      }*/
       
     } else if self == context.previouslyFocusedView {
+      //descriptionLabel.alpha = 0.0
       self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height)
       self.titleLabel.alpha = 0.0
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
       })
-      self.setUnFocusedState()
+      //self.setUnFocusedState()
       titleLabel.motionEffects = []
 
       //remove the description view

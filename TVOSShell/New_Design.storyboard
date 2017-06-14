@@ -63,32 +63,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="800" sectionHeaderHeight="100" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Gi-10X">
-                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="700" sectionHeaderHeight="100" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Gi-10X">
+                                <rect key="frame" x="0.0" y="156" width="1920" height="924"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="nd_category_cell" id="7xw-lO-cUg" customClass="NDMainTableViewCell" customModule="TVOSShell" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="1920" height="800"/>
+                                        <rect key="frame" x="0.0" y="100" width="1920" height="700"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7xw-lO-cUg" id="RR5-xS-dLG">
-                                            <rect key="frame" x="0.0" y="0.0" width="1904" height="800"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1904" height="700"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lhM-Lq-qyi">
-                                                    <rect key="frame" x="8" y="8" width="1904" height="784"/>
+                                                    <rect key="frame" x="8" y="8" width="1968" height="692"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YsS-a1-eqn">
-                                                        <size key="itemSize" width="567" height="364"/>
+                                                        <size key="itemSize" width="567" height="570"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="20" minY="0.0" maxX="40" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="AW3-0I-irg" customClass="NDMainCollectionViewCell" customModule="TVOSShell" customModuleProvider="target">
-                                                            <rect key="frame" x="20" y="0.0" width="567" height="364"/>
+                                                            <rect key="frame" x="20" y="61" width="567" height="570"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="567" height="364"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="567" height="570"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                             </view>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -99,8 +99,8 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="lhM-Lq-qyi" firstAttribute="leading" secondItem="RR5-xS-dLG" secondAttribute="leadingMargin" id="5m7-1f-PwW"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="lhM-Lq-qyi" secondAttribute="bottom" id="DBh-We-rfM"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="lhM-Lq-qyi" secondAttribute="trailing" id="OWg-lA-wdt"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="lhM-Lq-qyi" secondAttribute="bottom" constant="-8" id="DBh-We-rfM"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lhM-Lq-qyi" secondAttribute="trailing" constant="-64" id="OWg-lA-wdt"/>
                                                 <constraint firstItem="lhM-Lq-qyi" firstAttribute="top" secondItem="RR5-xS-dLG" secondAttribute="topMargin" id="mmH-Fk-gb1"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -131,7 +131,7 @@
                             <constraint firstItem="Oim-aA-XfB" firstAttribute="top" secondItem="3t9-Qv-sNG" secondAttribute="topMargin" constant="45" id="jDB-eA-yTM"/>
                             <constraint firstItem="Oim-aA-XfB" firstAttribute="leading" secondItem="822-fa-4tq" secondAttribute="trailing" constant="30" id="lX8-NO-ate"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Oim-aA-XfB" secondAttribute="trailing" constant="38" id="njP-ZR-4k3"/>
-                            <constraint firstItem="eE7-Gi-10X" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" id="o9Z-vq-4Wd"/>
+                            <constraint firstItem="eE7-Gi-10X" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="156" id="o9Z-vq-4Wd"/>
                             <constraint firstItem="TKv-6N-fis" firstAttribute="top" secondItem="eE7-Gi-10X" secondAttribute="bottom" id="pJd-8C-Fyb"/>
                             <constraint firstItem="Iwe-a9-yeb" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="45" id="qfE-eP-3gJ"/>
                             <constraint firstItem="1cH-1c-gPB" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="rMj-45-wd7"/>

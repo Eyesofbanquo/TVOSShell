@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol Video {
   var id:String { get }
@@ -14,22 +15,21 @@ protocol Video {
   var date:String { get }
   var title:String { get }
   var duration:Double { get }
-  var category:DataStore.Category.Sub { get }
-  
+  var category:DataStore.Category.Sub { get }  
   
   
 }
 
 extension Video {
-  func getTime() -> (minutes: Int, seconds: Double) {
-    let seconds = duration.truncatingRemainder(dividingBy: 60.0)
-    var totalDuration: Double = duration - seconds
+  func getTime() -> (minutes: Int, seconds: Int) {
+    let s = duration.truncatingRemainder(dividingBy: 60.0)
+    var totalDuration: Double = duration - s
     var minutes: Int = 0
     while totalDuration > 0 {
       minutes = minutes + 1
       totalDuration = totalDuration - 60
     }
-    
+    let seconds = Int(ceil(s))
     return (minutes, seconds)
   }
 }

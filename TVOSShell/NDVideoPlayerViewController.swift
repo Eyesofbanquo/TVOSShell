@@ -16,14 +16,47 @@ class NDVideoPlayerViewController: UIViewController {
   @IBOutlet weak var restart: NDVideoPlayerControl!
   @IBOutlet weak var favorite: NDVideoPlayerControl!
   
+  @IBOutlet weak var backgroundImage: UIImageView!
+  
   @IBOutlet weak var video_title: UILabel!
   @IBOutlet weak var date: UILabel!
   @IBOutlet weak var duration: UILabel!
+  
+  var time: (Int, Int)!
   
   var video: Video!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    time = video.getTime()
+    
+    if time.0 > 0 {
+      duration.text = "\(time.0) minutes and \(time.1) seconds"
+    } else {
+      duration.text = "\(time.1) seconds"
+    }
+    
+    //yearString = video.date.characters[0]
+    
+    let index = video.date.index(video.date.startIndex, offsetBy: 19)
+    let dateString = video.date.substring(to: index)
+    print(dateString)
+    
+    
+    let RFC3339DateFormatter = DateFormatter()
+    RFC3339DateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    RFC3339DateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    RFC3339DateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+    
+    //let string = "2017-05-30T21:05:09"
+    let date = RFC3339DateFormatter.date(from: dateString)
+    RFC3339DateFormatter.dateFormat = "MMM d, yyyy"
+    let newDate = RFC3339DateFormatter.string(from: date!)
+    print(newDate)
+    
+    self.video_title.text = video.title
+    self.date.text = newDate
     
     // Do any additional setup after loading the view.
   }

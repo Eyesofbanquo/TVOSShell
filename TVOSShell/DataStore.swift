@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 /// Typealias for Category.Sub
 typealias SubCategory = DataStore.Category.Sub
 typealias InnerJoint = DataStore.InnerJoint
@@ -114,6 +115,7 @@ class DataStore {
   static private var dispatchGroup:DispatchGroup = DispatchGroup()
   
   static private var videos:[Category:[Video]] = [:]
+  static private var images: [String: UIImage] = [:]
   
   static private(set) var numberOfCategories:Int = {
     return videos.count

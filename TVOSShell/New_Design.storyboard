@@ -176,6 +176,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_background" translatesAutoresizingMaskIntoConstraints="NO" id="xlp-Xx-bwb">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V5q-Ic-8sf">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz6-t5-eix">
                                 <rect key="frame" x="45" y="206" width="760" height="362"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -184,6 +190,7 @@
                                     <constraint firstAttribute="height" constant="362" id="Efg-Jw-LSl"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -316,19 +323,28 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="xlp-Xx-bwb" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="-20" id="6Or-C6-1W4"/>
                             <constraint firstItem="zz6-t5-eix" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="206" id="9w3-80-xor"/>
                             <constraint firstItem="27H-7y-Qgz" firstAttribute="leading" secondItem="wRc-ee-O33" secondAttribute="trailing" constant="30" id="CoV-YA-80d"/>
+                            <constraint firstItem="V5q-Ic-8sf" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="-20" id="LEI-Yu-faW"/>
+                            <constraint firstItem="xlp-Xx-bwb" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" id="Lxg-gZ-N2y"/>
                             <constraint firstItem="6js-X4-m1v" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="39" id="NE6-qY-Bhm"/>
+                            <constraint firstItem="3A0-qz-JWK" firstAttribute="top" secondItem="xlp-Xx-bwb" secondAttribute="bottom" id="Nhb-mF-p6v"/>
                             <constraint firstItem="3Rc-Zf-FNg" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="Q1i-7k-Uxo"/>
                             <constraint firstItem="6js-X4-m1v" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="QcD-77-eVP"/>
                             <constraint firstItem="3A0-qz-JWK" firstAttribute="top" secondItem="3Rc-Zf-FNg" secondAttribute="bottom" constant="60" id="Qkb-jl-5NK"/>
+                            <constraint firstItem="V5q-Ic-8sf" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" id="Ves-xX-2he"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xlp-Xx-bwb" secondAttribute="trailing" constant="-20" id="YzR-N4-rF6"/>
+                            <constraint firstItem="3A0-qz-JWK" firstAttribute="top" secondItem="V5q-Ic-8sf" secondAttribute="bottom" id="chC-Ib-EoW"/>
                             <constraint firstItem="wRc-ee-O33" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="119" id="ctA-vS-urs"/>
                             <constraint firstItem="wRc-ee-O33" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="dtn-Zx-BX4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="V5q-Ic-8sf" secondAttribute="trailing" constant="-20" id="iNx-ag-f2X"/>
                             <constraint firstItem="zz6-t5-eix" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="jbl-sM-sjJ"/>
                             <constraint firstItem="27H-7y-Qgz" firstAttribute="top" secondItem="ihy-Gg-rOC" secondAttribute="topMargin" constant="119" id="uyu-X1-wzb"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backgroundImage" destination="V5q-Ic-8sf" id="Crm-vp-IMI"/>
                         <outlet property="date" destination="wRc-ee-O33" id="vJJ-0E-dsv"/>
                         <outlet property="duration" destination="27H-7y-Qgz" id="l0M-MH-wyb"/>
                         <outlet property="favorite" destination="wSw-bi-bsj" id="GZA-Rc-RrV"/>

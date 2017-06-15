@@ -180,8 +180,6 @@ extension NDMainViewController: UITableViewDelegate {
               }
             }
           }, completion: {
-            //self.tableViewTopConstraint.isActive = true
-            //self.tableViewScrolledTopConstraint.isActive = false
           })
         }
         
@@ -311,9 +309,18 @@ extension NDMainViewController: UICollectionViewDataSource {
         
       case .success(_):
         let json = JSON(data: response.data!)
-        print(json)
+        //print(json)
         var videoURLString: String
         videoURLString = json["downloads"]["720p"]["uri"].stringValue
+        
+        // MARK: Get the date the video was actually created - uncomment below
+        
+        //let authorAtString = json["source"]["authoredAt"].stringValue
+        //print(authorAtString)
+        /*if var swa = self.ij.data(atRow: collectionView.tag)[indexPath.item] as? SWAVideo {
+          swa.set(authoredDate: authorAtString, instead: true)
+        }*/
+        
         let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
         let thumbnailString = videoURLString.substring(to: index) + ".jpg"
         
@@ -341,7 +348,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     } else if duration > 1{
       cell.duration.text = "\(duration) mins"
     } else {
-      cell.duration.text = "\(Int(ceil(seconds))) s"
+      cell.duration.text = "\(seconds) s"
     }
     
     return cell
@@ -351,7 +358,38 @@ extension NDMainViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
     let videoPlayerController = storyboard.instantiateViewController(withIdentifier: "video_player") as! NDVideoPlayerViewController
-    self.present(videoPlayerController, animated: true, completion: nil)
+    
+    let cell = collectionView.cellForItem(at: indexPath) as! NDMainCollectionViewCell
+    
+    //let time: (Int, Int) = ij.data(atRow: collectionView.tag)[indexPath.item].getTime()
+    //videoPlayerController.time = time
+    videoPlayerController.video = ij.data(atRow: collectionView.tag)[indexPath.item]
+    
+    if let image = cell.imageView.image {
+      
+      /* Set a gradient on the image in the background */
+      let gradientLayer:CAGradientLayer = CAGradientLayer()
+      gradientLayer.frame = self.view.bounds
+      gradientLayer.colors = [
+        UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1).cgColor,
+        UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0).cgColor]
+      gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+      gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+      //self.backgroundImage.layer.mask = gradientLayer
+      
+      //Set up the visual for the video player controller
+      self.present(videoPlayerController, animated: true, completion: {
+        videoPlayerController.backgroundImage.alpha = 0.0
+        videoPlayerController.backgroundImage.image = image
+        videoPlayerController.backgroundImage.layer.mask = gradientLayer
+        
+        UIView.animate(withDuration: 3.0, animations: {
+          videoPlayerController.backgroundImage.alpha = 1.0
+          
+        })
+      })
+    }
+    
   }
 }
 

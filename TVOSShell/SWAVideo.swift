@@ -35,6 +35,11 @@ struct SWAVideo:Video {
     
   }
   
+  mutating func set(authoredDate dateString: String, instead: Bool){
+    if instead {
+      self.date = dateString
+    }
+  }
   
   /*var videoURL:URL?{
    

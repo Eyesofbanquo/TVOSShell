@@ -92,8 +92,8 @@
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fj3-5U-gtq">
                     <rect key="frame" x="0.0" y="364" width="567" height="206"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3b-6J-OS3">
-                            <rect key="frame" x="8" y="8" width="551" height="198"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3b-6J-OS3">
+                            <rect key="frame" x="8" y="8" width="551" height="46"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -102,7 +102,6 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Q3b-6J-OS3" firstAttribute="top" secondItem="fj3-5U-gtq" secondAttribute="top" constant="8" id="Bs0-2K-9yb"/>
-                        <constraint firstAttribute="bottom" secondItem="Q3b-6J-OS3" secondAttribute="bottom" id="JqH-Py-iVn"/>
                         <constraint firstItem="Q3b-6J-OS3" firstAttribute="leading" secondItem="fj3-5U-gtq" secondAttribute="leading" constant="8" id="KO0-F1-l1F"/>
                         <constraint firstAttribute="trailing" secondItem="Q3b-6J-OS3" secondAttribute="trailing" constant="8" id="rah-li-UW4"/>
                     </constraints>

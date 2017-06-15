@@ -17,6 +17,7 @@ protocol Video {
   var duration:Double { get }
   var category:DataStore.Category.Sub { get }
   var caption: String { get }
+  var videoURL: String { get }
   
   
 }

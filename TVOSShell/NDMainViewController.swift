@@ -279,66 +279,22 @@ extension NDMainViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nd_main_collection_view_cell", for: indexPath) as! NDMainCollectionViewCell
     cell.backgroundColor = .clear
-    //cell.backgroundColor = modelColors[collectionView.tag][indexPath.item]
-    //cell.currentRow = collectionView.tag
-    //cell.delegate = self
+    
     cell.prepareForReuse()
     
-    let urlString = ij.data(atRow: collectionView.tag)[indexPath.item].thumbnailUri
-    let url = URL(string: urlString)
-    /*URLSession.shared.dataTask(with: url!) {
+    let id = ij.data(atRow: collectionView.tag)[indexPath.item].id
+    
+    let video = ij.data(atRow: collectionView.tag)[indexPath.item]
+    
+    let u = URL(string: video.thumbnailUri)
+    URLSession.shared.dataTask(with: u!) {
       data, response, error in
       guard let data = data else { return }
       let image = UIImage(data: data)
       DispatchQueue.main.async {
         cell.imageView.image = image
       }
-      }.resume()*/
-    
-    let id = ij.data(atRow: collectionView.tag)[indexPath.item].id
-    
-    var urlComponents:URLComponents = URLComponents()
-    urlComponents.scheme = "https"
-    urlComponents.host = "stage-swatv.wieck.com"
-    urlComponents.path = "/api/v1/videos/\(id)"
-    
-    
-    Alamofire.request(urlComponents).responseJSON(completionHandler: {
-      response in
-      switch response.result {
-        
-      case .success(_):
-        let json = JSON(data: response.data!)
-        //print(json)
-        var videoURLString: String
-        videoURLString = json["downloads"]["720p"]["uri"].stringValue
-        
-        // MARK: Get the date the video was actually created - uncomment below
-        
-        //let authorAtString = json["source"]["authoredAt"].stringValue
-        //print(authorAtString)
-        /*if var swa = self.ij.data(atRow: collectionView.tag)[indexPath.item] as? SWAVideo {
-          swa.set(authoredDate: authorAtString, instead: true)
-        }*/
-        
-        let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
-        let thumbnailString = videoURLString.substring(to: index) + ".jpg"
-        
-        
-        let url = URL(string: thumbnailString)
-        URLSession.shared.dataTask(with: url!) {
-          data, response, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          DispatchQueue.main.async {
-            cell.imageView.image = image
-          }
-          }.resume()
-        
-      case .failure(_):
-        break
-      }
-    })
+      }.resume()
     
     let duration = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().minutes
     let seconds = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().seconds
@@ -350,6 +306,9 @@ extension NDMainViewController: UICollectionViewDataSource {
     } else {
       cell.duration.text = "\(seconds) s"
     }
+    
+    cell.titleLabel.text = video.title
+    cell.descriptionLabel.text = video.caption
     
     return cell
   }
@@ -448,6 +407,12 @@ extension NDMainViewController {
   }
   
   func loadSettingsController(_ sender: UITapGestureRecognizer) {
-    
+    /* The last item in the list should be the settings item which will allow the user to log in and out of the tvOS app. Logging in and out should only be used for switching users and not to maintain multiple accounts for the same user */
+    let alertController:UIAlertController = UIAlertController(title: "Logout?", message: "Would You Like To Logout?", preferredStyle: .alert)
+    let confirmButton:UIAlertAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+    alertController.addAction(confirmButton)
+    let cancelButton:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    alertController.addAction(cancelButton)
+    self.present(alertController, animated: true, completion: nil)
   }
 }

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import AVKit
 
 class NDVideoPlayerViewController: UIViewController {
   
@@ -27,6 +28,9 @@ class NDVideoPlayerViewController: UIViewController {
   
   var video: Video!
   
+  var playingVideo: Bool = false
+  var playerController: AVPlayerViewController!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -41,7 +45,7 @@ class NDVideoPlayerViewController: UIViewController {
     
     let index = video.date.index(video.date.startIndex, offsetBy: 19)
     let dateString = video.date.substring(to: index)
-    print(dateString)
+    //print(dateString)
     
     
     let RFC3339DateFormatter = DateFormatter()
@@ -56,6 +60,17 @@ class NDVideoPlayerViewController: UIViewController {
     self.video_title.text = video.title
     self.date.text = newDate
     self.video_description.text = video.caption
+    
+    let playTap = UITapGestureRecognizer(target: self, action: #selector(NDVideoPlayerViewController.playTap(_:)))
+    play.addGestureRecognizer(playTap)
+    
+    let resumeTap = UITapGestureRecognizer(target: self, action: #selector(NDVideoPlayerViewController.resumeTap(_:)))
+    restart.addGestureRecognizer(resumeTap)
+    
+    let favoritesTap = UITapGestureRecognizer(target: self, action: #selector(NDVideoPlayerViewController.favoritesTap(_:)))
+    favorite.addGestureRecognizer(favoritesTap)
+    
+    
     
   }
   
@@ -95,6 +110,14 @@ class NDVideoPlayerViewController: UIViewController {
     return vString
   }
   
+  override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+    for item in presses {
+      if item.type == .menu {
+        //playerController.removeFromParentViewController()
+        //self.dismiss(animated: true, completion: nil)
+      }
+    }
+  }
   
   /*
    // MARK: - Navigation
@@ -106,4 +129,49 @@ class NDVideoPlayerViewController: UIViewController {
    }
    */
   
+}
+
+extension NDVideoPlayerViewController {
+  func playTap(_ sender: UITapGestureRecognizer) {
+    
+    guard let url = URL(string: video.videoURL) else { return }
+    let asset:AVURLAsset = AVURLAsset(url: url)
+    let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+    let player:AVPlayer = AVPlayer(playerItem: playerItem)
+    
+    let restoration: String = "nd_video"
+    let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
+    let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
+    controller.player = AVPlayerViewController()
+    controller.player.player = player
+    
+    self.present(controller, animated: true, completion: nil)
+    
+    // Create a new AVPlayerViewController and pass it a reference to the player.
+    /*playerController = AVPlayerViewController()
+    playerController.player = player
+    
+    //NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: controller.player?.currentItem)
+    
+    // Add the video player as a child to this view controller
+    self.addChildViewController(playerController)
+    
+    // Add its view so that it will be able to be displayed and also create its frame so that it will have a size
+    self.view.addSubview(playerController.view)
+    playerController.view.frame = self.view.bounds
+    
+    //Notify the child that it has been made a child to this parent view controller
+    playerController.didMove(toParentViewController: self)
+    playerController.showsPlaybackControls = true
+    playerController.player?.play()
+    playerController.view.isUserInteractionEnabled = true*/
+  }
+  
+  func resumeTap(_ sender: UITapGestureRecognizer) {
+    
+  }
+  
+  func favoritesTap(_ sender: UITapGestureRecognizer) {
+    
+  }
 }

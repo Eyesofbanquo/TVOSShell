@@ -8,6 +8,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="MundoSansStd-Bold.otf">
+            <string>MundoSansStd-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,7 +26,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAj-vv-bon">
                             <rect key="frame" x="0.0" y="0.0" width="567" height="284"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ckM-pZ-f1L">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ckM-pZ-f1L">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="284"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="284" id="6yT-6H-tFG"/>
@@ -63,16 +68,16 @@
                             <rect key="frame" x="0.0" y="284" width="567" height="80"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ids-HM-IYF">
-                                    <rect key="frame" x="20" y="17" width="93" height="46"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                    <nil key="textColor"/>
+                                    <rect key="frame" x="20" y="17" width="93" height="61"/>
+                                    <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
+                                    <color key="textColor" red="0.18829268217086792" green="0.29721635580062866" blue="0.69687467813491821" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="Ids-HM-IYF" firstAttribute="top" secondItem="42g-Kx-iMv" secondAttribute="top" constant="17" id="0D2-Jt-0cl"/>
-                                <constraint firstAttribute="bottom" secondItem="Ids-HM-IYF" secondAttribute="bottom" constant="17" id="BWk-ij-aVv"/>
+                                <constraint firstAttribute="bottom" secondItem="Ids-HM-IYF" secondAttribute="bottom" constant="2" id="BWk-ij-aVv"/>
                                 <constraint firstItem="Ids-HM-IYF" firstAttribute="leading" secondItem="42g-Kx-iMv" secondAttribute="leading" constant="20" id="Dvp-21-Epj"/>
                             </constraints>
                         </view>
@@ -93,8 +98,8 @@
                     <rect key="frame" x="0.0" y="364" width="567" height="206"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3b-6J-OS3">
-                            <rect key="frame" x="8" y="8" width="551" height="46"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <rect key="frame" x="20" y="8" width="539" height="46"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="38"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -102,7 +107,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Q3b-6J-OS3" firstAttribute="top" secondItem="fj3-5U-gtq" secondAttribute="top" constant="8" id="Bs0-2K-9yb"/>
-                        <constraint firstItem="Q3b-6J-OS3" firstAttribute="leading" secondItem="fj3-5U-gtq" secondAttribute="leading" constant="8" id="KO0-F1-l1F"/>
+                        <constraint firstItem="Q3b-6J-OS3" firstAttribute="leading" secondItem="fj3-5U-gtq" secondAttribute="leading" constant="20" id="KO0-F1-l1F"/>
                         <constraint firstAttribute="trailing" secondItem="Q3b-6J-OS3" secondAttribute="trailing" constant="8" id="rah-li-UW4"/>
                     </constraints>
                 </view>

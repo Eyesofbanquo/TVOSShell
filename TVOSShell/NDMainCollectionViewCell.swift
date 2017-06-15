@@ -70,7 +70,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       self.titleLabel.alpha = 0.0
       
       
-      //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.focusedFrame.height)
+      //self.frame = CGRect(x: self.frame.origin.x - self.focusedFrame.width / 2, y: self.frame.origin.y, width: self.focusedFrame.width, height: self.focusedFrame.height)
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
         self.descriptionView.alpha = 1.0
@@ -96,7 +96,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       
     } else if self == context.previouslyFocusedView {
       //descriptionLabel.alpha = 0.0
-      //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height)
+      //self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.unfocusedFrame.width, height: self.unfocusedFrame.height
       self.titleLabel.alpha = 0.0
       
       UIView.animate(withDuration: animationDuration, animations: {
@@ -151,14 +151,14 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     //                                 titleLabelTopAnchorUnfocusedConstraint
     //titleLabelTopAnchorConstraint.isActive = true
    // titleLabelBottomAnchorConstraint.isActive = false
-    titleLabelCenterXAnchorFocusedConstraint.isActive = true
-    titleLabelLeftAnchorConstraint.isActive = false
+    //titleLabelCenterXAnchorFocusedConstraint.isActive = true
+    //titleLabelLeftAnchorConstraint.isActive = false
     
   }
   
   private func setUnFocusedState(){
-    titleLabelCenterXAnchorFocusedConstraint.isActive = false
-    titleLabelLeftAnchorConstraint.isActive = true
+   // titleLabelCenterXAnchorFocusedConstraint.isActive = false
+    //titleLabelLeftAnchorConstraint.isActive = true
     //titleLabelBottomAnchorConstraint.isActive = true
     //titleLabelLeftAnchorConstraint.isActive = true
     //self.layoutIfNeeded()

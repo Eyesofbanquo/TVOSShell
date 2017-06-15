@@ -157,7 +157,13 @@ class Winona {
         
         let description = json["caption"].stringValue
         
-        let v = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailString, date: authorAtString, duration: duration, caption: description)
+        if json["downloads"]["source"] != JSON.null {
+          videoURLString = json["downloads"]["source"]["uri"].stringValue
+        } else if json["downloads"]["720p"] != JSON.null {
+          videoURLString = json["downloads"]["720p"]["uri"].stringValue
+        }
+        
+        let v = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailString, date: authorAtString, duration: duration, caption: description, videoURL: videoURLString)
         completionHandler!(v)
         
         self.dispatchGroup.leave()

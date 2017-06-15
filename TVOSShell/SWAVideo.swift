@@ -19,6 +19,7 @@ struct SWAVideo:Video {
   private(set) var date:String
   private(set) var duration:Double
   private(set) var caption: String
+  private(set) var videoURL: String
   //private(set) var category: [String]
   
   var thumbnailImage:UIImage? {

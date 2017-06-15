@@ -13,6 +13,8 @@ class NDVideoPlayerControl: UIView {
   @IBOutlet weak var icon: UILabel!
   @IBOutlet weak var text: UILabel!
   
+  var isActivated: Bool = false
+  
   override var canBecomeFocused: Bool {
     return true
   }
@@ -30,10 +32,20 @@ class NDVideoPlayerControl: UIView {
       self.backgroundColor = .white
       self.alpha = 1.0
     } else {
-      icon.textColor = .white
-      text.textColor = .white
-      self.backgroundColor = .black
-      self.alpha = 0.5
+      
+      if isActivated {
+        self.backgroundColor = UIColor(hex: "304cb2")
+        text.textColor = .white
+        icon.textColor = .white
+        self.alpha = 1.0
+      } else {
+        icon.textColor = .white
+        text.textColor = .white
+        self.backgroundColor = .black
+        self.alpha = 0.5
+      }
+      
+      
     }
   }
   

@@ -403,7 +403,7 @@ extension NDMainViewController {
   }
   
   func loadFavoritesController(_ sender: UITapGestureRecognizer) {
-    
+    //Winona.add(toFavorites: video.id)
   }
   
   func loadSettingsController(_ sender: UITapGestureRecognizer) {

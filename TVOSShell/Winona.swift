@@ -18,6 +18,34 @@ class Winona {
   static private(set) var dispatchGroup: DispatchGroup = DispatchGroup()
   static private(set) var authenticated: Bool = false
   
+  static private(set) var favoriteVideos: [String] = []
+  
+
+  /// Add video to the users favorites
+  ///
+  /// - Parameter id: video id to favorite
+  static func add(toFavorites id: String) -> Bool{
+    if !favoriteVideos.contains(id) {
+      favoriteVideos.append(id)
+      return true
+    }
+    return false
+  }
+  static func remove(fromFavorites id: String) {
+    guard favoriteVideos.count != 0 else { return }
+    for (index, i) in favoriteVideos.enumerated() {
+      if i == id {
+        favoriteVideos.remove(at: index)
+        return
+      }
+    }
+  }
+  
+  //Use cloudkit here
+  static func loadFavorites() {
+    
+  }
+  
   
   static func searches(facets:[String:[String]], completionHandler:((DataStore.Category, SubCategory, (DataResponse<Any>)) -> Void)?) -> DispatchGroup? {
     //Get the index for the first category

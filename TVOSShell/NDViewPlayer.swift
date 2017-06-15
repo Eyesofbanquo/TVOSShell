@@ -30,6 +30,13 @@ class NDViewPlayer: UIViewController {
     player.showsPlaybackControls = true
     player.player?.play()
     player.view.isUserInteractionEnabled = true
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(NDViewPlayer.endVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.player?.currentItem)
+  }
+  
+  func endVideo() {
+    NotificationCenter.default.removeObserver(self)
+    self.dismiss(animated: true, completion: nil)
   }
   
   override func didReceiveMemoryWarning() {

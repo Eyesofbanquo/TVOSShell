@@ -169,9 +169,32 @@ extension NDVideoPlayerViewController {
   
   func resumeTap(_ sender: UITapGestureRecognizer) {
     
+    guard let url = URL(string: video.videoURL) else { return }
+    let asset:AVURLAsset = AVURLAsset(url: url)
+    let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+    let player:AVPlayer = AVPlayer(playerItem: playerItem)
+    
+    let restoration: String = "nd_video"
+    let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
+    let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
+    controller.player = AVPlayerViewController()
+    controller.player.player = player
+    
+    self.present(controller, animated: true, completion: nil)
   }
   
   func favoritesTap(_ sender: UITapGestureRecognizer) {
+    if Winona.add(toFavorites: video.id) {
+      favorite.isActivated = true
+      favorite.setNeedsFocusUpdate()
+      favorite.updateFocusIfNeeded()
+    } else {
+      Winona.remove(fromFavorites: video.id)
+      
+      favorite.isActivated = false
+      
+    }
+    
     
   }
 }

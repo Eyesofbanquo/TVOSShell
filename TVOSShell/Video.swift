@@ -15,7 +15,8 @@ protocol Video {
   var date:String { get }
   var title:String { get }
   var duration:Double { get }
-  var category:DataStore.Category.Sub { get }  
+  var category:DataStore.Category.Sub { get }
+  var caption: String { get }
   
   
 }

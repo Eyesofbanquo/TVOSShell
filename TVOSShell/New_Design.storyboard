@@ -182,18 +182,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V5q-Ic-8sf">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz6-t5-eix">
-                                <rect key="frame" x="45" y="206" width="760" height="362"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="760" id="32a-cW-HVd"/>
-                                    <constraint firstAttribute="height" constant="362" id="Efg-Jw-LSl"/>
-                                </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6js-X4-m1v">
                                 <rect key="frame" x="45" y="39" width="760" height="70"/>
                                 <constraints>
@@ -321,11 +309,20 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8i-Rk-mEf">
+                                <rect key="frame" x="45" y="186" width="760" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="760" id="7Tr-UP-NGL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstItem="xlp-Xx-bwb" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="-20" id="6Or-C6-1W4"/>
-                            <constraint firstItem="zz6-t5-eix" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="206" id="9w3-80-xor"/>
                             <constraint firstItem="27H-7y-Qgz" firstAttribute="leading" secondItem="wRc-ee-O33" secondAttribute="trailing" constant="30" id="CoV-YA-80d"/>
+                            <constraint firstItem="C8i-Rk-mEf" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="IGp-lf-9FK"/>
                             <constraint firstItem="V5q-Ic-8sf" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="-20" id="LEI-Yu-faW"/>
                             <constraint firstItem="xlp-Xx-bwb" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" id="Lxg-gZ-N2y"/>
                             <constraint firstItem="6js-X4-m1v" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="39" id="NE6-qY-Bhm"/>
@@ -339,8 +336,8 @@
                             <constraint firstItem="wRc-ee-O33" firstAttribute="top" secondItem="igo-Ec-nyE" secondAttribute="bottom" constant="119" id="ctA-vS-urs"/>
                             <constraint firstItem="wRc-ee-O33" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="dtn-Zx-BX4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="V5q-Ic-8sf" secondAttribute="trailing" constant="-20" id="iNx-ag-f2X"/>
-                            <constraint firstItem="zz6-t5-eix" firstAttribute="leading" secondItem="ihy-Gg-rOC" secondAttribute="leadingMargin" constant="25" id="jbl-sM-sjJ"/>
                             <constraint firstItem="27H-7y-Qgz" firstAttribute="top" secondItem="ihy-Gg-rOC" secondAttribute="topMargin" constant="119" id="uyu-X1-wzb"/>
+                            <constraint firstItem="C8i-Rk-mEf" firstAttribute="top" secondItem="wRc-ee-O33" secondAttribute="bottom" constant="25" id="zBa-MW-lU1"/>
                         </constraints>
                     </view>
                     <connections>
@@ -350,6 +347,7 @@
                         <outlet property="favorite" destination="wSw-bi-bsj" id="GZA-Rc-RrV"/>
                         <outlet property="play" destination="bUV-9s-Lkf" id="mqh-pv-08H"/>
                         <outlet property="restart" destination="nXf-yL-zvV" id="06d-zF-g7M"/>
+                        <outlet property="video_description" destination="C8i-Rk-mEf" id="hcP-f7-dKH"/>
                         <outlet property="video_title" destination="6js-X4-m1v" id="1TS-QX-pyX"/>
                     </connections>
                 </viewController>

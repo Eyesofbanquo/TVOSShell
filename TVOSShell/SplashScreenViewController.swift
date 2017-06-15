@@ -26,7 +26,8 @@ class SplashScreenViewController: UIViewController {
       
       Winona.searches(facets: facets, completionHandler: {
         category, sub, response in
-        
+        //Winona.dispatchGroup.enter()
+
         guard let data = response.data else { return }
         
         //create the json object using SwiftyJSON
@@ -40,13 +41,22 @@ class SplashScreenViewController: UIViewController {
           let thumbnailUri:String = object["thumbnailUri"].stringValue
           let date:String = object["date"].stringValue
           
-          let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration)
-          ij.add(to: category, video: swaVideo)
-          //DataStore.add(to: category, video: swaVideo)
+          //print(object)
+          //let swaVideo:SWAVideo = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailUri, date: date, duration: duration, caption: "")
+          //ij.add(to: category, video: swaVideo)
           
+
+          let swaVideo2 = Winona.loadVideoInformation(from: id, for: category, in: sub, completionHandler: {
+            video in
+            ij.add(to: category, video: video)
+          })
+          //print(swaVideo2)
+          //DataStore.add(to: category, video: swaVideo)
+          //Winona.dispatchGroup.leave()
+
         }
+        Winona.dispatchGroup.leave()
       })?.notify(queue: .main, execute: {
-        //Execute once all of the API loading has been completed
         UIView.animate(withDuration: 0.4, animations: {
           
         }, completion: {
@@ -63,16 +73,18 @@ class SplashScreenViewController: UIViewController {
           }
         })
       })
-      /*Winona.dispatchGroup.notify(queue: .main, execute: {
-        
+
+      /*?.notify(queue: .main, execute: {
+        //Execute once all of the API loading has been completed
         UIView.animate(withDuration: 0.4, animations: {
           
         }, completion: {
           completed in
           //Once the animation is completed inject the available categories into the next controller then launch
           if completed {
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let destination:ScrollMainViewController = storyboard.instantiateViewController(withIdentifier: ScrollMainViewController.storyboard_id) as? ScrollMainViewController else { return }
+            let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+            //guard let destination:ScrollMainViewController = storyboard.instantiateViewController(withIdentifier: ScrollMainViewController.storyboard_id) as? ScrollMainViewController else { return }
+            guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
             destination.ij = InnerJoint()
             destination.ij.categories = [.featured, .b_roll]
             self.navigationController?.pushViewController(destination, animated: true)

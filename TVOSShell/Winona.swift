@@ -14,9 +14,9 @@ import UIKit
 /* The class for networking */
 class Winona {
   
-  private static var urlRequest:URLRequest?
-  static private(set) var dispatchGroup:DispatchGroup = DispatchGroup()
-  static private(set) var authenticated:Bool = false
+  private static var urlRequest: URLRequest?
+  static private(set) var dispatchGroup: DispatchGroup = DispatchGroup()
+  static private(set) var authenticated: Bool = false
   
   
   static func searches(facets:[String:[String]], completionHandler:((DataStore.Category, SubCategory, (DataResponse<Any>)) -> Void)?) -> DispatchGroup? {
@@ -89,7 +89,7 @@ class Winona {
       
       guard let completion = completionHandler else { return }
       completion(response)
-      self.dispatchGroup.leave()
+      //self.dispatchGroup.leave()
     }
     
     
@@ -123,8 +123,50 @@ class Winona {
       self.authenticated = true
       completion()
     })
+  }
+  
+  static func loadVideoInformation(from id: String, for category: DataStore.Category, in sub: SubCategory, completionHandler: ((Video) -> Void)?){
+    //let id = ij.data(atRow: collectionView.tag)[indexPath.item].id
     
+    var urlComponents:URLComponents = URLComponents()
+    urlComponents.scheme = "https"
+    urlComponents.host = "stage-swatv.wieck.com"
+    urlComponents.path = "/api/v1/videos/\(id)"
     
+    self.dispatchGroup.enter()
+    Alamofire.request(urlComponents).responseJSON(completionHandler: {
+      response in
+      switch response.result {
+        
+      case .success(_):
+        let json = JSON(data: response.data!)
+        var videoURLString: String
+        videoURLString = json["downloads"]["720p"]["uri"].stringValue
+        
+        // MARK: Get the date the video was actually created - uncomment below
+        
+        let authorAtString = json["source"]["authoredAt"].stringValue
+        
+        let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
+        
+        let thumbnailString = videoURLString.substring(to: index) + ".jpg"
+        
+        let duration = json["source"]["duration"].doubleValue
+        
+        let title = json["title"].stringValue
+        
+        let description = json["caption"].stringValue
+        
+        let v = SWAVideo(id: id, category: sub, title: title, thumbnailUri: thumbnailString, date: authorAtString, duration: duration, caption: description)
+        completionHandler!(v)
+        
+        self.dispatchGroup.leave()
+      case .failure(_):
+        break
+      }
+    })
+
     
+    //return video
   }
 }

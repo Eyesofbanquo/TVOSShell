@@ -21,6 +21,7 @@ class NDVideoPlayerViewController: UIViewController {
   @IBOutlet weak var video_title: UILabel!
   @IBOutlet weak var date: UILabel!
   @IBOutlet weak var duration: UILabel!
+  @IBOutlet weak var video_description: UILabel!
   
   var time: (Int, Int)!
   
@@ -37,7 +38,6 @@ class NDVideoPlayerViewController: UIViewController {
       duration.text = "\(time.1) seconds"
     }
     
-    //yearString = video.date.characters[0]
     
     let index = video.date.index(video.date.startIndex, offsetBy: 19)
     let dateString = video.date.substring(to: index)
@@ -49,16 +49,14 @@ class NDVideoPlayerViewController: UIViewController {
     RFC3339DateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
     RFC3339DateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
     
-    //let string = "2017-05-30T21:05:09"
     let date = RFC3339DateFormatter.date(from: dateString)
     RFC3339DateFormatter.dateFormat = "MMM d, yyyy"
     let newDate = RFC3339DateFormatter.string(from: date!)
-    print(newDate)
     
     self.video_title.text = video.title
     self.date.text = newDate
+    self.video_description.text = video.caption
     
-    // Do any additional setup after loading the view.
   }
   
   override func didReceiveMemoryWarning() {

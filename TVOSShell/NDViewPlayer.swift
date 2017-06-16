@@ -27,9 +27,9 @@ class NDViewPlayer: UIViewController {
     
     //Notify the child that it has been made a child to this parent view controller
     player.didMove(toParentViewController: self)
-    player.showsPlaybackControls = true
+    //player.showsPlaybackControls = true
     player.player?.play()
-    player.view.isUserInteractionEnabled = true
+    //player.view.isUserInteractionEnabled = true
     
     NotificationCenter.default.addObserver(self, selector: #selector(NDViewPlayer.endVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.player?.currentItem)
   }

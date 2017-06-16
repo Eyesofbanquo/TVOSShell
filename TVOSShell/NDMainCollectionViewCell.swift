@@ -15,7 +15,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var duration: UILabel!
   @IBOutlet weak var durationView: UIView!
   @IBOutlet weak var descriptionView: UIView!
-  @IBOutlet weak var descriptionLabel: UILabel!
+  @IBOutlet weak var descriptionLabel: UITextView!
   
   //Unfocused constraints
   @IBOutlet weak var titleLabelBottomAnchorConstraint: NSLayoutConstraint!
@@ -52,7 +52,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     titleLabelCenterXAnchorFocusedConstraint.isActive = false
     
     durationView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-    descriptionLabel.text = "iawnogawiohohwahoaoigowgiahgoihowawhawhi"
+    descriptionLabel.textContainer.maximumNumberOfLines = 4
   }
   
   override func prepareForReuse() {

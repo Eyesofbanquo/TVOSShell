@@ -39,10 +39,7 @@ class NDMainViewController: UIViewController {
   var previousIndexPath: IndexPath!
   var nextIndexPath: IndexPath!
   
-  var modelCount: Int {
-    guard let categories = ij.categories else { return 0 }
-    return categories.count
-  }
+  var modelCount: Int = 0
   
   var categoryNames: [String] = ["Gary's Takeoff", "Safety and Security", "Work Perks", "Office Space", "Extra Mile", "Around Our SysteM"]
   
@@ -117,11 +114,6 @@ class NDMainViewController: UIViewController {
     topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
     
     tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80)
-    
-    //tableView.topAnchor = tableViewTopConstraint
-    /*Winona.dispatchGroup.notify(queue: .main, execute: {
-      print("jobs have been completed")
-    })*/
   }
   
   override func didReceiveMemoryWarning() {
@@ -242,18 +234,12 @@ extension NDMainViewController: UITableViewDataSource {
   }
   /* You control the number of rows total by controlling the number of sections = categories in the app */
   func numberOfSections(in tableView: UITableView) -> Int {
-    if let categories = ij.categories {
-      return categories.count
-    }
-    return 0
+    return modelCount
+    
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "nd_category_cell", for: indexPath) as? NDMainTableViewCell else { return UITableViewCell() }
-    
-    
-    
-    //cell.prepareForReuse()
     return cell
   }
   
@@ -326,6 +312,8 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     if let image = cell.imageView.image {
       
+      videoPlayerController.backgroundImage = image
+      
       /* Set a gradient on the image in the background */
       let gradientLayer:CAGradientLayer = CAGradientLayer()
       gradientLayer.frame = self.view.bounds
@@ -337,16 +325,7 @@ extension NDMainViewController: UICollectionViewDataSource {
       //self.backgroundImage.layer.mask = gradientLayer
       
       //Set up the visual for the video player controller
-      self.present(videoPlayerController, animated: true, completion: {
-        videoPlayerController.backgroundImage.alpha = 0.0
-        videoPlayerController.backgroundImage.image = image
-        videoPlayerController.backgroundImage.layer.mask = gradientLayer
-        
-        UIView.animate(withDuration: 3.0, animations: {
-          videoPlayerController.backgroundImage.alpha = 1.0
-          
-        })
-      })
+      self.present(videoPlayerController, animated: true, completion: nil)
     }
     
   }

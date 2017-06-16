@@ -97,18 +97,19 @@
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fj3-5U-gtq">
                     <rect key="frame" x="0.0" y="364" width="567" height="206"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3b-6J-OS3">
-                            <rect key="frame" x="20" y="8" width="539" height="46"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh8-Jw-C6p">
+                            <rect key="frame" x="0.0" y="0.0" width="567" height="206"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="Q3b-6J-OS3" firstAttribute="top" secondItem="fj3-5U-gtq" secondAttribute="top" constant="8" id="Bs0-2K-9yb"/>
-                        <constraint firstItem="Q3b-6J-OS3" firstAttribute="leading" secondItem="fj3-5U-gtq" secondAttribute="leading" constant="20" id="KO0-F1-l1F"/>
-                        <constraint firstAttribute="trailing" secondItem="Q3b-6J-OS3" secondAttribute="trailing" constant="8" id="rah-li-UW4"/>
+                        <constraint firstItem="lh8-Jw-C6p" firstAttribute="leading" secondItem="fj3-5U-gtq" secondAttribute="leading" id="Dsn-kD-sXn"/>
+                        <constraint firstItem="lh8-Jw-C6p" firstAttribute="top" secondItem="fj3-5U-gtq" secondAttribute="top" id="T7L-B0-P2f"/>
+                        <constraint firstAttribute="trailing" secondItem="lh8-Jw-C6p" secondAttribute="trailing" id="VXP-s9-AJD"/>
+                        <constraint firstAttribute="bottom" secondItem="lh8-Jw-C6p" secondAttribute="bottom" id="eC6-4S-1wY"/>
                     </constraints>
                 </view>
             </subviews>
@@ -124,7 +125,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="descriptionLabel" destination="Q3b-6J-OS3" id="PVZ-cT-nHS"/>
+                <outlet property="descriptionLabel" destination="lh8-Jw-C6p" id="y0a-GT-2De"/>
                 <outlet property="descriptionView" destination="fj3-5U-gtq" id="XVX-s0-ejL"/>
                 <outlet property="duration" destination="nBe-C3-sJB" id="awG-mf-cLT"/>
                 <outlet property="durationView" destination="aqp-jX-kWf" id="mWl-dZ-bSz"/>

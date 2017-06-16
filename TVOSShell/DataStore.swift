@@ -17,6 +17,9 @@ class DataStore {
   enum Category:String {
     case featured = "Featured"
     case b_roll = "B-Roll"
+    case cat3 = "Category3"
+    case cat4 = "Category4"
+    case cat5 = "Category5"
     
     init?(string:String){
       switch string{
@@ -24,6 +27,12 @@ class DataStore {
         self = .featured
       case "B-Roll":
         self = .b_roll
+      case "Category3":
+        self = .cat3
+      case "Category4":
+        self = .cat4
+      case "Category5":
+        self = .cat5
       default:
         self = .featured
       }
@@ -33,11 +42,17 @@ class DataStore {
       case main = "main"
       case featured = "featured"
       case instruction_video = "instruction video"
+      case cat3 = "cat3"
+      case cat4 = "cat4"
+      case cat5 = "cat5"
     }
     
     enum Position: Int {
       case featured = 0
       case b_roll
+      case cat3
+      case cat4
+      case cat5
     }
   }
   
@@ -68,6 +83,12 @@ class DataStore {
         category = .featured
       case 1:
         category = .b_roll
+      case 2:
+        category = .cat3
+      case 3:
+        category = .cat4
+      case 4:
+        category = .cat5
       default:
         category = .featured
       }
@@ -189,6 +210,27 @@ class DataStore {
         }
       }
       finalData.append(featured)
+    case .cat3:
+      var array:[Video] = []
+      _ = self.videos[category]?.map {
+        video in
+        array.append(video)
+      }
+      finalData.append(array)
+    case .cat4:
+      var array:[Video] = []
+      _ = self.videos[category]?.map {
+        video in
+        array.append(video)
+      }
+      finalData.append(array)
+    case .cat5:
+      var array:[Video] = []
+      _ = self.videos[category]?.map {
+        video in
+        array.append(video)
+      }
+      finalData.append(array)
     }
     return finalData
   }

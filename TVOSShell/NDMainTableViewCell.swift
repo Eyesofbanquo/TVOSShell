@@ -33,7 +33,7 @@ class NDMainTableViewCell: UITableViewCell {
     
     let nib = UINib(nibName: "NDMainCollectionViewCell", bundle: nil)
     collectionView.register(nib, forCellWithReuseIdentifier: "nd_main_collection_view_cell")
-    collectionView.remembersLastFocusedIndexPath = true
+    collectionView.remembersLastFocusedIndexPath = false
     //collectionView.remembersLastFocusedIndexPath = true
     //collectionView.sp
     collectionView.reloadData()

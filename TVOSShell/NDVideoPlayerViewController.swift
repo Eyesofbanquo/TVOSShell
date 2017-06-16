@@ -17,7 +17,10 @@ class NDVideoPlayerViewController: UIViewController {
   @IBOutlet weak var restart: NDVideoPlayerControl!
   @IBOutlet weak var favorite: NDVideoPlayerControl!
   
-  @IBOutlet weak var backgroundImage: UIImageView!
+  @IBOutlet weak var backgroundImageView: UIImageView!
+  var backgroundImage: UIImage!
+  var appeared: Bool = false
+  
   
   @IBOutlet weak var video_title: UILabel!
   @IBOutlet weak var date: UILabel!
@@ -33,6 +36,22 @@ class NDVideoPlayerViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    
+    /* Set a gradient on the image in the background */
+    let gradientLayer:CAGradientLayer = CAGradientLayer()
+    gradientLayer.frame = self.view.bounds
+    gradientLayer.colors = [
+      UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1).cgColor,
+      UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0).cgColor]
+    gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+    gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+    
+    //Set up the visual for the video player controller
+    backgroundImageView.image = backgroundImage
+    backgroundImageView.alpha = 0.0
+    backgroundImageView.layer.mask = gradientLayer
+    
     
     time = video.getTime()
     
@@ -74,12 +93,23 @@ class NDVideoPlayerViewController: UIViewController {
     
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    if !appeared {
+      UIView.animate(withDuration: 1.0, animations: {
+        self.backgroundImageView.alpha = 1.0
+      })
+      appeared = !appeared
+    }
+    
+  }
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
   
-  private func createVideoURL() -> String{
+func createVideoURL() -> String{
     let urlString = "https://stage-swatv.wieck.com/api/v1/videos/\(video.id)/720p"
     
     var urlComponents:URLComponents = URLComponents()
@@ -95,6 +125,7 @@ class NDVideoPlayerViewController: UIViewController {
       switch response.result {
       case .success(_):
         let json = JSON(data: response.data!)
+        print(json)
         let downloads = json["downloads"]
         if downloads["source"] != JSON.null {
           videoURLString = downloads["source"]["uri"].stringValue
@@ -134,53 +165,95 @@ class NDVideoPlayerViewController: UIViewController {
 extension NDVideoPlayerViewController {
   func playTap(_ sender: UITapGestureRecognizer) {
     
-    guard let url = URL(string: video.videoURL) else { return }
-    let asset:AVURLAsset = AVURLAsset(url: url)
-    let playerItem:AVPlayerItem = AVPlayerItem(url: url)
-    let player:AVPlayer = AVPlayer(playerItem: playerItem)
+    //let urlString = "https://stage-swatv.wieck.com/api/v1/videos/\(video.id)/720p"
     
-    let restoration: String = "nd_video"
-    let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
-    let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
-    controller.player = AVPlayerViewController()
-    controller.player.player = player
+    var urlComponents:URLComponents = URLComponents()
+    urlComponents.scheme = "https"
+    urlComponents.host = "stage-swatv.wieck.com"
+    urlComponents.path = "/api/v1/videos/\(video.id)"
+    //let videoURL = urlComponents.url!
     
-    self.present(controller, animated: true, completion: nil)
+    var videoURLString: String?
     
-    // Create a new AVPlayerViewController and pass it a reference to the player.
-    /*playerController = AVPlayerViewController()
-    playerController.player = player
+    Alamofire.request(urlComponents).responseJSON(completionHandler: {
+      response in
+      switch response.result {
+      case .success(_):
+        let json = JSON(data: response.data!)
+        print(json)
+        let downloads = json["downloads"]
+        if downloads["source"] != JSON.null {
+          videoURLString = downloads["source"]["uri"].stringValue
+        } else if downloads["720p"] != JSON.null {
+          videoURLString = downloads["720p"]["uri"].stringValue
+        }
+        
+        guard let videoURL = videoURLString else { return }
+        
+        guard let url = URL(string: videoURL) else { return }
+        //let asset:AVURLAsset = AVURLAsset(url: url)
+        let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+        let player:AVPlayer = AVPlayer(playerItem: playerItem)
+        
+        let restoration: String = "nd_video"
+        let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
+        controller.player = AVPlayerViewController()
+        controller.player.player = player
+        
+        self.present(controller, animated: true, completion: nil)
+      case .failure(_):
+        break
+      }
+    })
     
-    //NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: controller.player?.currentItem)
     
-    // Add the video player as a child to this view controller
-    self.addChildViewController(playerController)
     
-    // Add its view so that it will be able to be displayed and also create its frame so that it will have a size
-    self.view.addSubview(playerController.view)
-    playerController.view.frame = self.view.bounds
-    
-    //Notify the child that it has been made a child to this parent view controller
-    playerController.didMove(toParentViewController: self)
-    playerController.showsPlaybackControls = true
-    playerController.player?.play()
-    playerController.view.isUserInteractionEnabled = true*/
   }
   
   func resumeTap(_ sender: UITapGestureRecognizer) {
     
-    guard let url = URL(string: video.videoURL) else { return }
-    let asset:AVURLAsset = AVURLAsset(url: url)
-    let playerItem:AVPlayerItem = AVPlayerItem(url: url)
-    let player:AVPlayer = AVPlayer(playerItem: playerItem)
+    let urlString = "https://stage-swatv.wieck.com/api/v1/videos/\(video.id)/720p"
     
-    let restoration: String = "nd_video"
-    let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
-    let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
-    controller.player = AVPlayerViewController()
-    controller.player.player = player
+    var urlComponents:URLComponents = URLComponents()
+    urlComponents.scheme = "https"
+    urlComponents.host = "stage-swatv.wieck.com"
+    urlComponents.path = "/api/v1/videos/\(video.id)"
+    let videoURL = urlComponents.url!
     
-    self.present(controller, animated: true, completion: nil)
+    var videoURLString: String?
+    
+    Alamofire.request(urlComponents).responseJSON(completionHandler: {
+      response in
+      switch response.result {
+      case .success(_):
+        let json = JSON(data: response.data!)
+        print(json)
+        let downloads = json["downloads"]
+        if downloads["source"] != JSON.null {
+          videoURLString = downloads["source"]["uri"].stringValue
+        } else if downloads["720p"] != JSON.null {
+          videoURLString = downloads["720p"]["uri"].stringValue
+        }
+        
+        guard let videoURL = videoURLString else { return }
+        
+        guard let url = URL(string: videoURL) else { return }
+        let asset:AVURLAsset = AVURLAsset(url: url)
+        let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+        let player:AVPlayer = AVPlayer(playerItem: playerItem)
+        
+        let restoration: String = "nd_video"
+        let storyboard = UIStoryboard(name: "New_Design", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: restoration) as! NDViewPlayer
+        controller.player = AVPlayerViewController()
+        controller.player.player = player
+        
+        self.present(controller, animated: true, completion: nil)
+      case .failure(_):
+        break
+      }
+    })
   }
   
   func favoritesTap(_ sender: UITapGestureRecognizer) {

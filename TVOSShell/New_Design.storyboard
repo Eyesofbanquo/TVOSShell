@@ -125,23 +125,23 @@
                                 </prototypes>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swa_logo" translatesAutoresizingMaskIntoConstraints="NO" id="peA-c0-nG6">
-                                <rect key="frame" x="20" y="14" width="598" height="100"/>
+                                <rect key="frame" x="40" y="28" width="342" height="72"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="598" id="JOA-2j-jaQ"/>
-                                    <constraint firstAttribute="height" constant="100" id="Yn3-tk-MzJ"/>
+                                    <constraint firstAttribute="width" constant="342" id="JOA-2j-jaQ"/>
+                                    <constraint firstAttribute="height" constant="72" id="Yn3-tk-MzJ"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="eE7-Gi-10X" secondAttribute="trailing" constant="-20" id="2T6-hP-j8z"/>
-                            <constraint firstItem="peA-c0-nG6" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="14" id="6b2-X9-AmE"/>
+                            <constraint firstItem="peA-c0-nG6" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="28" id="6b2-X9-AmE"/>
                             <constraint firstItem="TKv-6N-fis" firstAttribute="top" secondItem="1cH-1c-gPB" secondAttribute="bottom" id="9GN-bZ-Pzm"/>
                             <constraint firstItem="eE7-Gi-10X" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="-20" id="NBR-cn-Puv"/>
                             <constraint firstItem="822-fa-4tq" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" constant="45" id="SZy-nP-X8I"/>
                             <constraint firstItem="822-fa-4tq" firstAttribute="leading" secondItem="Iwe-a9-yeb" secondAttribute="trailing" constant="30" id="Yrq-mw-dx7"/>
                             <constraint firstItem="1cH-1c-gPB" firstAttribute="top" secondItem="Mnt-1Q-HlJ" secondAttribute="bottom" id="bSk-Pi-7BV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1cH-1c-gPB" secondAttribute="trailing" constant="-20" id="eQI-6r-YAG"/>
-                            <constraint firstItem="peA-c0-nG6" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" id="hn5-9Q-haC"/>
+                            <constraint firstItem="peA-c0-nG6" firstAttribute="leading" secondItem="3t9-Qv-sNG" secondAttribute="leadingMargin" constant="20" id="hn5-9Q-haC"/>
                             <constraint firstItem="Oim-aA-XfB" firstAttribute="top" secondItem="3t9-Qv-sNG" secondAttribute="topMargin" constant="45" id="jDB-eA-yTM"/>
                             <constraint firstItem="Oim-aA-XfB" firstAttribute="leading" secondItem="822-fa-4tq" secondAttribute="trailing" constant="30" id="lX8-NO-ate"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Oim-aA-XfB" secondAttribute="trailing" constant="38" id="njP-ZR-4k3"/>
@@ -360,7 +360,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backgroundImage" destination="V5q-Ic-8sf" id="Crm-vp-IMI"/>
+                        <outlet property="backgroundImageView" destination="V5q-Ic-8sf" id="xpK-pn-QWL"/>
                         <outlet property="date" destination="wRc-ee-O33" id="vJJ-0E-dsv"/>
                         <outlet property="duration" destination="27H-7y-Qgz" id="l0M-MH-wyb"/>
                         <outlet property="favorite" destination="wSw-bi-bsj" id="GZA-Rc-RrV"/>

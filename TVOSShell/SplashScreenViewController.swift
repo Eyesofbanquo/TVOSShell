@@ -19,7 +19,7 @@ class SplashScreenViewController: UIViewController {
     
     //Authenticate
     Winona.auth {
-      var facets:[String:[String]] = ["B-Roll":["featured"],"Featured": ["main", "instruction video"]]
+      var facets:[String:[String]] = ["B-Roll":["featured"],"Featured": ["main", "instruction video"], "Category3": ["cat3"]]
       
       //Gain access to the datastore using this class. This class is the equivalent of a viewmodel
       let ij:InnerJoint = InnerJoint()
@@ -67,9 +67,12 @@ class SplashScreenViewController: UIViewController {
             //guard let destination:ScrollMainViewController = storyboard.instantiateViewController(withIdentifier: ScrollMainViewController.storyboard_id) as? ScrollMainViewController else { return }
             guard let destination = storyboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return }
             destination.ij = InnerJoint()
-            destination.ij.categories = [.featured, .b_roll]
-            self.navigationController?.pushViewController(destination, animated: true)
             
+            //Change this to just beign a variable called category count
+            
+            destination.modelCount = DataStore.numberOfCategories
+            self.navigationController?.pushViewController(destination, animated: true)
+            print(DataStore.numberOfCategories)
           }
         })
       })

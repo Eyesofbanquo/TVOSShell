@@ -80,8 +80,8 @@ class NDMainViewController: UIViewController {
     let searchTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSearchController(_:)))
     searchButton.addGestureRecognizer(searchTap)
     
-    let favoritesTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadFavoritesController(_:)))
-    favoritesButton.addGestureRecognizer(favoritesTap)
+    //let favoritesTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadFavoritesController(_:)))
+    //favoritesButton.addGestureRecognizer(favoritesTap)
     
     let settingsTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSettingsController(_:)))
     settingsButton.addGestureRecognizer(settingsTap)

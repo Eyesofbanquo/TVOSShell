@@ -80,16 +80,16 @@ class DataStore {
       })
     }
     
-    func data(atRow pos: Int) -> [Video] {
-      var videos: [Video]
-      for (key, val) in DataStore.stringVideos.enumerated() {
-        if key == pos {
-          videos = val.value
-          return videos
-        }
-      }
-      return []
-    }
+//    func data(atRow pos: Int) -> [Video] {
+//      var videos: [Video]
+//      for (key, val) in DataStore.stringVideos.enumerated() {
+//        if key == pos {
+//          videos = val.value
+//          return videos
+//        }
+//      }
+//      return []
+//    }
     
     /// Get the data at a given position in the DataStore data structure
     ///

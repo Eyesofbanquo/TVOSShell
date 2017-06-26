@@ -258,7 +258,7 @@ extension NDMainViewController: UITableViewDataSource {
 extension NDMainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return ij.data(atRow: collectionView.tag).count
+    return ij.data(for: Winona.categories[collectionView.tag]).count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -267,9 +267,9 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     cell.prepareForReuse()
     
-    let id = ij.data(atRow: collectionView.tag)[indexPath.item].id
+    let id = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item].id
     
-    let video = ij.data(atRow: collectionView.tag)[indexPath.item]
+    let video = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item]
     
     let u = URL(string: video.thumbnailUri)
     URLSession.shared.dataTask(with: u!) {
@@ -281,8 +281,8 @@ extension NDMainViewController: UICollectionViewDataSource {
       }
       }.resume()
     
-    let duration = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().minutes
-    let seconds = ij.data(atRow: collectionView.tag)[indexPath.item].getTime().seconds
+    let duration = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item].getTime().minutes
+    let seconds = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item].getTime().seconds
     
     if duration == 1 {
       cell.duration.text = "\(duration) min"
@@ -307,7 +307,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     //let time: (Int, Int) = ij.data(atRow: collectionView.tag)[indexPath.item].getTime()
     //videoPlayerController.time = time
-    videoPlayerController.video = ij.data(atRow: collectionView.tag)[indexPath.item]
+    videoPlayerController.video = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item]
     
     if let image = cell.imageView.image {
       

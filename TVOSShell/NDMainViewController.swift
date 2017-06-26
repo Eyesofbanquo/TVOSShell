@@ -41,7 +41,7 @@ class NDMainViewController: UIViewController {
   
   var modelCount: Int = 0
   
-  var categoryNames: [String] = ["Gary's Takeoff", "Safety and Security", "Work Perks", "Office Space", "Extra Mile", "Around Our SysteM"]
+  var categoryNames: [String] = ["Gary's Takeoff", "Safety and Security", "Work Perks", "Office Space", "Extra Mile", "Around Our System"]
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,7 +72,6 @@ class NDMainViewController: UIViewController {
     
     tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 156)
     tableViewTopConstraint.isActive = true
-    //hiddenRows = []
     
     tableView.delegate = self
     
@@ -88,7 +87,6 @@ class NDMainViewController: UIViewController {
     settingsButton.addGestureRecognizer(settingsTap)
     
     //Load the videos from the API. This is temporary atm
-    //print(ij.allData)
   }
 
   
@@ -247,7 +245,8 @@ extension NDMainViewController: UITableViewDataSource {
     let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
     
     let header = cell as! NDHeader
-    header.titleLabel.text = categoryNames[section].uppercased()
+//    header.titleLabel.text = categoryNames[section].uppercased()
+    header.titleLabel.text = Winona.categories[section].uppercased()
     return header
   }
   
@@ -382,7 +381,6 @@ extension NDMainViewController {
   }
   
   func loadFavoritesController(_ sender: UITapGestureRecognizer) {
-    //Winona.add(toFavorites: video.id)
   }
   
   func loadSettingsController(_ sender: UITapGestureRecognizer) {

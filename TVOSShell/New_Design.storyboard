@@ -27,10 +27,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="lbE-Yd-1kG" kind="relationship" relationship="rootViewController" id="CLl-kP-9Vi"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UWq-9l-Xbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1884" y="305"/>
+            <point key="canvasLocation" x="-2104" y="-1835"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="aYR-KT-hcG">
@@ -210,7 +213,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRc-ee-O33">
-                                <rect key="frame" x="45" y="119" width="91" height="42"/>
+                                <rect key="frame" x="45" y="119" width="93" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="8WO-EU-zZ2"/>
                                 </constraints>
@@ -219,7 +222,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DURATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27H-7y-Qgz">
-                                <rect key="frame" x="166" y="119" width="191" height="42"/>
+                                <rect key="frame" x="168" y="119" width="190" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="GJW-jd-lAd"/>
                                 </constraints>
@@ -234,13 +237,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="760" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l75-ud-SRr">
-                                                <rect key="frame" x="30" y="17" width="30" height="46"/>
+                                                <rect key="frame" x="30" y="17" width="44" height="46"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VI-Q5-VuV">
-                                                <rect key="frame" x="105" y="22" width="88" height="46"/>
+                                                <rect key="frame" x="119" y="22" width="93" height="46"/>
                                                 <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -266,13 +269,13 @@
                                         <rect key="frame" x="0.0" y="110" width="760" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-vT-FUb">
-                                                <rect key="frame" x="30" y="17" width="22" height="46"/>
+                                                <rect key="frame" x="30" y="17" width="44" height="46"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY FROM BEGINNING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWV-1u-1SP">
-                                                <rect key="frame" x="102" y="17" width="416" height="46"/>
+                                                <rect key="frame" x="124" y="17" width="433" height="46"/>
                                                 <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -298,13 +301,13 @@
                                         <rect key="frame" x="0.0" y="220" width="760" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twt-4M-cKU">
-                                                <rect key="frame" x="30" y="17" width="38" height="46"/>
+                                                <rect key="frame" x="30" y="17" width="44" height="46"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="38"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAVE TO FAVORITES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-eh-sy8">
-                                                <rect key="frame" x="98" y="20" width="340" height="43"/>
+                                                <rect key="frame" x="104" y="20" width="366" height="43"/>
                                                 <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -406,6 +409,7 @@
                             <constraint firstItem="2Bq-vm-4I3" firstAttribute="leading" secondItem="NCD-Fh-Pvm" secondAttribute="leadingMargin" constant="-20" id="pJm-0d-D3j"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="xcp-A8-gqK"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dec-rf-xia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

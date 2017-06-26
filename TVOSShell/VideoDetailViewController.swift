@@ -56,7 +56,7 @@ class VideoDetailViewController: UIViewController {
     
     self.videoTitle.text = "title: " + self.video.title
     self.videoDate.text = "date (non formatted): " + self.video.date
-    self.videoCategories.text = "the category: " + self.video.category.rawValue
+    //self.videoCategories.text = "the category: " + self.video.category.rawValue
     self.videoDescription.text = "caption: " + String(self.video.duration)
     
     

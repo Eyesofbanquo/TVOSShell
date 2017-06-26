@@ -48,6 +48,7 @@
 		D55EB19A1EF2C16B00617EFE /* NDViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55EB1991EF2C16B00617EFE /* NDViewPlayer.swift */; };
 		D562B6B31ED77CFD007A3990 /* VideoBottomBarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */; };
 		D562B6B51ED7814E007A3990 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */; };
+		D5BFF4D71F003A930018214A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFF4D61F003A930018214A /* CloudKit.framework */; };
 		D5D2CB9A1EDDFAC5004F66A2 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB991EDDFAC5004F66A2 /* Video.swift */; };
 		D5D2CB9C1EDDFB53004F66A2 /* SWAVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */; };
 		D5D2CB9E1EDE0241004F66A2 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2CB9D1EDE0241004F66A2 /* VM.swift */; };
@@ -96,6 +97,8 @@
 		D55EB1991EF2C16B00617EFE /* NDViewPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDViewPlayer.swift; sourceTree = "<group>"; };
 		D562B6B21ED77CFD007A3990 /* VideoBottomBarNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBottomBarNavigation.swift; sourceTree = "<group>"; };
 		D562B6B41ED7814E007A3990 /* CustomVideoPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayerController.swift; sourceTree = "<group>"; };
+		D5BFF4D51F003A900018214A /* TVOSShell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TVOSShell.entitlements; sourceTree = "<group>"; };
+		D5BFF4D61F003A930018214A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		D5D2CB991EDDFAC5004F66A2 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		D5D2CB9B1EDDFB53004F66A2 /* SWAVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWAVideo.swift; sourceTree = "<group>"; };
 		D5D2CB9D1EDE0241004F66A2 /* VM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFAA596C0C6A66BC4EECF3E3 /* Pods_TVOSShell.framework in Frameworks */,
+				D5BFF4D71F003A930018214A /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +142,7 @@
 		255262DDD3D8D8903808E9D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D5BFF4D61F003A930018214A /* CloudKit.framework */,
 				7D42E48F6A358B7D5D1DCDC2 /* Pods_TVOSShell.framework */,
 			);
 			name = Frameworks;
@@ -164,6 +169,7 @@
 		D50123071EC3C179003854B3 /* TVOSShell */ = {
 			isa = PBXGroup;
 			children = (
+				D5BFF4D51F003A900018214A /* TVOSShell.entitlements */,
 				D5D2CBAC1EE7380D004F66A2 /* Fonts */,
 				D5D2CBA91EE72E64004F66A2 /* NewDesign */,
 				D5D2CBA31EE0FC1B004F66A2 /* SplashScreenViewController.swift */,
@@ -358,6 +364,14 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 2W3P634BS8;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -606,6 +620,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = TVOSShell/TVOSShell.entitlements;
 				DEVELOPMENT_TEAM = 2W3P634BS8;
 				INFOPLIST_FILE = TVOSShell/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -621,6 +636,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = TVOSShell/TVOSShell.entitlements;
 				DEVELOPMENT_TEAM = 2W3P634BS8;
 				INFOPLIST_FILE = TVOSShell/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

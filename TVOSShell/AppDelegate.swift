@@ -26,13 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("Setting category to AVAudioSessionCategoryPlayback failed.")
     }
     
-    let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
+    ///Load from splash screen first
+    /*let storyboard:UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
     guard let splashScreen = storyboard.instantiateViewController(withIdentifier: "splash_screen") as? SplashScreenViewController else { return false}
     let navigationController:UINavigationController = storyboard.instantiateViewController(withIdentifier: "navigation_controller") as! UINavigationController
     navigationController.pushViewController(splashScreen, animated: false)
     navigationController.setNavigationBarHidden(true, animated: false)
     
-    window?.rootViewController = navigationController
+    window?.rootViewController = navigationController*/
     
     /*let ndStoryboard: UIStoryboard = UIStoryboard(name: "New_Design", bundle: nil)
     guard let mainView: NDMainViewController = ndStoryboard.instantiateViewController(withIdentifier: "new_design_main") as? NDMainViewController else { return false }

@@ -67,6 +67,17 @@ extension UILabel {
   }
 }
 
+extension UIImage {
+  convenience init(view: UIView) {
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.isOpaque, 0.0)
+    view.layer.render(in: UIGraphicsGetCurrentContext()!)    
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    self.init(cgImage: (image?.cgImage)!)
+  }
+}
+
 extension UIImageView {
   override open var canBecomeFocused: Bool {
     return true

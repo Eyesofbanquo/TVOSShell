@@ -8,5 +8,6 @@ target 'TVOSShell' do
   # Pods for TVOSShell
   pod ‘Alamofire’, ‘~> 4.4’
   pod ‘SwiftyJSON’
+  pod 'MarqueeLabel/Swift'
 
 end

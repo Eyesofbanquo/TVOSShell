@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MarqueeLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-TVOSShell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,7 +27,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>41FC316CB800792F09A3E7CA6DFA0F4E</key>
+		<key>320AD47B0C6BA014D301395D3BFC8FB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -32,7 +37,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9A8F14727689A4FFAFC4024496E63DEE</key>
+		<key>8928C821A88FCF807F5FB20759089282</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DDD34A4A628E586AEFCB450A682AB78E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

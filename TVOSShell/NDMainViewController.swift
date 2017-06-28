@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MarqueeLabel
 
 class NDMainViewController: UIViewController {
   
@@ -87,6 +88,7 @@ class NDMainViewController: UIViewController {
     settingsButton.addGestureRecognizer(settingsTap)
     
     //Load the videos from the API. This is temporary atm
+    print(ij.allData)
   }
 
   
@@ -271,6 +273,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     let video = ij.data(for: Winona.categories[collectionView.tag])[indexPath.item]
     
+    //need to save these
     let u = URL(string: video.thumbnailUri)
     URLSession.shared.dataTask(with: u!) {
       data, response, error in
@@ -294,6 +297,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     
     cell.titleLabel.text = video.title
     cell.descriptionLabel.text = video.caption
+    cell.setDurationView()
     
     return cell
   }

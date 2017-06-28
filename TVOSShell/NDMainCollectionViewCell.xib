@@ -67,11 +67,19 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42g-Kx-iMv">
                             <rect key="frame" x="0.0" y="284" width="567" height="80"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ids-HM-IYF">
-                                    <rect key="frame" x="20" y="17" width="93" height="61"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ids-HM-IYF" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                    <rect key="frame" x="0.0" y="17" width="559" height="61"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="539" id="GpX-sI-EBH"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="MundoSansStd-Bold" family="Mundo Sans Std" pointSize="38"/>
                                     <color key="textColor" red="0.18829268217086792" green="0.29721635580062866" blue="0.69687467813491821" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="fadeLength">
+                                            <real key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

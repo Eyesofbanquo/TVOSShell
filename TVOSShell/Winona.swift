@@ -267,8 +267,5 @@ class Winona {
         break
       }
     })
-
-    
-    //return video
   }
 }

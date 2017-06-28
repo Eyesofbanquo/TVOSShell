@@ -47,10 +47,12 @@ class NDVideoPlayerViewController: UIViewController {
     gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
     gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
     
+    
     //Set up the visual for the video player controller
     backgroundImageView.image = backgroundImage
     backgroundImageView.alpha = 0.0
     backgroundImageView.layer.mask = gradientLayer
+    
     
     
     time = video.getTime()
@@ -95,9 +97,19 @@ class NDVideoPlayerViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    
+    let blackView = UIView()
+    blackView.frame = self.view.bounds
+    blackView.backgroundColor = .black
+    
+    self.view.insertSubview(blackView, belowSubview: backgroundImageView)
+    blackView.alpha = 0.0
+    
     if !appeared {
       UIView.animate(withDuration: 1.0, animations: {
         self.backgroundImageView.alpha = 1.0
+        blackView.alpha = 1.0
+        
       })
       appeared = !appeared
     }

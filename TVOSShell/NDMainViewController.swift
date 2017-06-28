@@ -26,11 +26,9 @@ class NDMainViewController: UIViewController {
     return [tableView]
   }
   
-  //var hiddenRows: [Int]!
   
   var focusGuide: UIFocusGuide!
-  //var shrinkCell: Bool!
-
+  
   //For the top bar navigation that holds the SWA logo and 3 buttons
   var topBarFocusGuide: UIFocusGuide!
   var topBarItems: [UIView]!
@@ -39,6 +37,7 @@ class NDMainViewController: UIViewController {
   
   var previousIndexPath: IndexPath!
   var nextIndexPath: IndexPath!
+  var targetOffset: CGPoint!
   
   var modelCount: Int = 0
   
@@ -64,6 +63,8 @@ class NDMainViewController: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.sectionFooterHeight = 1.0
+    tableView.remembersLastFocusedIndexPath = false
+    
     
     //register the header view
     let nib = UINib(nibName: "NDHeaderView", bundle: nil)
@@ -76,8 +77,9 @@ class NDMainViewController: UIViewController {
     
     tableView.delegate = self
     
+    targetOffset = CGPoint.zero
     
-    //searchButton.target(forAction: #selector(NDMainViewController.random(_:)), withSender: self)
+    
     let searchTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSearchController(_:)))
     searchButton.addGestureRecognizer(searchTap)
     
@@ -86,11 +88,8 @@ class NDMainViewController: UIViewController {
     
     let settingsTap = UITapGestureRecognizer(target: self, action: #selector(NDMainViewController.loadSettingsController(_:)))
     settingsButton.addGestureRecognizer(settingsTap)
-    
-    //Load the videos from the API. This is temporary atm
-    print(ij.allData)
   }
-
+  
   
   
   
@@ -114,6 +113,11 @@ class NDMainViewController: UIViewController {
     topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
     
     tableViewScrolledTopConstraint = tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80)
+    tableView.scrollToNearestSelectedRow(at: .top, animated: true)
+    
+    /*if targetOffset != CGPoint.zero {
+      tableView.setContentOffset(targetOffset, animated: true)
+    }*/
   }
   
   override func didReceiveMemoryWarning() {
@@ -124,10 +128,11 @@ class NDMainViewController: UIViewController {
   override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     super.didUpdateFocus(in: context, with: coordinator)
     
-    if context.focusHeading == .down {
-      if context.previouslyFocusedView is UIIconLabel {
-        topBarFocusGuide.preferredFocusEnvironments = [tableView]
-      }
+    if context.focusHeading == .down && context.previouslyFocusedView is UIIconLabel {
+      topBarFocusGuide.preferredFocusEnvironments = [tableView]
+      self.updateFocusIfNeeded()
+      self.setNeedsFocusUpdate()
+      
     }
     
     //If the previous focus item is a collectionviewcell and the next item is not then that means you've hit the focus guide and you should reset the preferredfocusenvironments
@@ -135,6 +140,7 @@ class NDMainViewController: UIViewController {
       if let previouslyFocusedView = context.previouslyFocusedView as? UICollectionViewCell {
         if !(context.nextFocusedView! is UICollectionViewCell) {
           topBarFocusGuide.preferredFocusEnvironments = [favoritesButton]
+          
         }
         //Do this because the preferredFocusEnvironments is still going to be the tableview so once you hit this focusguide the next focusedView will be the tableview which will return a UICollectionViewCell (basically you're locked in the tableview). So you check to see if the nextFocusedView is a CollectionCell and if it is then set the preferredfocusenvironments to the favoritesbutton
         if context.nextFocusedView! is UICollectionViewCell {
@@ -187,7 +193,7 @@ extension NDMainViewController: UITableViewDelegate {
         //On the first step going down make sure you hide the top bar. ANimate it up
         if nextIndexPath.section == 1 {
           topBarFocusGuide.isEnabled = false
-
+          
           coordinator.addCoordinatedAnimations({
             for view in self.topBarItems {
               if view is UIIconLabel {
@@ -247,7 +253,7 @@ extension NDMainViewController: UITableViewDataSource {
     let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
     
     let header = cell as! NDHeader
-//    header.titleLabel.text = categoryNames[section].uppercased()
+    //    header.titleLabel.text = categoryNames[section].uppercased()
     header.titleLabel.text = Winona.categories[section].uppercased()
     return header
   }
@@ -290,7 +296,7 @@ extension NDMainViewController: UICollectionViewDataSource {
     if duration == 1 {
       cell.duration.text = "\(duration) min"
     } else if duration > 1{
-      cell.duration.text = "\(duration) mins"
+      cell.duration.text = "\(duration) min"
     } else {
       cell.duration.text = "\(seconds) s"
     }
@@ -327,8 +333,14 @@ extension NDMainViewController: UICollectionViewDataSource {
       gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
       //self.backgroundImage.layer.mask = gradientLayer
       
+      //tableView.setContentOffset(targetOffset, animated: true)
+      
       //Set up the visual for the video player controller
-      self.present(videoPlayerController, animated: true, completion: nil)
+      self.present(videoPlayerController, animated: true, completion: {
+        self.tableView.setContentOffset(self.targetOffset, animated: true)
+      })
+    } else {
+      //add a dummy image file here
     }
     
   }
@@ -351,17 +363,25 @@ extension NDMainViewController: UICollectionViewDelegateFlowLayout {
 
 extension NDMainViewController: UIScrollViewDelegate {
   
+  /// This function will get the indexpath at the targetContentOffset point. This point happens to be the point where the scrollview is going next. You take this indexpath to get the section header view for the next item in the scrollview. You set the targetcontentoffset point to this header's origin so that you have a paging effect. When the indexPath reaches the bottom it will be n-1 number of headers when you scroll down. Therefore, if the target indexPath.section is the same as the section we just came from then it must be at the bottom and manually set the offset to the next indexPath.section.
+  ///
+  /// - Parameters:
+  ///   - scrollView: The tableview's scrollview
+  ///   - velocity: the speed at which it scrolls
+  ///   - targetContentOffset: the target position after the scroll
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     
     
     let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     guard let index = indexPath else { return }
     
-    targetContentOffset.pointee = tableView.rectForHeader(inSection: index.section).origin
+    targetContentOffset.pointee = CGPoint(x: tableView.rectForHeader(inSection: index.section).origin.x, y: tableView.rectForHeader(inSection: index.section).origin.y - 30.0)
     
     if index.section == previousIndexPath.section {
       targetContentOffset.pointee = tableView.rectForHeader(inSection: nextIndexPath.section).origin
     }
+    
+    self.targetOffset = targetContentOffset.pointee
   }
 }
 

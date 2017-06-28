@@ -247,6 +247,7 @@ class Winona {
         
         let thumbnailString = videoURLString.substring(to: index) + ".jpg"
         
+        
         let duration = json["source"]["duration"].doubleValue
         
         let title = json["title"].stringValue

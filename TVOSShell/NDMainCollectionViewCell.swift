@@ -13,6 +13,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   
   @IBOutlet weak var titleLabel: MarqueeLabel!
   @IBOutlet weak var imageView: UIImageView!
+  var newImageView: UIImageView!
   @IBOutlet weak var duration: UILabel!
   @IBOutlet weak var durationView: UIView!
   @IBOutlet weak var descriptionView: UIView!
@@ -58,11 +59,13 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     
     durationView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     descriptionLabel.textContainer.maximumNumberOfLines = 4
+    
+    //setDurationView()
   }
   
   func setDurationView() {
     let image = UIImage(view: durationView)
-    let newImageView = UIImageView(image: image)
+    newImageView = UIImageView(image: image)
     newImageView.frame = CGRect(x: durationView.frame.minX + durationView.frame.width / 2.5, y: durationView.frame.height / 4, width: durationView.frame.width / 2, height: durationView.frame.height / 2)
     newImageView.adjustsImageWhenAncestorFocused = true
     durationView.alpha = 0.0
@@ -73,6 +76,9 @@ class NDMainCollectionViewCell: UICollectionViewCell {
     super.prepareForReuse()
     
     imageView.image = nil
+    if newImageView != nil {
+      newImageView.image = nil
+    }
     durationView.alpha = 1.0
     //setDurationView()
   }
@@ -96,6 +102,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       self.setFocusedState()
       
     } else if self == context.previouslyFocusedView {
+      
       self.titleLabel.alpha = 0.0
       self.titleLabel.shutdownLabel()
       self.titleLabel.holdScrolling = true

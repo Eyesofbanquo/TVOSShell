@@ -24,7 +24,7 @@ class UIIconLabel: UILabel {
     
     ///Edit this to make the icons glow or something
     if context.nextFocusedView == self {
-      self.textColor = UIColor.blue
+      self.textColor = UIColor.white
       self.alpha = 1.0
     } else {
       self.textColor = UIColor.white

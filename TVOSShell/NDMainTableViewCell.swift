@@ -24,9 +24,7 @@ class NDMainTableViewCell: UITableViewCell {
     
     let nib = UINib(nibName: "NDMainCollectionViewCell", bundle: nil)
     collectionView.register(nib, forCellWithReuseIdentifier: "nd_main_collection_view_cell")
-    collectionView.remembersLastFocusedIndexPath = false
-    //collectionView.remembersLastFocusedIndexPath = true
-    //collectionView.sp
+    collectionView.remembersLastFocusedIndexPath = true
     collectionView.reloadData()
   }
   
@@ -38,7 +36,6 @@ class NDMainTableViewCell: UITableViewCell {
   func applyFocusChanges(opacity: CGFloat) {
     self.alpha = opacity
     self.contentView.alpha = opacity
-    //self.isHidden = true
   }
   
   override var preferredFocusEnvironments: [UIFocusEnvironment] {

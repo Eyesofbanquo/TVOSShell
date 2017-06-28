@@ -92,6 +92,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       
       self.titleLabel.alpha = 0.0
       self.titleLabel.holdScrolling = false
+      self.titleLabel.type = .leftRight
 
       
       UIView.animate(withDuration: animationDuration, animations: {

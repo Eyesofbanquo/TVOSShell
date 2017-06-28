@@ -38,6 +38,7 @@ class NDMainViewController: UIViewController {
   var previousIndexPath: IndexPath!
   var nextIndexPath: IndexPath!
   var targetOffset: CGPoint!
+  var targetOffsetCushion: CGFloat = 35.0
   
   var modelCount: Int = 0
   
@@ -375,7 +376,7 @@ extension NDMainViewController: UIScrollViewDelegate {
     let indexPath = tableView.indexPathForRow(at: targetContentOffset.pointee)
     guard let index = indexPath else { return }
     
-    targetContentOffset.pointee = CGPoint(x: tableView.rectForHeader(inSection: index.section).origin.x, y: tableView.rectForHeader(inSection: index.section).origin.y - 30.0)
+    targetContentOffset.pointee = CGPoint(x: tableView.rectForHeader(inSection: index.section).origin.x, y: tableView.rectForHeader(inSection: index.section).origin.y - targetOffsetCushion)
     
     if index.section == previousIndexPath.section {
       targetContentOffset.pointee = tableView.rectForHeader(inSection: nextIndexPath.section).origin

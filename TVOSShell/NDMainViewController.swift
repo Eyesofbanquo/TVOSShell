@@ -332,13 +332,12 @@ extension NDMainViewController: UICollectionViewDataSource {
         UIColor.init(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0).cgColor]
       gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
       gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-      //self.backgroundImage.layer.mask = gradientLayer
-      
-      //tableView.setContentOffset(targetOffset, animated: true)
       
       //Set up the visual for the video player controller
       self.present(videoPlayerController, animated: true, completion: {
-        self.tableView.setContentOffset(self.targetOffset, animated: true)
+        if self.nextIndexPath.section != 0 {
+          self.tableView.setContentOffset(self.targetOffset, animated: true)
+        }
       })
     } else {
       //add a dummy image file here

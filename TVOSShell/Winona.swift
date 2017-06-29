@@ -243,9 +243,12 @@ class Winona {
         
         let authorAtString = json["source"]["authoredAt"].stringValue
         
-        let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
+        //let index = videoURLString.index(videoURLString.startIndex, offsetBy: 88)
         
-        let thumbnailString = videoURLString.substring(to: index) + ".jpg"
+        //let thumbnailString = videoURLString.substring(to: index) + ".jpg"
+        let index = videoURLString.range(of: "preview")
+        let thumbnailString = videoURLString.substring(to: index!.upperBound) + ".jpg"
+        //print(thumbnailString2)
         
         
         let duration = json["source"]["duration"].doubleValue

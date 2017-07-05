@@ -10,6 +10,8 @@ import UIKit
 
 class UIIconLabel: UILabel {
   
+  var glowLayer: CALayer!
+  
   override var canBecomeFocused: Bool {
     return true
   }
@@ -25,9 +27,16 @@ class UIIconLabel: UILabel {
     ///Edit this to make the icons glow or something
     if context.nextFocusedView == self {
       self.textColor = UIColor.white
+      self.layer.shadowColor = self.textColor.cgColor
+      self.layer.shadowRadius = 4.0
+      self.layer.shadowOpacity = 0.9
+      self.layer.shadowOffset = CGSize.zero
+      self.layer.masksToBounds = false
+      //self.layer.addSublayer(glowLayer)
       self.alpha = 1.0
     } else {
       self.textColor = UIColor.white
+      self.layer.shadowOpacity = 0.0
       self.alpha = 0.5
     }
 

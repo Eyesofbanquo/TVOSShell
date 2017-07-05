@@ -35,6 +35,7 @@ class NDMainCollectionViewCell: UICollectionViewCell {
   
   var currentRow: Int!
   
+  var glowLayer: CALayer!
   
   override var canBecomeFocused: Bool {
     return true
@@ -93,7 +94,11 @@ class NDMainCollectionViewCell: UICollectionViewCell {
       self.titleLabel.alpha = 0.0
       self.titleLabel.holdScrolling = false
       self.titleLabel.type = .leftRight
-
+      /*self.titleLabel.layer.shadowColor = self.titleLabel.textColor.cgColor
+      self.titleLabel.layer.shadowRadius = 4.0
+      self.titleLabel.layer.shadowOpacity = 0.9
+      self.titleLabel.shadowOffset = CGSize.zero
+      self.titleLabel.layer.masksToBounds = false*/
       
       UIView.animate(withDuration: animationDuration, animations: {
         self.titleLabel.alpha = 1.0
